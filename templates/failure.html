@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Game Over
+{% endblock %}
+
+{% block main %}
+<div class="failure-container">
+    <h1>Game Over</h1>
+    <p>Sorry, you've used all 8 guesses. The correct player was <strong>{{ player_name }}</strong>.</p>
+    <p>Better luck next time</p>
+</div>
+{% endblock %}

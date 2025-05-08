@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Your stats
+{% endblock %}
+
+{% block main %}
+<div class="container mt-5">
+    <h2 class="text-center">Player Stats</h2>
+    <table class="table table-striped table-bordered table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>Number Of Guesses</th>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+                <th>5</th>
+                <th>6</th>
+                <th>7</th>
+                <th>8</th>
+                <th>Fails</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Amount of Times</td>
+                <td>{{ ones }}</td>
+                <td>{{ two }}</td>
+                <td>{{ three }}</td>
+                <td>{{ four }}</td>
+                <td>{{ five }}</td>
+                <td>{{ six }}</td>
+                <td>{{ sevens }}</td>
+                <td>{{ eights }}</td>
+                <td>{{ fails }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

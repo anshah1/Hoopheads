@@ -1,0 +1,523 @@
+.center {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+}
+
+.topRow{
+    background-color: #04AA6D; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 12px;
+}
+
+.up-arrow {
+    color: green; /* Color for the up arrow */
+    font-weight: bold;
+    margin-left: 5px; /* Space between height and arrow */
+}
+
+.down-arrow {
+    color: red; /* Color for the down arrow */
+    font-weight: bold;
+    margin-left: 5px; /* Space between height and arrow */
+}
+
+/* Background Color Styles */
+.green-bg {
+    background-color: #90EE90; /* Light green */
+}
+
+.yellow-bg {
+    background-color: #FFFFC5; /* Light yellow */
+}
+
+.red-bg {
+    background-color: #FFCCCB; /* Light red */
+}
+
+.transparent-bg {
+    background-color: transparent; /* No background */
+}
+
+/* Optional: Add a hover effect for table rows */
+tr:hover {
+    background-color: #f0f0f0; /* Light gray on hover */
+}
+
+
+h2 {
+    font-family: "Lucida Handwriting", cursive;
+}
+
+
+body {
+    background: url('https://your-image-url.com/basketball-background.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+.navbar {
+    background-color: #f8f9fa;
+}
+
+.navbar-brand {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    width: 100%; /* Ensure it takes the full width of the container */
+}
+
+.navbar-brand a {
+    text-decoration: none; /* Remove underline from link */
+}
+
+.navbar-brand h2 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.navbar-nav {
+    display: flex;
+    align-items: center;
+}
+
+.nav-link {
+    margin-left: 15px;
+    margin-right: 15px; /* Added margin for spacing */
+}
+
+/* Existing styles remain the same, just adding improvements */
+
+/* Stats container styling */
+.stats-container {
+    background-color: rgba(255, 255, 255, 0.8); /* Slight transparency */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.stats-title {
+    font-size: 1.8em;
+    color: #333;
+    font-family: "Lucida Handwriting", cursive;
+    margin-bottom: 20px;
+}
+
+/* Adjust the stat grid for better spacing */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px; /* Increased gap for better spacing */
+    margin-top: 20px;
+}
+
+.stat-item {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out; /* Adding a hover effect */
+}
+
+.stat-item h3 {
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.stat-value {
+    font-size: 3em; /* Larger stat values */
+    color: #04AA6D; /* Green color for better emphasis */
+    font-weight: bold;
+}
+
+/* Hover effect for the stat-item */
+.stat-item:hover {
+    transform: translateY(-5px); /* Slight lift on hover */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Update for submit button styling */
+.btn-primary {
+    margin-top: 10px;
+    padding: 12px 25px; /* Slightly larger padding for better usability */
+    background-color: #04AA6D; /* Updated to match the green theme */
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.2em; /* Slightly larger font */
+    transition: background-color 0.3s ease;
+}
+
+.search-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+#player-search {
+    width: 100%;
+    height: 50px;
+    font-size: 1.2rem;
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #ccc;
+}
+
+.suggestions-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-height: 150px;
+    overflow-y: auto;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+.suggestions-list li {
+    padding: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+.suggestions-list li:hover {
+    background-color: #04AA6D;
+    color: white;
+}
+
+/* Button hover effect */
+.btn-primary:hover {
+    background-color: #037d4a; /* Darker green on hover */
+}
+
+/* Input box for guess */
+#player_guess {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    font-size: 1.1em;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); /* Slight shadow */
+}
+
+/* Suggestions list */
+.suggestions-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    max-height: 150px;
+    overflow-y: auto;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Add shadow for better separation */
+}
+
+.suggestions-list li {
+    padding: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.suggestions-list li:hover {
+    background-color: #f0f0f0; /* Updated hover color */
+}
+
+/* Background */
+body {
+    background: url('https://your-image-url.com/basketball-background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #333; /* Ensuring text contrast on background */
+}
+
+/* Centering the navbar brand */
+.navbar-brand {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    width: 100%;
+}
+
+/* Additional navbar spacing */
+.navbar-nav {
+    display: flex;
+    align-items: center;
+}
+
+/* Navbar links styling */
+.nav-link {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.result-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.result-table th, .result-table td {
+    padding: 10px;
+    border: 1px solid #dee2e6;
+    text-align: center;
+}
+#player_guess {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+}
+.suggestions-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    max-height: 150px;
+    overflow-y: auto;
+    background-color: #fff;
+}
+.suggestions-list li {
+    padding: 8px;
+    cursor: pointer;
+}
+.suggestions-list li:hover {
+    background-color: #e9ecef;
+}
+.congrats-container {
+    text-align: center;
+    padding: 50px;
+    background: #f0f8ff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1;
+}
+
+.player-name {
+    font-size: 2em;
+    font-weight: bold;
+    color: #ff4500;
+}
+
+.confetti {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('path_to_your_confetti_image.png') no-repeat center center;
+    background-size: cover;
+    z-index: -1;
+    animation: confetti-animation 5s infinite;
+}
+
+@keyframes confetti-animation {
+    0% { background-position: 0 0; }
+    100% { background-position: 100% 100%; }
+}
+
+#suggestions {
+    list-style-type: none;
+    padding: 0;
+    border: 1px solid #ccc;
+    max-height: 150px;
+    overflow-y: auto;
+    background-color: white;
+    width: 200px;
+}
+
+#suggestions li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+#suggestions li:hover {
+    background-color: #f0f0f0;
+}
+
+/* Styling for the player guess input */
+#player_guess {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    font-size: 1.1em;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Enhanced suggestions list styling */
+.suggestions-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px auto;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    max-height: 150px;
+    overflow-y: auto;
+    background-color: #fff;
+    width: 80%; /* Make it span below the text box */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Adding shadow */
+}
+
+.green-bg {
+    background-color: #90EE90;
+}
+
+.yellow-bg {
+    background-color: #FFFFC5;
+}
+
+.red-bg {
+    background-color: #FFCCCB;
+}
+
+.transparent-bg {
+    background-color: transparent;
+}
+
+.suggestions-list li {
+    padding: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center; /* Center text */
+}
+
+.suggestions-list li:hover {
+    background-color: #04AA6D;
+    color: white; /* Better contrast on hover */
+}
+
+/* Styling the Submit Guess button */
+
+/* Button hover effect */
+.btn-primary:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Centering the game container */
+.game-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center; /* Centering content inside */
+}
+
+.game-table-container {
+    margin-top: 20px;
+}
+
+.game-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.game-table th, .game-table td {
+    border: 2px dashed #000;
+    padding: 10px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.game-table th {
+    background-color: #f8f8f8;
+    font-weight: bold;
+}
+
+.game-table td {
+    height: 40px; /* Adjust the row height */
+}
+
+.game-table td:empty {
+    background-color: #fff;
+}
+
+/* Styling for the player guess input */
+#player_guess {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    font-size: 1.1em;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Enhanced suggestions list styling */
+.suggestions-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px auto;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    max-height: 150px;
+    overflow-y: auto;
+    background-color: #fff;
+    width: 80%; /* Make it span below the text box */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Adding shadow */
+}
+
+.suggestions-list li {
+    padding: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center; /* Center text */
+}
+
+.suggestions-list li:hover {
+    background-color: #04AA6D;
+    color: white; /* Better contrast on hover */
+}
+
+/* Styling the Submit Guess button */
+
+/* Button hover effect */
+.btn-primary:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.search-wrapper {
+    display: flex;
+    align-items: center; /* Vertically center the items */
+    gap: 10px; /* Add some space between the input and button */
+}
+
+/* Style for the search input box */
+#player-search {
+    width: 400px; /* Adjust width to make it longer horizontally */
+    height: 50px; /* Adjust height to make it larger vertically */
+    font-size: 1.2rem; /* Increase font size */
+    padding: 10px; /* Add some padding for better text spacing */
+    border-radius: 5px; /* Add rounded corners */
+    border: 2px solid #ccc; /* Optional: styling the border */
+}
+
+/* Ensure the button matches the input height and looks consistent */

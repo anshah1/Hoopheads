@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Congrats!
+{% endblock %}
+
+{% block main %}
+    <div class="congrats-container">
+        <h1>Congratulations!</h1>
+        <h2>You guessed the player correctly in {{ guess_count }} tries</h2>
+        <p class="player-name">{{ player_name }}</p>
+        <p>Well done! 🎉</p>
+        <p>Visit us again tomorrow for more fun!</p>
+    </div>
+    <div class="confetti"></div>
+{% endblock %}

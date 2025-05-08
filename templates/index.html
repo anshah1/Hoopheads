@@ -1,0 +1,178 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Play Today's game
+{% endblock %}
+
+<body>
+    {% block main %}
+        <div class="game-container">
+            <div class="stats-container">
+                <h2 class="stats-title">Player's 2024-2025 Regular Season Per Game Stats</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <h3>Points</h3>
+                        <h1 class="stat-value">{{ ppg }}</h1>
+                    </div>
+                    <div class="stat-item">
+                        <h3>Rebounds</h3>
+                        <h1 class="stat-value">{{ rpg }}</h1>
+                    </div>
+                    <div class="stat-item">
+                        <h3>Assists</h3>
+                        <h1 class="stat-value">{{ apg }}</h1>
+                    </div>
+                </div>
+            </div>
+        
+            <form id="player-form" method="POST" action="/">
+                <div class="search-wrapper">
+                    <input type="text" id="player-search" name="player-search" onkeyup="getSuggestions()" autocomplete="off" />
+                    <ul class="suggestions-list" id="suggestions"></ul>
+                </div>
+            </form>
+        
+            <div class="game-table-container">
+                <table class="game-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Division</th>
+                            <th>Height</th>
+                            <th>PPG</th>
+                            <th>RPG</th>
+                            <th>APG</th>
+                            <th>Age</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in range(8) %}
+                        <tr class="fade-in">
+                            <td>{{ i+1 }}</td>
+                            <td>{{ guesses[i]['name'] or '' }}</td>
+                            <td class="
+                                {% if guesses[i]['divColor'] == '#90EE90' %}
+                                    green-bg
+                                {% elif guesses[i]['divColor'] == '#FFFFC5' %}
+                                    yellow-bg
+                                {% elif guesses[i]['divColor'] == '#FFCCCB' %}
+                                    red-bg
+                                {% else %}
+                                    transparent-bg
+                                {% endif %}
+                            ">
+                                {{ guesses[i]['division'] or '' }}
+                            </td>
+                            <td class="
+                                {% if guesses[i]['height'][1] == 'equal' %}
+                                    green-bg
+                                {% elif guesses[i]['height'][1] in ['closeup', 'closedown'] %}
+                                    yellow-bg
+                                {% else %}
+                                    transparent-bg
+                                {% endif %}
+                            ">
+                                {{ guesses[i]['height'][0] or '' }}
+                                {% if guesses[i]['height'][1] in ['up', 'closeup'] %}
+                                    <span class="up-arrow">↑</span>
+                                {% elif guesses[i]['height'][1] in ['down', 'closedown'] %}
+                                    <span class="down-arrow">↓</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ guesses[i]['ppg'] or '' }}</td>
+                            <td>{{ guesses[i]['rpg'] or '' }}</td>
+                            <td>{{ guesses[i]['apg'] or '' }}</td>
+                            <td class="
+                                {% if guesses[i]['age'][1] == 'equal' %}
+                                    green-bg
+                                {% elif guesses[i]['age'][1] in ['closeup', 'closedown'] %}
+                                    yellow-bg
+                                {% else %}
+                                    transparent-bg
+                                {% endif %}
+                            ">
+                                {{ guesses[i]['age'][0] or '' }}
+                                {% if guesses[i]['age'][1] in ['up', 'closeup'] %}
+                                    <span class="up-arrow">↑</span>
+                                {% elif guesses[i]['age'][1] in ['down', 'closedown'] %}
+                                    <span class="down-arrow">↓</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        
+            <script>
+                let currentFocus = -1; // Tracks which suggestion is highlighted
+            
+                function getSuggestions() {
+                    const query = document.getElementById('player-search').value;
+            
+                    if (query.length > 0) {
+                        fetch(`/search?q=${query}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                const suggestionsList = document.getElementById('suggestions');
+                                suggestionsList.innerHTML = ''; // Clear previous suggestions
+            
+                                data.forEach((player, index) => {
+                                    const listItem = document.createElement('li');
+                                    listItem.textContent = player;
+            
+                                    // When the player is clicked, submit the form with that name
+                                    listItem.addEventListener('click', () => {
+                                        document.getElementById('player-search').value = player;
+                                        document.getElementById('player-form').submit();
+                                    });
+            
+                                    suggestionsList.appendChild(listItem);
+                                });
+                                
+                                currentFocus = -1; // Reset the focus
+                            });
+                    } else {
+                        document.getElementById('suggestions').innerHTML = ''; 
+                    }
+                }
+            
+                // Handle key navigation
+                document.getElementById('player-search').addEventListener('keydown', function(e) {
+                    const suggestionsList = document.getElementById('suggestions').getElementsByTagName('li');
+                    if (suggestionsList.length > 0) {
+                        if (e.key === 'ArrowDown') {
+                            currentFocus++;
+                            addActive(suggestionsList);
+                        } else if (e.key === 'ArrowUp') {
+                            currentFocus--;
+                            addActive(suggestionsList);
+                        } else if (e.key === 'Enter') {
+                            e.preventDefault();
+                            if (currentFocus > -1) {
+                                if (suggestionsList[currentFocus]) {
+                                    suggestionsList[currentFocus].click(); // Simulate click on suggestion
+                                }
+                            }
+                        }
+                    }
+                });
+            
+                function addActive(suggestionsList) {
+                    removeActive(suggestionsList);
+                    if (currentFocus >= suggestionsList.length) currentFocus = 0;
+                    if (currentFocus < 0) currentFocus = suggestionsList.length - 1;
+                    suggestionsList[currentFocus].classList.add("active");
+                }
+            
+                function removeActive(suggestionsList) {
+                    for (let i = 0; i < suggestionsList.length; i++) {
+                        suggestionsList[i].classList.remove("active");
+                    }
+                }
+            </script>
+        </div>
+    {% endblock %}
+</body>
+</html>
