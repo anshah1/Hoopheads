@@ -52,7 +52,7 @@ tr:hover {
 
 
 h2 {
-    font-family: "Lucida Handwriting", cursive;
+    font-family: "Verdana Primer", serif;
 }
 
 
@@ -61,8 +61,13 @@ body {
     background-size: cover;
 }
 
+.icon-help {
+    height: 2em; /* adjust this to match the h2 font size */
+    vertical-align: middle;
+}
+
 .navbar {
-    background-color: #f8f9fa;
+    background-color: #90a2b3;
 }
 
 .navbar-brand {

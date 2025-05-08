@@ -16,71 +16,28 @@
 
     <title>Hoophead: Guess the NBA Player</title>
 
-    <style>
-        body {
-            background: url('https://your-image-url.com/basketball-background.jpg') no-repeat center center fixed;
-            background-size: cover;
-        }
-        .navbar {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #f8f9fa;
-        }
-        .navbar-brand {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-        }
-        .navbar-brand a {
-            text-decoration: none;
-        }
-        .navbar-brand h2 {
-            margin: 0;
-            font-size: 2rem;
-            font-weight: bold;
-            color: #333;
-        }
-        .navbar-nav {
-            display: flex;
-            align-items: center;
-        }
-        .nav-link {
-            margin-left: 15px;
-            margin-right: 15px;
-        }
-        .icon-person {
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-        }
-        .icon-spacing {
-    margin-right: 10px; /* Adjust the value as needed */
-}
-    </style>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <!-- Person Icon -->
-            <img src="../static/images/person.png" alt="Person Icon" class="icon-person icon-spacing" data-bs-toggle="modal" data-bs-target="#bioModal" >
-            <!--Info Icon-->
-            <img src="../static/images/info.png" alt="Info Icon" class="icon-person" data-bs-toggle="modal" data-bs-target="#infoModal">
-            <div class="navbar-brand">
-                <a href="/">
-                    <h2>Hoopheads: Guess the NBA Player</h2>
+            <div class="d-flex align-items-center gap-3">
+                <img src="../static/images/logo.png" alt="Info Icon" class="icon-help">
+                <a href="/" class="navbar-brand m-0">
+                    <h2 class="m-1">Guess the NBA Player</h2>
                 </a>
             </div>
+    
             <div class="collapse navbar-collapse" id="navbar">
-                <div class="navbar-nav ms-auto">
+                <div class="navbar-nav ms-auto gap-3">
                     {% if session["username"] %}
-                        <a class="nav-link d-inline" href="/stats">Stats</a>
-                        <a class="nav-link d-inline" href="/logout">Log Out</a>
+                        <a href="/stats"><img src="../static/images/stats.png" class="icon-help"></a>
+                        <a href="/logout"><img src="../static/images/logout.png" class="icon-help"></a>
                     {% else %}
-                        <a class="nav-link d-inline" href="/register">Register</a>
-                        <a class="nav-link d-inline" href="/login">Log In</a>
+                        <a href="/register"><img src="../static/images/register.png" class="icon-help"></a>
+                        <a href="/login"><img src="../static/images/login.png" class="icon-help"></a>
                     {% endif %}
+                    <img src="../static/images/help.png" alt="Info Icon" class="icon-help" data-bs-toggle="modal" data-bs-target="#infoModal">
                 </div>
             </div>
         </div>
