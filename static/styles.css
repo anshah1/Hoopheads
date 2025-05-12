@@ -101,6 +101,35 @@ body {
     margin-right: 15px; /* Added margin for spacing */
 }
 
+@font-face {
+  font-family: 'Sentral Sans Serif';
+  src: url('../static/fonts/SentralSansSerif.woff2') format('woff2');
+}
+
+.navbar-nav {
+  font-family: 'Sentral Sans Serif', sans-serif;
+}
+
+.nav-link-item {
+  text-decoration: none;
+  color: black;
+}
+
+.nav-icon {
+  height: 2em;
+  width: auto;
+}
+
+.nav-text {
+  font-size: 1.6rem;
+  color: black;
+}
+
+.logo {
+  height: 2em;
+  width: auto;
+}
+
 /* Existing styles remain the same, just adding improvements */
 
 /* Stats container styling */
