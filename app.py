@@ -9,6 +9,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from data.dataStorage import divisions, players, allTheData, divisionBreakdown
 warnings.simplefilter(action='ignore', category=FutureWarning)
 from datetime import datetime
+from scraper.players import get_player_headshot, get_player_link
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
@@ -84,7 +85,15 @@ def home():
                 db.execute(query, (currentInThatGuess, session["username"]))
                 db.commit()
 
-            return render_template("congrats.html", player_name=session["correct_player"], guess_count=guessCount)
+            imageURL = get_player_headshot(guessedPlayer)
+            print(f"Player Image URL: {imageURL}")
+            if imageURL is None:
+                imageURL = "https://www.logodesignlove.com/images/classic/nba-logo.jpg"
+
+            playerLink = get_player_link(guessedPlayer)
+            print(f"Player Link: {playerLink}")
+
+            return render_template("congrats.html", player_name=session["correct_player"], guess_count=guessCount, imageURL=imageURL, playerLink = playerLink)
         else:
             if session["guessCount"] == 8:
                 if "username" in session:
