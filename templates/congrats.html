@@ -7,10 +7,16 @@
 {% block main %}
     <div class="congrats-container">
         <h1>Congratulations!</h1>
-        <h2>You guessed the player correctly in {{ guess_count }} tries</h2>
-        <p class="player-name">{{ player_name }}</p>
-        <p>Well done! 🎉</p>
-        <p>Visit us again tomorrow for more fun!</p>
+        {% if guess_count == 1 %}
+            <h2>You guessed the player correctly in 1 try</h2>
+        {% else %}
+            <h2>You guessed the player correctly in {{ guess_count }} tries</h2>
+        {% endif %}
+        <a href="{{ player_link }}" class="player-name" target="_blank">{{ player_name }}</a>
+        {% if imageURL %}
+            <img src="{{ imageURL }}" alt="Player Image" class="player-image">
+        {% endif %}
+        <p>Visit the main page again for another round!</p>
     </div>
     <div class="confetti"></div>
 {% endblock %}
