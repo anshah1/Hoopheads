@@ -22,8 +22,8 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
             <div class="d-flex align-items-center gap-3">
-                <img src="../static/images/logo.png" alt="Info Icon" class="icon-help">
-                <a href="/" class="navbar-brand m-0">
+                <img src="../static/images/logo.png" alt="Logo" class="logo">
+                <a href="/" class="navbar-brand">
                     <h2 class="m-1">Guess the NBA Player</h2>
                 </a>
             </div>
@@ -31,13 +31,13 @@
             <div class="collapse navbar-collapse" id="navbar">
                 <div class="navbar-nav ms-auto gap-3">
                     {% if session["username"] %}
-                        <a href="/stats"><img src="../static/images/stats.png" class="icon-help"></a>
-                        <a href="/logout"><img src="../static/images/logout.png" class="icon-help"></a>
+                        <a href="/stats"><img src="../static/images/stats.png" alt = "Stats" class="header-icons"></a>
+                        <a href="/logout"><img src="../static/images/logout.png" alt = "Logout" class="header-icons"></a>
                     {% else %}
-                        <a href="/register"><img src="../static/images/register.png" class="icon-help"></a>
-                        <a href="/login"><img src="../static/images/login.png" class="icon-help"></a>
+                        <a href="/register"><img src="../static/images/register.png" alt = "Register" class="header-icons"></a>
+                        <a href="/login"><img src="../static/images/login.png" alt = "Login" class="header-icons"></a>
                     {% endif %}
-                    <img src="../static/images/help.png" alt="Info Icon" class="icon-help" data-bs-toggle="modal" data-bs-target="#infoModal">
+                    <img src="../static/images/help.png" alt="Help" class="header-icons" data-bs-toggle="modal" data-bs-target="#infoModal">
                 </div>
             </div>
         </div>

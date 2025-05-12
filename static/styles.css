@@ -61,8 +61,13 @@ body {
     background-size: cover;
 }
 
-.icon-help {
-    height: 2em; /* adjust this to match the h2 font size */
+.header-icons {
+    height: 1.8em; /* adjust this to match the h2 font size */
+    vertical-align: middle;
+}
+
+.logo {
+    height: 2.2em; /* adjust this to match the h2 font size */
     vertical-align: middle;
 }
 
@@ -82,8 +87,7 @@ body {
 
 .navbar-brand h2 {
     margin: 0;
-    font-size: 2rem;
-    font-weight: bold;
+    font-size: 1.8rem;
     color: #333;
 }
 
