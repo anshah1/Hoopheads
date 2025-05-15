@@ -32,9 +32,9 @@ def get_selenium_wrapper(url, xpath):
 def get_wrapper(url):
     global last_request
     # Verify last request was 3 seconds ago
-    if 0 < time() - last_request < 3:
-        sleep(3)
-    last_request = time()
+    #if 0 < time() - last_request < 3:
+    #    sleep(3)
+    #last_request = time()
     r = get(url)
     while True:
         if r.status_code == 200:
