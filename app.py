@@ -71,6 +71,14 @@ def home():
         guessCount = session.get("guessCount", 0) + 1
         session["guessCount"] = guessCount
 
+        imageURL = get_player_headshot(session["correct_player"])
+        print(f"Player Image URL: {imageURL}")
+        if imageURL is None:
+            imageURL = "https://www.logodesignlove.com/images/classic/nba-logo.jpg"
+
+        playerLink = get_player_link(session["correct_player"])
+        print(f"Player Link: {playerLink}")
+
         if session["correct_player"] == guessedPlayer:
             if "username" in session:
                 for pair in matches:
@@ -85,14 +93,6 @@ def home():
                 db.execute(query, (currentInThatGuess, session["username"]))
                 db.commit()
 
-            imageURL = get_player_headshot(guessedPlayer)
-            print(f"Player Image URL: {imageURL}")
-            if imageURL is None:
-                imageURL = "https://www.logodesignlove.com/images/classic/nba-logo.jpg"
-
-            playerLink = get_player_link(guessedPlayer)
-            print(f"Player Link: {playerLink}")
-
             return render_template("congrats.html", player_name=session["correct_player"], guess_count=guessCount, imageURL=imageURL, playerLink = playerLink)
         else:
             if session["guessCount"] == 8:
@@ -102,7 +102,7 @@ def home():
                     currentFails = currentFails[0] + 1
                     db.execute("UPDATE stats SET fails = ? WHERE personUsername = ?", (currentFails, session["username"]))
                     db.commit()
-                return render_template("failure.html", player_name = session["correct_player"])
+                return render_template("failure.html", player_name = session["correct_player"], imageURL=imageURL, playerLink = playerLink)
             guesses[guessCount - 1]["name"] = guessedPlayer
             guesses[guessCount-1]['division'] = getDivision(guessedPlayer)[0]
             guesses[guessCount-1]['divColor'] = getDivision(guessedPlayer)[1]

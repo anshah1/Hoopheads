@@ -5,9 +5,9 @@ import unicodedata, unidecode
 
 from .utils import get_player_suffix
 from .lookup import lookup
-from .request_utils import get_wrapper, get_selenium_wrapper
+from .request_utils import get_wrapper
 
-
+'''
 def get_stats(_name, stat_type='PER_GAME', playoffs=False, career=False, ask_matches = True):
     name = lookup(_name, ask_matches)
     suffix = get_player_suffix(name)
@@ -49,7 +49,7 @@ def get_stats(_name, stat_type='PER_GAME', playoffs=False, career=False, ask_mat
 
     df = df.reset_index().drop('index', axis=1)
     return df
-
+'''
 
 def get_game_logs(_name, year, playoffs=False, ask_matches=True):
     name = lookup(_name, ask_matches)
