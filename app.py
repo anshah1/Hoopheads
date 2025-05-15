@@ -32,88 +32,88 @@ def get_db_connection():
     conn.row_factory = sqlite3.Row
     return conn
 
-@app.route("/", methods=["GET", "POST"])
-def home():
-    if request.method == "GET":
-        playerFound = False
-        while not playerFound:
-            randomPlayer = random.choice(allTheData)
-            print(randomPlayer)
-            
+@app.route("/", methods=["GET"])
+def start_game():
+    # this always runs first, and sets up the session
+    playerFound = False
+    while not playerFound:
+        randomPlayer = random.choice(allTheData)
+        try:
             ppg = float(randomPlayer['PPG'])
             rpg = float(randomPlayer['RPG'])
             apg = float(randomPlayer['APG'])
-
-            print(f"Player Found: {randomPlayer["NAME"]} - PPG: {ppg}, APG: {apg}, RPG: {rpg}")
             playerFound = True
+        except:
+            continue  # skip malformed player
 
-        # Store the correct player in the session for later use
-        session["correct_player"] = randomPlayer["NAME"]
-        session["ppg"] = ppg
-        session["apg"] = apg
-        session["rpg"] = rpg
-        session["division"] = defaultDivision(randomPlayer)
-        height = randomPlayer["HEIGHT"]
-        session["inches"] = int(height[0]) * 12 + int(height[2])
-        session["age"] = defaultAge(randomPlayer['NAME'])
-        session["guessCount"] = 0
-        session["guesses"] = [{"name": "", "division": "", "height": "", "age": ""} for _ in range(8)]
-        guesses = session["guesses"]
-        # Render the index.html template and pass in the stats
-        return render_template("index.html", ppg=ppg, apg=apg, rpg=rpg, guesses = guesses)
-    if request.method == "POST":
-        if "correct_player" not in session:
-            return redirect("/")
-        guessedPlayer = request.form.get("player-search")
-        print("This is guessed player: " + guessedPlayer)
-        ppg = session.get("ppg")
-        apg = session.get("apg")
-        rpg = session.get("rpg")
-        guesses = session.get("guesses", [{"name": "", "division": "", "divColor": "", "height": "", "ppg": "", "rpg": "", "apg": "","divColor": "", "age": ""} for _ in range(8)])
-        guessCount = session.get("guessCount", 0) + 1
-        session["guessCount"] = guessCount
+    session["correct_player"] = randomPlayer["NAME"]
+    session["ppg"] = ppg
+    session["apg"] = apg
+    session["rpg"] = rpg
+    session["division"] = defaultDivision(randomPlayer)
+    height = randomPlayer["HEIGHT"]
+    session["inches"] = int(height[0]) * 12 + int(height[2])
+    session["age"] = defaultAge(randomPlayer['NAME'])
+    session["guessCount"] = 0
+    session["guesses"] = [{"name": "", "division": "", "height": "", "age": ""} for _ in range(8)]
+    return render_template("index.html", ppg=ppg, apg=apg, rpg=rpg, guesses=session["guesses"])
 
-        imageURL = get_player_headshot(session["correct_player"])
-        print(f"Player Image URL: {imageURL}")
-        if imageURL is None:
-            imageURL = "https://www.logodesignlove.com/images/classic/nba-logo.jpg"
+@app.route("/guess", methods=["POST"])
+def process_guess():
+    if "correct_player" not in session:
+        return redirect("/")
+    if "correct_player" not in session:
+        return redirect("/")
+    guessedPlayer = request.form.get("player-search")
+    print("This is guessed player: " + guessedPlayer)
+    ppg = session.get("ppg")
+    apg = session.get("apg")
+    rpg = session.get("rpg")
+    guesses = session.get("guesses", [{"name": "", "division": "", "divColor": "", "height": "", "ppg": "", "rpg": "", "apg": "","divColor": "", "age": ""} for _ in range(8)])
+    guessCount = session.get("guessCount", 0) + 1
+    session["guessCount"] = guessCount
 
-        playerLink = get_player_link(session["correct_player"])
-        print(f"Player Link: {playerLink}")
+    imageURL = get_player_headshot(session["correct_player"])
+    print(f"Player Image URL: {imageURL}")
+    if imageURL is None:
+        imageURL = "https://www.logodesignlove.com/images/classic/nba-logo.jpg"
 
-        if session["correct_player"] == guessedPlayer:
+    playerLink = get_player_link(session["correct_player"])
+    print(f"Player Link: {playerLink}")
+
+    if session["correct_player"] == guessedPlayer:
+        if "username" in session:
+            for pair in matches:
+                if session["guessCount"] == pair[0]:
+                    guessCountName = pair[1]
+            
+            db = get_db_connection()
+            query = f"SELECT {guessCountName} FROM stats WHERE personUsername = ?"
+            currentInThatGuess = db.execute(query, (session["username"],)).fetchone()
+            currentInThatGuess = currentInThatGuess[0] + 1
+            query = f"UPDATE stats SET {guessCountName} = ? WHERE personUsername = ?"
+            db.execute(query, (currentInThatGuess, session["username"]))
+            db.commit()
+
+        return render_template("congrats.html", player_name=session["correct_player"], guess_count=guessCount, imageURL=imageURL, playerLink = playerLink)
+    else:
+        if session["guessCount"] == 8:
             if "username" in session:
-                for pair in matches:
-                    if session["guessCount"] == pair[0]:
-                        guessCountName = pair[1]
-                
                 db = get_db_connection()
-                query = f"SELECT {guessCountName} FROM stats WHERE personUsername = ?"
-                currentInThatGuess = db.execute(query, (session["username"],)).fetchone()
-                currentInThatGuess = currentInThatGuess[0] + 1
-                query = f"UPDATE stats SET {guessCountName} = ? WHERE personUsername = ?"
-                db.execute(query, (currentInThatGuess, session["username"]))
+                currentFails = db.execute("SELECT fails FROM stats WHERE personUsername = ?", (session["username"],)).fetchone()
+                currentFails = currentFails[0] + 1
+                db.execute("UPDATE stats SET fails = ? WHERE personUsername = ?", (currentFails, session["username"]))
                 db.commit()
-
-            return render_template("congrats.html", player_name=session["correct_player"], guess_count=guessCount, imageURL=imageURL, playerLink = playerLink)
-        else:
-            if session["guessCount"] == 8:
-                if "username" in session:
-                    db = get_db_connection()
-                    currentFails = db.execute("SELECT fails FROM stats WHERE personUsername = ?", (session["username"],)).fetchone()
-                    currentFails = currentFails[0] + 1
-                    db.execute("UPDATE stats SET fails = ? WHERE personUsername = ?", (currentFails, session["username"]))
-                    db.commit()
-                return render_template("failure.html", player_name = session["correct_player"], imageURL=imageURL, playerLink = playerLink)
-            guesses[guessCount - 1]["name"] = guessedPlayer
-            guesses[guessCount-1]['division'] = getDivision(guessedPlayer)[0]
-            guesses[guessCount-1]['divColor'] = getDivision(guessedPlayer)[1]
-            guesses[guessCount - 1]["height"] = getHeight(guessedPlayer)
-            guesses[guessCount - 1]["ppg"] = getPoints(guessedPlayer)
-            guesses[guessCount - 1]["rpg"] = getRebounds(guessedPlayer)
-            guesses[guessCount - 1]["apg"] = getAssists(guessedPlayer)
-            guesses[guessCount - 1]["age"] = getAge(guessedPlayer)
-            return render_template("index.html", ppg=ppg, apg=apg, rpg=rpg, guesses = guesses)
+            return render_template("failure.html", player_name = session["correct_player"], imageURL=imageURL, playerLink = playerLink)
+        guesses[guessCount - 1]["name"] = guessedPlayer
+        guesses[guessCount-1]['division'] = getDivision(guessedPlayer)[0]
+        guesses[guessCount-1]['divColor'] = getDivision(guessedPlayer)[1]
+        guesses[guessCount - 1]["height"] = getHeight(guessedPlayer)
+        guesses[guessCount - 1]["ppg"] = getPoints(guessedPlayer)
+        guesses[guessCount - 1]["rpg"] = getRebounds(guessedPlayer)
+        guesses[guessCount - 1]["apg"] = getAssists(guessedPlayer)
+        guesses[guessCount - 1]["age"] = getAge(guessedPlayer)
+        return render_template("index.html", ppg=ppg, apg=apg, rpg=rpg, guesses = guesses)
 
 @app.route('/search', methods=['GET'])
 def search():
