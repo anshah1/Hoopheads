@@ -9,9 +9,11 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from data.dataStorage import divisions, players, allTheData, divisionBreakdown
 warnings.simplefilter(action='ignore', category=FutureWarning)
 from datetime import datetime
+import timedelta
 from scraper.players import get_player_headshot, get_player_link
 app = Flask(__name__)
-app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_PERMANENT"] = True
+app.permanent_session_lifetime = timedelta(minutes=30)
 app.config["SESSION_TYPE"] = "filesystem"
 app.secret_key = os.urandom(24) 
 
@@ -296,4 +298,4 @@ def defaultAge(player):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
