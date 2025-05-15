@@ -79,11 +79,3 @@ Ansh Shah - [LinkedIn](https://www.linkedin.com/in/anshah18/)
 
 Gitingore
 
-
-
-venv/
-__pycache__/
-*.py[cod]
-*.db
-*.log
-
