@@ -101,11 +101,6 @@ body {
     margin-right: 15px; /* Added margin for spacing */
 }
 
-@font-face {
-  font-family: 'Sentral Sans Serif';
-  src: url('../static/fonts/SentralSansSerif.woff2') format('woff2');
-}
-
 .navbar-nav {
   font-family: 'Sentral Sans Serif', sans-serif;
 }
