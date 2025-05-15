@@ -38,7 +38,7 @@ def start_game():
     player_found = False
     while not player_found:
         random_player = random.choice(allTheData)
-        print(f"Random Player: {random_player['NAME']}")
+        print(f"Selected Player: {random_player['NAME']}")
         try:
             ppg = float(random_player['PPG'])
             rpg = float(random_player['RPG'])
@@ -184,36 +184,14 @@ def register():
 @app.route("/stats")
 def stats():
     db = get_db_connection()
-    ones = db.execute("SELECT ones FROM stats WHERE personUsername = ?", (session["username"],)).fetchone()
-    two = db.execute("SELECT two FROM stats WHERE personUsername = ?", (session["username"],)).fetchone()
-    three = db.execute("SELECT three FROM stats WHERE personUsername = ?", (session["username"],)).fetchone()
-    four = db.execute("SELECT four FROM stats WHERE personUsername = ?", (session["username"],)).fetchone()
-    five = db.execute("SELECT five FROM stats WHERE personUsername = ?", (session["username"],)).fetchone()
-    six = db.execute("SELECT six FROM stats WHERE personUsername = ?", (session["username"],)).fetchone()
-    sevens = db.execute("SELECT sevens FROM stats WHERE personUsername = ?", (session["username"],)).fetchone()
-    eights = db.execute("SELECT eights FROM stats WHERE personUsername = ?", (session["username"],)).fetchone()
-    fails = db.execute("SELECT fails FROM stats WHERE personUsername = ?", (session["username"],)).fetchone()
-    
-    ones_value = ones["ones"] if ones else 0
-    two_value = two["two"] if two else 0
-    three_value = three["three"] if three else 0
-    four_value = four["four"] if four else 0
-    five_value = five["five"] if five else 0
-    six_value = six["six"] if six else 0
-    sevens_value = sevens["sevens"] if sevens else 0
-    eights_value = eights["eights"] if eights else 0
-    fails_value = fails["fails"] if fails else 0
+    stats_to_add = {'ones': 0, 'two': 0, 'three': 0, 'four': 0, 'five': 0, 'six': 0, 'sevens': 0, 'eights': 0, 'fails': 0}
+    for key in stats_to_add:
+        if db.execute(f"SELECT {key} FROM stats WHERE personUsername = ?", (session["username"],)).fetchone()[0] > 0:
+            stats_to_add[key] = db.execute(f"SELECT {key} FROM stats WHERE personUsername = ?", (session["username"],)).fetchone()[0]
+        else:
+            stats_to_add[key] = 0
 
-    return render_template("stats.html", 
-                           ones=ones_value, 
-                           two=two_value, 
-                           three=three_value, 
-                           four=four_value, 
-                           five=five_value, 
-                           six=six_value, 
-                           sevens=sevens_value, 
-                           eights=eights_value, 
-                           fails=fails_value)
+    return render_template("stats.html", ones = stats_to_add['ones'], twos = stats_to_add['two'], threes = stats_to_add['three'], fours = stats_to_add['four'], fives = stats_to_add['five'], sixes = stats_to_add['six'], sevens = stats_to_add['sevens'], eights = stats_to_add['eights'], fails = stats_to_add['fails'])
 
 @app.route("/logout")
 def logout():
@@ -292,4 +270,9 @@ def defaultAge(player):
         if player == row['NAME']:
             bday_str = row['BIRTHDAY']
     bday = datetime.strptime(bday_str, "%Y-%m-%d")  # Adjust format if needed
-    age = (date
+    age = (datetime.today() - bday).days // 365
+    return age
+
+
+if __name__ == "__main__":
+    app.run()
