@@ -12,9 +12,9 @@
         {% else %}
             <h2>You guessed the player correctly in {{ guess_count }} tries</h2>
         {% endif %}
-        <a href="{{ playerLink }}" class="player-name" target="_blank">{{ player_name }}</a>
-        {% if imageURL %}
-            <img src="{{ imageURL }}" alt="Player Image" class="player-image">
+        <a href="{{ player_link }}" class="player-name" target="_blank">{{ player_name }}</a>
+        {% if image_url %}
+            <img src="{{ image_url }}" alt="Player Image" class="player-image">
         {% endif %}
         <p>Visit the main page again for another round!</p>
     </div>

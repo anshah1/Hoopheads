@@ -8,12 +8,12 @@
 <div class="failure-container">
     <h1>Game Over</h1>
     <p>Sorry, you've used all 8 guesses. The correct player was 
-    <a href="{{ playerLink }}" target="_blank">
+    <a href="{{ player_link }}" target="_blank">
         <strong>{{ player_name }}</strong>
     </a>.
     </p>
-    {% if imageURL %}
-        <img src="{{ imageURL }}" alt="Player Image" class="player-image">
+    {% if image_url %}
+        <img src="{{ image_url }}" alt="Player Image" class="player-image">
     {% endif %}
     <p>Better luck next time</p>
 </div>

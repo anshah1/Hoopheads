@@ -8,12 +8,12 @@ from flask import Flask, redirect, render_template, session, request, jsonify
 from werkzeug.security import check_password_hash, generate_password_hash
 from data.dataStorage import divisions, players, allTheData, divisionBreakdown
 warnings.simplefilter(action='ignore', category=FutureWarning)
-from datetime import datetime
+from datetime import datetime, timedelta
 from scraper.players import get_player_headshot, get_player_link
 app = Flask(__name__)
-app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"] = "filesystem"
-app.secret_key = os.urandom(24) 
+app.config["SESSION_PERMANENT"] = True
+app.permanent_session_lifetime = timedelta(minutes=30)
+app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev-temp-secret")
 
 matches = [
     [1, 'ones'],
@@ -32,88 +32,85 @@ def get_db_connection():
     conn.row_factory = sqlite3.Row
     return conn
 
-@app.route("/", methods=["GET", "POST"])
-def home():
-    if request.method == "GET":
-        playerFound = False
-        while not playerFound:
-            randomPlayer = random.choice(allTheData)
-            print(randomPlayer)
+@app.route("/", methods=["GET"])
+def start_game():
+    session.permanent = True
+    player_found = False
+    while not player_found:
+        random_player = random.choice(allTheData)
+        print(f"Selected Player: {random_player['NAME']}")
+        try:
+            ppg = float(random_player['PPG'])
+            rpg = float(random_player['RPG'])
+            apg = float(random_player['APG'])
+            player_found = True
+        except:
+            continue  # skip malformed player
+
+    session["correct_player"] = random_player["NAME"]
+    session["ppg"] = ppg
+    session["apg"] = apg
+    session["rpg"] = rpg
+    session["division"] = defaultDivision(random_player)
+    height = random_player["HEIGHT"]
+    session["inches"] = int(height[0]) * 12 + int(height[2])
+    session["age"] = defaultAge(random_player['NAME'])
+    session["guess_count"] = 0
+    session["guesses"] = [{"name": "", "division": "", "height": "", "age": ""} for _ in range(8)]
+    return render_template("index.html", ppg=ppg, apg=apg, rpg=rpg, guesses=session["guesses"])
+
+@app.route("/guess", methods=["POST"])
+def process_guess():
+    guessedPlayer = request.form.get("player-search")
+    print("This is guessed player: " + guessedPlayer)
+    ppg = session.get("ppg")
+    apg = session.get("apg")
+    rpg = session.get("rpg")
+    guesses = session.get("guesses", [{"name": "", "division": "", "divColor": "", "height": "", "ppg": "", "rpg": "", "apg": "","divColor": "", "age": ""} for _ in range(8)])
+    guess_count = session.get("guess_count", 0) + 1
+    session["guess_count"] = guess_count
+
+    image_url = get_player_headshot(session["correct_player"])
+    print(f"Player Image URL: {image_url}")
+    if image_url is None:
+        image_url = "https://www.logodesignlove.com/images/classic/nba-logo.jpg"
+
+    player_link = get_player_link(session["correct_player"])
+    print(f"Player Link: {player_link}")
+
+    if session["correct_player"] == guessedPlayer:
+        if "username" in session:
+            for pair in matches:
+                if session["guess_count"] == pair[0]:
+                    guess_count_name = pair[1]
             
-            ppg = float(randomPlayer['PPG'])
-            rpg = float(randomPlayer['RPG'])
-            apg = float(randomPlayer['APG'])
+            db = get_db_connection()
+            query = f"SELECT {guess_count_name} FROM stats WHERE personUsername = ?"
+            current_in_that_guess = db.execute(query, (session["username"],)).fetchone()
+            current_in_that_guess = current_in_that_guess[0] + 1
+            query = f"UPDATE stats SET {guess_count_name} = ? WHERE personUsername = ?"
+            db.execute(query, (current_in_that_guess, session["username"]))
+            db.commit()
 
-            print(f"Player Found: {randomPlayer["NAME"]} - PPG: {ppg}, APG: {apg}, RPG: {rpg}")
-            playerFound = True
-
-        # Store the correct player in the session for later use
-        session["correct_player"] = randomPlayer["NAME"]
-        session["ppg"] = ppg
-        session["apg"] = apg
-        session["rpg"] = rpg
-        session["division"] = defaultDivision(randomPlayer)
-        height = randomPlayer["HEIGHT"]
-        session["inches"] = int(height[0]) * 12 + int(height[2])
-        session["age"] = defaultAge(randomPlayer['NAME'])
-        session["guessCount"] = 0
-        session["guesses"] = [{"name": "", "division": "", "height": "", "age": ""} for _ in range(8)]
-        guesses = session["guesses"]
-        # Render the index.html template and pass in the stats
-        return render_template("index.html", ppg=ppg, apg=apg, rpg=rpg, guesses = guesses)
-    if request.method == "POST":
-        if "correct_player" not in session:
-            return redirect("/")
-        guessedPlayer = request.form.get("player-search")
-        print("This is guessed player: " + guessedPlayer)
-        ppg = session.get("ppg")
-        apg = session.get("apg")
-        rpg = session.get("rpg")
-        guesses = session.get("guesses", [{"name": "", "division": "", "divColor": "", "height": "", "ppg": "", "rpg": "", "apg": "","divColor": "", "age": ""} for _ in range(8)])
-        guessCount = session.get("guessCount", 0) + 1
-        session["guessCount"] = guessCount
-
-        imageURL = get_player_headshot(session["correct_player"])
-        print(f"Player Image URL: {imageURL}")
-        if imageURL is None:
-            imageURL = "https://www.logodesignlove.com/images/classic/nba-logo.jpg"
-
-        playerLink = get_player_link(session["correct_player"])
-        print(f"Player Link: {playerLink}")
-
-        if session["correct_player"] == guessedPlayer:
+        return render_template("congrats.html", player_name=session["correct_player"], guess_count=guess_count, image_url=image_url, player_link = player_link)
+    else:
+        if session["guess_count"] == 8:
             if "username" in session:
-                for pair in matches:
-                    if session["guessCount"] == pair[0]:
-                        guessCountName = pair[1]
-                
                 db = get_db_connection()
-                query = f"SELECT {guessCountName} FROM stats WHERE personUsername = ?"
-                currentInThatGuess = db.execute(query, (session["username"],)).fetchone()
-                currentInThatGuess = currentInThatGuess[0] + 1
-                query = f"UPDATE stats SET {guessCountName} = ? WHERE personUsername = ?"
-                db.execute(query, (currentInThatGuess, session["username"]))
+                current_fails = db.execute("SELECT fails FROM stats WHERE personUsername = ?", (session["username"],)).fetchone()
+                current_fails = current_fails[0] + 1
+                db.execute("UPDATE stats SET fails = ? WHERE personUsername = ?", (current_fails, session["username"]))
                 db.commit()
-
-            return render_template("congrats.html", player_name=session["correct_player"], guess_count=guessCount, imageURL=imageURL, playerLink = playerLink)
-        else:
-            if session["guessCount"] == 8:
-                if "username" in session:
-                    db = get_db_connection()
-                    currentFails = db.execute("SELECT fails FROM stats WHERE personUsername = ?", (session["username"],)).fetchone()
-                    currentFails = currentFails[0] + 1
-                    db.execute("UPDATE stats SET fails = ? WHERE personUsername = ?", (currentFails, session["username"]))
-                    db.commit()
-                return render_template("failure.html", player_name = session["correct_player"], imageURL=imageURL, playerLink = playerLink)
-            guesses[guessCount - 1]["name"] = guessedPlayer
-            guesses[guessCount-1]['division'] = getDivision(guessedPlayer)[0]
-            guesses[guessCount-1]['divColor'] = getDivision(guessedPlayer)[1]
-            guesses[guessCount - 1]["height"] = getHeight(guessedPlayer)
-            guesses[guessCount - 1]["ppg"] = getPoints(guessedPlayer)
-            guesses[guessCount - 1]["rpg"] = getRebounds(guessedPlayer)
-            guesses[guessCount - 1]["apg"] = getAssists(guessedPlayer)
-            guesses[guessCount - 1]["age"] = getAge(guessedPlayer)
-            return render_template("index.html", ppg=ppg, apg=apg, rpg=rpg, guesses = guesses)
+            return render_template("failure.html", player_name = session["correct_player"], image_url=image_url, player_link = player_link)
+        guesses[guess_count - 1]["name"] = guessedPlayer
+        guesses[guess_count-1]['division'] = getDivision(guessedPlayer)[0]
+        guesses[guess_count-1]['divColor'] = getDivision(guessedPlayer)[1]
+        guesses[guess_count - 1]["height"] = getHeight(guessedPlayer)
+        guesses[guess_count - 1]["ppg"] = getPoints(guessedPlayer)
+        guesses[guess_count - 1]["rpg"] = getRebounds(guessedPlayer)
+        guesses[guess_count - 1]["apg"] = getAssists(guessedPlayer)
+        guesses[guess_count - 1]["age"] = getAge(guessedPlayer)
+        return render_template("index.html", ppg=ppg, apg=apg, rpg=rpg, guesses = guesses)
 
 @app.route('/search', methods=['GET'])
 def search():
@@ -153,13 +150,13 @@ def register():
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
-        confirmPassword = request.form.get("confirmation")
+        confirm_password = request.form.get("confirmation")
 
-        if not username or not password or not confirmPassword:
+        if not username or not password or not confirm_password:
             error = "All fields are required."
             return render_template("register.html", error=error)
 
-        if password != confirmPassword:
+        if password != confirm_password:
             error = "Passwords don't match."
             return render_template("register.html", error=error)
 
@@ -170,10 +167,10 @@ def register():
             error = "Username is already taken."
             return render_template("register.html", error=error)
 
-        hashedPassword = generate_password_hash(password)
+        hashed_password = generate_password_hash(password)
         db.execute(
             "INSERT INTO users (username, hash, streak, winCount, gamesPlayed) VALUES (?, ?, 0, 0, 0)", 
-            (username, hashedPassword)
+            (username, hashed_password)
         )
         db.execute(
             "INSERT INTO stats (personUsername) VALUES (?)", (username,)
@@ -187,36 +184,14 @@ def register():
 @app.route("/stats")
 def stats():
     db = get_db_connection()
-    ones = db.execute("SELECT ones FROM stats WHERE personUsername = ?", (session["username"],)).fetchone()
-    two = db.execute("SELECT two FROM stats WHERE personUsername = ?", (session["username"],)).fetchone()
-    three = db.execute("SELECT three FROM stats WHERE personUsername = ?", (session["username"],)).fetchone()
-    four = db.execute("SELECT four FROM stats WHERE personUsername = ?", (session["username"],)).fetchone()
-    five = db.execute("SELECT five FROM stats WHERE personUsername = ?", (session["username"],)).fetchone()
-    six = db.execute("SELECT six FROM stats WHERE personUsername = ?", (session["username"],)).fetchone()
-    sevens = db.execute("SELECT sevens FROM stats WHERE personUsername = ?", (session["username"],)).fetchone()
-    eights = db.execute("SELECT eights FROM stats WHERE personUsername = ?", (session["username"],)).fetchone()
-    fails = db.execute("SELECT fails FROM stats WHERE personUsername = ?", (session["username"],)).fetchone()
-    
-    ones_value = ones["ones"] if ones else 0
-    two_value = two["two"] if two else 0
-    three_value = three["three"] if three else 0
-    four_value = four["four"] if four else 0
-    five_value = five["five"] if five else 0
-    six_value = six["six"] if six else 0
-    sevens_value = sevens["sevens"] if sevens else 0
-    eights_value = eights["eights"] if eights else 0
-    fails_value = fails["fails"] if fails else 0
+    stats_to_add = {'ones': 0, 'two': 0, 'three': 0, 'four': 0, 'five': 0, 'six': 0, 'sevens': 0, 'eights': 0, 'fails': 0}
+    for key in stats_to_add:
+        if db.execute(f"SELECT {key} FROM stats WHERE personUsername = ?", (session["username"],)).fetchone()[0] > 0:
+            stats_to_add[key] = db.execute(f"SELECT {key} FROM stats WHERE personUsername = ?", (session["username"],)).fetchone()[0]
+        else:
+            stats_to_add[key] = 0
 
-    return render_template("stats.html", 
-                           ones=ones_value, 
-                           two=two_value, 
-                           three=three_value, 
-                           four=four_value, 
-                           five=five_value, 
-                           six=six_value, 
-                           sevens=sevens_value, 
-                           eights=eights_value, 
-                           fails=fails_value)
+    return render_template("stats.html", ones = stats_to_add['ones'], twos = stats_to_add['two'], threes = stats_to_add['three'], fours = stats_to_add['four'], fives = stats_to_add['five'], sixes = stats_to_add['six'], sevens = stats_to_add['sevens'], eights = stats_to_add['eights'], fails = stats_to_add['fails'])
 
 @app.route("/logout")
 def logout():
@@ -300,4 +275,4 @@ def defaultAge(player):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
