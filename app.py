@@ -60,10 +60,6 @@ def start_game():
 
 @app.route("/guess", methods=["POST"])
 def process_guess():
-    if "correct_player" not in session:
-        return redirect("/")
-    if "correct_player" not in session:
-        return redirect("/")
     guessedPlayer = request.form.get("player-search")
     print("This is guessed player: " + guessedPlayer)
     ppg = session.get("ppg")
