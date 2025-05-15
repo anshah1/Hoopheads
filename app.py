@@ -62,6 +62,8 @@ def home():
         # Render the index.html template and pass in the stats
         return render_template("index.html", ppg=ppg, apg=apg, rpg=rpg, guesses = guesses)
     if request.method == "POST":
+        if "correct_player" not in session:
+            return redirect("/")
         guessedPlayer = request.form.get("player-search")
         print("This is guessed player: " + guessedPlayer)
         ppg = session.get("ppg")
