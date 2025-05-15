@@ -13,8 +13,7 @@ from scraper.players import get_player_headshot, get_player_link
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = True
 app.permanent_session_lifetime = timedelta(minutes=30)
-app.config["SESSION_TYPE"] = "filesystem"
-app.secret_key = os.urandom(24) 
+app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev-temp-secret")
 
 matches = [
     [1, 'ones'],
