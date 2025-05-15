@@ -8,10 +8,11 @@ from flask import Flask, redirect, render_template, session, request, jsonify
 from werkzeug.security import check_password_hash, generate_password_hash
 from data.dataStorage import divisions, players, allTheData, divisionBreakdown
 warnings.simplefilter(action='ignore', category=FutureWarning)
-from datetime import datetime
+from datetime import datetime, timedelta
 from scraper.players import get_player_headshot, get_player_link
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = True
+app.permanent_session_lifetime = timedelta(minutes=30)
 app.config["SESSION_TYPE"] = "filesystem"
 app.secret_key = os.urandom(24) 
 
@@ -34,7 +35,7 @@ def get_db_connection():
 
 @app.route("/", methods=["GET"])
 def start_game():
-    # this always runs first, and sets up the session
+    session.permanent = True
     playerFound = False
     while not playerFound:
         randomPlayer = random.choice(allTheData)
