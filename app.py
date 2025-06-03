@@ -1,6 +1,5 @@
 import os
 import random
-import sqlite3
 import sys
 import warnings
 import psycopg2
