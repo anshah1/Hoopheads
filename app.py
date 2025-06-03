@@ -3,6 +3,7 @@ import random
 import sqlite3
 import sys
 import warnings
+import psycopg2
 from io import StringIO
 from flask import Flask, redirect, render_template, session, request, jsonify
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -28,9 +29,10 @@ matches = [
 
 # Setup SQLite database connection
 def get_db_connection():
-    conn = sqlite3.connect("hoophead.db", check_same_thread=False)
-    conn.row_factory = sqlite3.Row
-    return conn
+    conn = psycopg2.connect(database="pgHoopheads", user="postgres",
+                        password="", host="localhost", port="5432")
+    cur = conn.cursor()
+    return {'connection': conn, 'cursor': cur}
 
 @app.route("/", methods=["GET"])
 def start_game():
@@ -85,22 +87,29 @@ def process_guess():
                     guess_count_name = pair[1]
             
             db = get_db_connection()
-            query = f"SELECT {guess_count_name} FROM stats WHERE personUsername = ?"
-            current_in_that_guess = db.execute(query, (session["username"],)).fetchone()
-            current_in_that_guess = current_in_that_guess[0] + 1
-            query = f"UPDATE stats SET {guess_count_name} = ? WHERE personUsername = ?"
-            db.execute(query, (current_in_that_guess, session["username"]))
-            db.commit()
+            query = f"SELECT {guess_count_name} FROM stats WHERE personUsername = %s"
+            current_in_that_guess = db['cursor'].execute(query, (session["username"],))
+            print(f'Current in that guess is {current_in_that_guess}')
+            if current_in_that_guess == None:
+                current_in_that_guess = 1
+            else: 
+                current_in_that_guess = current_in_that_guess[0] + 1
+            query = f"UPDATE stats SET {guess_count_name} = %s WHERE personUsername = %s"
+            db['cursor'].execute(query, (current_in_that_guess, session["username"]))
+            db['connection'].commit()
 
         return render_template("congrats.html", player_name=session["correct_player"], guess_count=guess_count, image_url=image_url, player_link = player_link)
     else:
         if session["guess_count"] == 8:
             if "username" in session:
                 db = get_db_connection()
-                current_fails = db.execute("SELECT fails FROM stats WHERE personUsername = ?", (session["username"],)).fetchone()
-                current_fails = current_fails[0] + 1
-                db.execute("UPDATE stats SET fails = ? WHERE personUsername = ?", (current_fails, session["username"]))
-                db.commit()
+                current_fails = db['cursor'].execute("SELECT fails FROM stats WHERE personUsername = %s", (session["username"],))
+                if current_fails == None:
+                    current_fails = 1
+                else:
+                    current_fails = current_fails[0] + 1
+                db['cursor'].execute("UPDATE stats SET fails = %s WHERE personUsername = %s", (current_fails, session["username"]))
+                db['connection'].commit()
             return render_template("failure.html", player_name = session["correct_player"], image_url=image_url, player_link = player_link)
         guesses[guess_count - 1]["name"] = guessedPlayer
         guesses[guess_count-1]['division'] = getDivision(guessedPlayer)[0]
@@ -134,9 +143,11 @@ def login():
             return render_template("login.html", error=error)
 
         db = get_db_connection()
-        user = db.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchone()
-
-        if user is None or not check_password_hash(user["hash"], password):
+        db['cursor'].execute("SELECT hash FROM users WHERE username = %s", (username,))
+        hash = db['cursor'].fetchone()
+        print(f'Hash: {hash}')
+        passwordCorrect = check_password_hash(hash[0], password)
+        if hash is None or not passwordCorrect:
             error = "Invalid username and/or password."
             return render_template("login.html", error=error)
 
@@ -161,21 +172,22 @@ def register():
             return render_template("register.html", error=error)
 
         db = get_db_connection()
-        existing_user = db.execute("SELECT username FROM users WHERE username = ?", (username,)).fetchone()
-        
+        db['cursor'].execute("SELECT username FROM users WHERE username = %s", (username,))
+        existing_user = db['cursor'].fetchone()
+        print(existing_user)
         if existing_user:
             error = "Username is already taken."
             return render_template("register.html", error=error)
 
         hashed_password = generate_password_hash(password)
-        db.execute(
-            "INSERT INTO users (username, hash, streak, winCount, gamesPlayed) VALUES (?, ?, 0, 0, 0)", 
+        db['cursor'].execute(
+            "INSERT INTO users (username, hash, streak, winCount, gamesPlayed) VALUES (%s, %s, 0, 0, 0)", 
             (username, hashed_password)
         )
-        db.execute(
-            "INSERT INTO stats (personUsername) VALUES (?)", (username,)
+        db['cursor'].execute(
+            "INSERT INTO stats (personUsername) VALUES (%s)", (username,)
         )
-        db.commit()
+        db['connection'].commit()
         session["username"] = username
         return redirect("/")
 
@@ -184,12 +196,14 @@ def register():
 @app.route("/stats")
 def stats():
     db = get_db_connection()
-    stats_to_add = {'ones': 0, 'two': 0, 'three': 0, 'four': 0, 'five': 0, 'six': 0, 'sevens': 0, 'eights': 0, 'fails': 0}
+    valid_keys = {'ones', 'two', 'three', 'four', 'five', 'six', 'sevens', 'eights', 'fails'}
+    stats_to_add = {key: 0 for key in valid_keys}
+
     for key in stats_to_add:
-        if db.execute(f"SELECT {key} FROM stats WHERE personUsername = ?", (session["username"],)).fetchone()[0] > 0:
-            stats_to_add[key] = db.execute(f"SELECT {key} FROM stats WHERE personUsername = ?", (session["username"],)).fetchone()[0]
-        else:
-            stats_to_add[key] = 0
+        query = f"SELECT {key} FROM stats WHERE personusername = %s"
+        db['cursor'].execute(query, (session["username"],))
+        result = db['cursor'].fetchone()
+        stats_to_add[key] = result[0] if result else 0
 
     return render_template("stats.html", ones = stats_to_add['ones'], twos = stats_to_add['two'], threes = stats_to_add['three'], fours = stats_to_add['four'], fives = stats_to_add['five'], sixes = stats_to_add['six'], sevens = stats_to_add['sevens'], eights = stats_to_add['eights'], fails = stats_to_add['fails'])
 
