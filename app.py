@@ -6,6 +6,7 @@ import warnings
 import psycopg2
 from io import StringIO
 from flask import Flask, redirect, render_template, session, request, jsonify
+from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import check_password_hash, generate_password_hash
 from data.dataStorage import divisions, players, allTheData, divisionBreakdown
 warnings.simplefilter(action='ignore', category=FutureWarning)
@@ -28,9 +29,9 @@ matches = [
 ]
 
 # Setup SQLite database connection
-def get_db_connection():
-    conn = psycopg2.connect(database="pgHoopheads", user="postgres",
-                        password="", host="localhost", port="5432")
+def get_db_connection ():
+    app.config["SQLALCHEMY_DATABASE_URI"] = "postgres://neondb_owner:npg_TLEp9srB4Igw@ep-rapid-pond-a43i3jwg-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require"
+    conn = SQLAlchemy(app)
     cur = conn.cursor()
     return {'connection': conn, 'cursor': cur}
 
