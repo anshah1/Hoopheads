@@ -7,6 +7,7 @@ bs4==0.0.2
 certifi==2024.7.4
 charset-normalizer==3.3.2
 click==8.1.7
+dotenv==0.9.9
 Flask==3.0.3
 Flask-SQLAlchemy==3.1.1
 h11==0.14.0
@@ -27,6 +28,7 @@ pydantic==2.10.4
 pydantic_core==2.27.2
 PySocks==1.7.1
 python-dateutil==2.9.0.post0
+python-dotenv==1.1.1
 pytz==2024.1
 redis==5.2.1
 requests==2.32.3
