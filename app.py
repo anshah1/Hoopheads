@@ -1,8 +1,8 @@
-import os
 import random
+import os
 import sys
 import warnings
-import psycopg2
+import sqlite3
 from io import StringIO
 from flask import Flask, redirect, render_template, session, request, jsonify
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -12,6 +12,7 @@ from datetime import datetime, timedelta
 from scraper.players import get_player_headshot, get_player_link
 from dotenv import load_dotenv
 load_dotenv()
+import unicodedata
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = True
 app.permanent_session_lifetime = timedelta(minutes=30)
@@ -29,15 +30,9 @@ matches = [
 ]
 
 # Setup SQLite database connection
+import sqlite3
 def get_db_connection():
-    import psycopg2
-    conn = psycopg2.connect(
-        database=os.environ.get("PGDATABASE", "pgHoopheads"),
-        user=os.environ.get("PGUSER", "postgres"),
-        password=os.environ.get("PGPASSWORD", ""),
-        host=os.environ.get("PGHOST", "localhost"),
-        port=os.environ.get("PGPORT", "5432")
-    )
+    conn = sqlite3.connect("Hoopheads.db")
     cur = conn.cursor()
     return {'connection': conn, 'cursor': cur}
 
@@ -94,14 +89,14 @@ def process_guess():
                     guess_count_name = pair[1]
             
             db = get_db_connection()
-            query = f"SELECT {guess_count_name} FROM stats WHERE personUsername = %s"
-            current_in_that_guess = db['cursor'].execute(query, (session["username"],))
-            print(f'Current in that guess is {current_in_that_guess}')
-            if current_in_that_guess == None:
+            query = f"SELECT {guess_count_name} FROM stats WHERE personUsername = ?"
+            db['cursor'].execute(query, (session["username"],))
+            result = db['cursor'].fetchone()
+            if result is None or result[0] is None:
                 current_in_that_guess = 1
-            else: 
-                current_in_that_guess = current_in_that_guess[0] + 1
-            query = f"UPDATE stats SET {guess_count_name} = %s WHERE personUsername = %s"
+            else:
+                current_in_that_guess = result[0] + 1
+            query = f"UPDATE stats SET {guess_count_name} = ? WHERE personUsername = ?"
             db['cursor'].execute(query, (current_in_that_guess, session["username"]))
             db['connection'].commit()
 
@@ -110,12 +105,12 @@ def process_guess():
         if session["guess_count"] == 8:
             if "username" in session:
                 db = get_db_connection()
-                current_fails = db['cursor'].execute("SELECT fails FROM stats WHERE personUsername = %s", (session["username"],))
+                current_fails = db['cursor'].execute("SELECT fails FROM stats WHERE personUsername = ?", (session["username"],))
                 if current_fails == None:
                     current_fails = 1
                 else:
                     current_fails = current_fails[0] + 1
-                db['cursor'].execute("UPDATE stats SET fails = %s WHERE personUsername = %s", (current_fails, session["username"]))
+                db['cursor'].execute("UPDATE stats SET fails = ? WHERE personUsername = ?", (current_fails, session["username"]))
                 db['connection'].commit()
             return render_template("failure.html", player_name = session["correct_player"], image_url=image_url, player_link = player_link)
         guesses[guess_count - 1]["name"] = guessedPlayer
@@ -131,10 +126,14 @@ def process_guess():
 @app.route('/search', methods=['GET'])
 def search():
     query = request.args.get('q', '').lower()
+    def strip_accents(text):
+        return ''.join(c for c in unicodedata.normalize('NFD', text) if unicodedata.category(c) != 'Mn')
+
     if query:
-        matches = [player for player in players if query in player.lower()]
-        return jsonify(matches[:10])  
-    return jsonify([]) 
+        norm_query = strip_accents(query)
+        matches = [player for player in players if norm_query in strip_accents(player.lower())]
+        return jsonify(matches[:10])
+    return jsonify([])
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -150,11 +149,13 @@ def login():
             return render_template("login.html", error=error)
 
         db = get_db_connection()
-        db['cursor'].execute("SELECT hash FROM users WHERE username = %s", (username,))
-        hash = db['cursor'].fetchone()
-        print(f'Hash: {hash}')
-        passwordCorrect = check_password_hash(hash[0], password)
-        if hash is None or not passwordCorrect:
+        db['cursor'].execute("SELECT hash FROM users WHERE username = ?", (username,))
+        hash_row = db['cursor'].fetchone()
+        if not hash_row:
+            error = "Invalid username and/or password."
+            return render_template("login.html", error=error)
+        passwordCorrect = check_password_hash(hash_row[0], password)
+        if not passwordCorrect:
             error = "Invalid username and/or password."
             return render_template("login.html", error=error)
 
@@ -179,7 +180,7 @@ def register():
             return render_template("register.html", error=error)
 
         db = get_db_connection()
-        db['cursor'].execute("SELECT username FROM users WHERE username = %s", (username,))
+        db['cursor'].execute("SELECT username FROM users WHERE username = ?", (username,))
         existing_user = db['cursor'].fetchone()
         print(existing_user)
         if existing_user:
@@ -188,11 +189,11 @@ def register():
 
         hashed_password = generate_password_hash(password)
         db['cursor'].execute(
-            "INSERT INTO users (username, hash, streak, winCount, gamesPlayed) VALUES (%s, %s, 0, 0, 0)", 
+            "INSERT INTO users (username, hash, streak, winCount, gamesPlayed) VALUES (?, ?, 0, 0, 0)", 
             (username, hashed_password)
         )
         db['cursor'].execute(
-            "INSERT INTO stats (personUsername) VALUES (%s)", (username,)
+            "INSERT INTO stats (personUsername) VALUES (?)", (username,)
         )
         db['connection'].commit()
         session["username"] = username
@@ -207,7 +208,7 @@ def stats():
     stats_to_add = {key: 0 for key in valid_keys}
 
     for key in stats_to_add:
-        query = f"SELECT {key} FROM stats WHERE personusername = %s"
+        query = f"SELECT {key} FROM stats WHERE personusername = ?"
         db['cursor'].execute(query, (session["username"],))
         result = db['cursor'].fetchone()
         stats_to_add[key] = result[0] if result else 0
