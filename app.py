@@ -10,6 +10,8 @@ from data.dataStorage import divisions, players, allTheData, divisionBreakdown
 warnings.simplefilter(action='ignore', category=FutureWarning)
 from datetime import datetime, timedelta
 from scraper.players import get_player_headshot, get_player_link
+from dotenv import load_dotenv
+load_dotenv()
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = True
 app.permanent_session_lifetime = timedelta(minutes=30)
@@ -28,8 +30,14 @@ matches = [
 
 # Setup SQLite database connection
 def get_db_connection():
-    conn = psycopg2.connect(database="pgHoopheads", user="postgres",
-                        password="", host="localhost", port="5432")
+    import psycopg2
+    conn = psycopg2.connect(
+        database=os.environ.get("PGDATABASE", "pgHoopheads"),
+        user=os.environ.get("PGUSER", "postgres"),
+        password=os.environ.get("PGPASSWORD", ""),
+        host=os.environ.get("PGHOST", "localhost"),
+        port=os.environ.get("PGPORT", "5432")
+    )
     cur = conn.cursor()
     return {'connection': conn, 'cursor': cur}
 
@@ -63,7 +71,7 @@ def start_game():
 @app.route("/guess", methods=["POST"])
 def process_guess():
     guessedPlayer = request.form.get("player-search")
-    print("This is guessed player: " + guessedPlayer)
+    print(f'Guessed player: {guessedPlayer}')
     ppg = session.get("ppg")
     apg = session.get("apg")
     rpg = session.get("rpg")
