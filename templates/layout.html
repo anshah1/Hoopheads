@@ -17,15 +17,32 @@
 <body>
   <!-- 
   -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container">
-      <a href="/" class="d-flex align-items-center gap-2 text-decoration-none">
-        <img src="../static/images/logo.png" alt="Logo" class="nav-icon">
-        <span class="navbar-brand mb-0 h2 d-none d-sm-block">Guess the NBA Player</span>
-      </a>
+      <!-- Mobile layout: Logo and text stacked on left, help on right -->
+      <div class="d-flex justify-content-between align-items-center w-100 d-lg-none mobile-navbar">
+        <div class="d-flex flex-column mobile-brand-section">
+          <a href="/" class="d-flex align-items-center gap-2 text-decoration-none mb-1">
+            <img src="../static/images/logo.png" alt="Logo" class="nav-icon">
+            <span class="navbar-brand mobile-brand">Poeltl</span>
+          </a>
+          <small class="mobile-subtitle">An NBA player guessing game</small>
+        </div>
+        
+        <div class="d-inline-flex align-items-center gap-2 nav-link-item" role="button" data-bs-toggle="modal" data-bs-target="#infoModal">
+          <img src="../static/images/help2.png" alt="Help Icon" class="nav-icon">
+          <span class="nav-text mobile-nav-text">Help</span>
+        </div>
+      </div>
 
-      <div class="collapse navbar-collapse" id="navbar">
-        <div class="navbar-nav ms-auto d-flex align-items-center gap-4">
+      <!-- Desktop layout: Original horizontal layout -->
+      <div class="d-none d-lg-flex justify-content-between align-items-center w-100 desktop-navbar">
+        <a href="/" class="d-flex align-items-center gap-2 text-decoration-none">
+          <img src="../static/images/logo.png" alt="Logo" class="nav-icon">
+          <span class="navbar-brand">Guess the NBA Player</span>
+        </a>
+
+        <div class="navbar-nav d-flex align-items-center gap-4">
           <div class="d-inline-flex align-items-center gap-2 nav-link-item" role="button" data-bs-toggle="modal" data-bs-target="#infoModal">
             <img src="../static/images/help2.png" alt="Help Icon" class="nav-icon">
             <span class="nav-text">Help</span>
@@ -33,7 +50,7 @@
         </div>
       </div>
     </div>
-  </nav>
+</nav>
 <!--
     <div class="modal fade" id="bioModal" tabindex="-1" aria-labelledby="bioModalLabel" aria-hidden="true">
         <div class="modal-dialog">
