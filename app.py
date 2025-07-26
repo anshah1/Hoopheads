@@ -5,7 +5,7 @@ import sqlite3
 from io import StringIO
 from flask import Flask, redirect, render_template, session, request, jsonify
 from werkzeug.security import check_password_hash, generate_password_hash
-from data.dataStorage import divisions, players, allTheData, divisionBreakdown
+from data.dataStorage import players, allTheData, divisionBreakdown, conferenceBreakdown
 warnings.simplefilter(action='ignore', category=FutureWarning)
 from datetime import datetime, timedelta
 from scraper.players import get_player_headshot, get_player_link
@@ -122,8 +122,8 @@ def getDivision(guessedPlayer):
             if division == session["division"]:
                 return [division, "#90EE90"]
             else:
-                for conference in divisionBreakdown:
-                    if division in conference and session["division"] in conference:
+                for conference, divisions in conferenceBreakdown.items():
+                    if division in divisions and session["division"] in divisions:
                         return [division, "#FFFFC5"]
                 return [division, "#FFCCCB"]
 
@@ -176,9 +176,9 @@ def getAge(guessedPlayer):
         return [age, 'equal']
 
 def defaultDivision(player):
-    for row in divisions:
-        if player['TEAM'] in row:
-            return row[0]
+    for division, teamList in divisionBreakdown.items():
+        if player['TEAM'] in teamList:
+            return division
         
 def defaultAge(player):
     for row in allTheData:
