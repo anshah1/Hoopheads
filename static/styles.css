@@ -28,23 +28,6 @@
     margin-left: 5px; /* Space between height and arrow */
 }
 
-/* Background Color Styles */
-.green-bg {
-    background-color: #90EE90; /* Light green */
-}
-
-.yellow-bg {
-    background-color: #FFFFC5; /* Light yellow */
-}
-
-.red-bg {
-    background-color: #FFCCCB; /* Light red */
-}
-
-.transparent-bg {
-    background-color: transparent; /* No background */
-}
-
 /* Optional: Add a hover effect for table rows */
 tr:hover {
     background-color: #f0f0f0; /* Light gray on hover */
@@ -66,11 +49,6 @@ body {
     vertical-align: middle;
 }
 
-.logo {
-    height: 2.2em; /* adjust this to match the h2 font size */
-    vertical-align: middle;
-}
-
 .navbar {
     background-color: #90a2b3;
 }
@@ -89,11 +67,6 @@ body {
     margin: 0;
     font-size: 1.8rem;
     color: #333;
-}
-
-.navbar-nav {
-    display: flex;
-    align-items: center;
 }
 
 .nav-link {
@@ -125,8 +98,6 @@ body {
   width: auto;
 }
 
-/* Existing styles remain the same, just adding improvements */
-
 /* Stats container styling */
 .stats-container {
     background-color: rgba(255, 255, 255, 0.8); /* Slight transparency */
@@ -144,7 +115,6 @@ body {
     margin-bottom: 20px;
 }
 
-/* Adjust the stat grid for better spacing */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -208,23 +178,6 @@ body {
     border: 2px solid #ccc;
 }
 
-.suggestions-list {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-    background-color: #fff;
-    border: 1px solid #ced4da;
-    border-radius: 5px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    max-height: 150px;
-    overflow-y: auto;
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
 .fade-in {
     animation: fadeIn 0.3s ease-in-out;
   }
@@ -234,46 +187,6 @@ body {
     to { opacity: 1; transform: translateY(0); }
   }
 
-.suggestions-list li {
-    padding: 12px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    text-align: center;
-}
-
-.suggestions-list li:hover {
-    background-color: #04AA6D;
-    color: white;
-}
-
-/* Button hover effect */
-.btn-primary:hover {
-    background-color: #037d4a; /* Darker green on hover */
-}
-
-/* Suggestions list */
-.suggestions-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    border: 1px solid #ced4da;
-    border-radius: 5px;
-    max-height: 150px;
-    overflow-y: auto;
-    background-color: #fff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Add shadow for better separation */
-}
-
-.suggestions-list li {
-    padding: 12px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.suggestions-list li:hover {
-    background-color: #f0f0f0; /* Updated hover color */
-}
-
 /* Background */
 body {
     background: url('https://your-image-url.com/basketball-background.jpg') no-repeat center center fixed;
@@ -281,23 +194,9 @@ body {
     color: #333; /* Ensuring text contrast on background */
 }
 
-/* Centering the navbar brand */
-.navbar-brand {
-    display: flex;
-    justify-content: center; /* Center horizontally */
-    width: 100%;
-}
-
-/* Additional navbar spacing */
 .navbar-nav {
     display: flex;
     align-items: center;
-}
-
-/* Navbar links styling */
-.nav-link {
-    margin-left: 15px;
-    margin-right: 15px;
 }
 
 .result-table {
@@ -310,23 +209,6 @@ body {
     text-align: center;
 }
 
-.suggestions-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    border: 1px solid #ced4da;
-    border-radius: 5px;
-    max-height: 150px;
-    overflow-y: auto;
-    background-color: #fff;
-}
-.suggestions-list li {
-    padding: 8px;
-    cursor: pointer;
-}
-.suggestions-list li:hover {
-    background-color: #e9ecef;
-}
 .congrats-container {
     display: flex;
     flex-direction: column;
@@ -379,7 +261,7 @@ body {
 }
 
 #suggestions li:hover {
-    background-color: #f0f0f0;
+    background-color: #04AA6D;
 }
 
 /* Styling for the player guess input */
@@ -403,20 +285,6 @@ body {
     mix-blend-mode: multiply;
 }
 
-/* Enhanced suggestions list styling */
-.suggestions-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 10px auto;
-    border: 1px solid #ced4da;
-    border-radius: 8px;
-    max-height: 150px;
-    overflow-y: auto;
-    background-color: #fff;
-    width: 80%; /* Make it span below the text box */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Adding shadow */
-}
-
 .green-bg {
     background-color: #90EE90;
 }
@@ -432,19 +300,6 @@ body {
 .transparent-bg {
     background-color: transparent;
 }
-
-.suggestions-list li {
-    padding: 12px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    text-align: center; /* Center text */
-}
-
-.suggestions-list li:hover {
-    background-color: #04AA6D;
-    color: white; /* Better contrast on hover */
-}
-
 /* Styling the Submit Guess button */
 
 /* Button hover effect */
@@ -508,27 +363,25 @@ body {
     padding: 12px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    text-align: center; /* Center text */
+    text-align: center; 
 }
 
 .suggestions-list li:hover {
     background-color: #04AA6D;
-    color: white; /* Better contrast on hover */
+    color: white; 
 }
 
-/* Button hover effect */
 .btn-primary:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: #0056b3; 
 }
 
 .search-wrapper {
     display: flex;
-    align-items: center; /* Vertically center the items */
-    gap: 10px; /* Add some space between the input and button */
+    align-items: center; 
+    gap: 10px; 
 }
 
-/* Make the info modal wider */
 #infoModal .modal-dialog {
-    max-width: 600px; /* Increase from Bootstrap's default ~500px */
-    width: 90%; /* Responsive width */
+    max-width: 600px; 
+    width: 90%; 
 }
