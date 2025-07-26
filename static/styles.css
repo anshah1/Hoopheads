@@ -93,8 +93,8 @@ body {
 /* Additional mobile-specific styles */
 @media (max-width: 991.98px) {
     .mobile-navbar {
-        padding: 1rem 0;
-        min-height: 60px;
+        padding: 0.7rem 0;
+        min-height: 50px;
     }
     
     .mobile-brand {
@@ -116,8 +116,12 @@ body {
         margin-top: 0.25rem;
     }
     
+    .mobile-help .nav-icon {
+        max-height: 2.1rem !important;
+    }
+    
     .mobile-nav-text {
-        font-size: 1.4rem !important;
+        font-size: 1.54rem !important;
     }
     
     .nav-link-item {
