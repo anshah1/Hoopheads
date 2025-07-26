@@ -9,8 +9,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from data.dataStorage import players, allTheData, divisionBreakdown, conferenceBreakdown
 warnings.simplefilter(action='ignore', category=FutureWarning)
 from datetime import datetime, timedelta
-from dotenv import load_dotenv
-load_dotenv()
+from scraping import get_player_headshot, get_player_link
 import unicodedata
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = True
