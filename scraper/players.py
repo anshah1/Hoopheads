@@ -1,80 +1,125 @@
-import pandas as pd
 from bs4 import BeautifulSoup
+from time import sleep
+from requests import get
 import unicodedata, unidecode
 
 
-from .utils import get_player_suffix
-from .lookup import lookup
-from .request_utils import get_wrapper
-
-'''
-def get_stats(_name, stat_type='PER_GAME', playoffs=False, career=False, ask_matches = True):
-    name = lookup(_name, ask_matches)
-    suffix = get_player_suffix(name)
-    if not suffix:
-        return pd.DataFrame()
-    stat_type = stat_type.lower()
-    table = None
-    if stat_type in ['per_game', 'totals', 'advanced'] and not playoffs:
-        r = get_wrapper(f'https://www.basketball-reference.com/{suffix}')
+def get_wrapper(url):
+    global last_request
+    # Verify last request was 3 seconds ago
+    #if 0 < time() - last_request < 3:
+    #    sleep(3)
+    #last_request = time()
+    r = get(url)
+    while True:
         if r.status_code == 200:
-            soup = BeautifulSoup(r.content, 'html.parser')
-            table = soup.find('table', { 'id': stat_type })
-            table = str(table)
+            return r
+        elif r.status_code == 429:
+            retry_time = int(r.headers["Retry-After"])
+            print(f'Retrying after {retry_time} sec...')
+            sleep(retry_time)
         else:
-            raise ConnectionError('Request to basketball reference failed')
-    elif stat_type in ['per_minute', 'per_poss'] or playoffs:
-        if playoffs:
-            xpath = f"//table[@id='playoffs_{stat_type}']"
+            return r
+
+def create_last_name_part_of_suffix(potential_last_names):
+    last_names = ''.join(potential_last_names)
+    if len(last_names) <= 5:
+        return last_names[:].lower()
+    else:
+        return last_names[:5].lower()
+
+
+def get_player_suffix(name):
+    print(f"\n🔍 Starting suffix search for player name: {name}")
+
+    normalized_name = unidecode.unidecode(unicodedata.normalize('NFD', name).encode('ascii', 'ignore').decode("utf-8"))
+    print(f"➡️ Normalized name: {normalized_name}")
+
+    if normalized_name == 'Metta World Peace':
+        suffix = '/players/a/artesro01.html'
+        print(f"🟢 Special case handled: {suffix}")
+        return suffix
+    elif normalized_name == 'KJ Martin':
+        suffix = '/players/m/martike04.html'
+        print(f"🟢 Special case handled: {suffix}")
+        return suffix
+    else:
+        split_normalized_name = normalized_name.split(' ')
+        if len(split_normalized_name) < 2:
+            print("❌ Not enough name parts to construct suffix.")
+            return None
+
+        initial = split_normalized_name[1][0].lower()
+        all_names = name.split(' ')
+        first_name_part = unidecode.unidecode(all_names[0][:2].lower())
+        first_name = all_names[0]
+        other_names = all_names[1:]
+        other_names_search = other_names[:]
+        last_name_part = create_last_name_part_of_suffix(other_names)
+        suffix = f'/players/{initial}/{last_name_part}{first_name_part}01.html'
+
+        print(f"🔧 Constructed initial suffix: {suffix}")
+
+    player_r = get_wrapper(f'https://www.basketball-reference.com{suffix}')
+    print(f"🌐 Initial request status code: {player_r.status_code}")
+
+    # Retry if 404
+    while player_r.status_code == 404 and other_names_search:
+        print(f"🔁 404 error - trying next name combination. Remaining: {other_names_search}")
+        other_names_search.pop(0)
+        last_name_part = create_last_name_part_of_suffix(other_names_search)
+        initial = last_name_part[0].lower()
+        suffix = f'/players/{initial}/{last_name_part}{first_name_part}01.html'
+        print(f"➡️ Retrying with new suffix: {suffix}")
+        player_r = get_wrapper(f'https://www.basketball-reference.com{suffix}')
+        print(f"🌐 New request status code: {player_r.status_code}")
+
+    while player_r.status_code == 200:
+        player_soup = BeautifulSoup(player_r.content, 'html.parser')
+        h1 = player_soup.find('h1')
+        if h1:
+            page_name = h1.find('span').text
+            print(f"📄 Found player page title: {page_name}")
+
+            if unidecode.unidecode(page_name).lower() == normalized_name.lower():
+                print("✅ Exact name match found.")
+                return suffix
+
+            page_names = unidecode.unidecode(page_name).lower().split(' ')
+            page_first_name = page_names[0]
+            print(f"👥 Comparing with page first name: {page_first_name}")
+
+            if first_name.lower() == page_first_name.lower():
+                print("✅ First name match found. Not returning suffix.")
+                #return suffix
+
+            if first_name.lower()[:2] == page_first_name.lower()[:2]:
+                print("🔁 Incrementing player number in suffix...")
+                player_number = int(''.join(c for c in suffix if c.isdigit())) + 1
+                if player_number < 10:
+                    player_number = f"0{str(player_number)}"
+                suffix = f"/players/{initial}/{last_name_part}{first_name_part}{player_number}.html"
+                print(f"➡️ New incremented suffix: {suffix}")
+            else:
+                print("⚠️ Name mismatch. Trying alternative last name parts.")
+                if other_names_search:
+                    other_names_search.pop(0)
+                    last_name_part = create_last_name_part_of_suffix(other_names_search)
+                    initial = last_name_part[0].lower()
+                    suffix = f'/players/{initial}/{last_name_part}{first_name_part}01.html'
+                    print(f"➡️ Switching to new suffix: {suffix}")
+                else:
+                    print("❌ Ran out of name variations to try.")
+                    return None
+
+            player_r = get_wrapper(f'https://www.basketball-reference.com{suffix}')
+            print(f"🌐 Rechecking new suffix status: {player_r.status_code}")
         else:
-            xpath = f"//table[@id='{stat_type}']"
-        table = get_selenium_wrapper(f'https://www.basketball-reference.com/{suffix}', xpath)
-    if table is None:
-        return pd.DataFrame()
-    df = pd.read_html(table)[0]
-    df.rename(columns={'Season': 'SEASON', 'Age': 'AGE',
-                'Tm': 'TEAM', 'Lg': 'LEAGUE', 'Pos': 'POS', 'Awards': 'AWARDS'}, inplace=True)
-    if 'FG.1' in df.columns:
-        df.rename(columns={'FG.1': 'FG%'}, inplace=True)
-    if 'eFG' in df.columns:
-        df.rename(columns={'eFG': 'eFG%'}, inplace=True)
-    if 'FT.1' in df.columns:
-        df.rename(columns={'FT.1': 'FT%'}, inplace=True)
+            print("❌ No <h1> tag found on player page.")
+            return None
 
-    career_index = df[df['SEASON']=='Career'].index[0]
-    if career:
-        df = df.iloc[career_index+2:, :]
-    else:
-        df = df.iloc[:career_index, :]
-
-    df = df.reset_index().drop('index', axis=1)
-    return df
-'''
-
-def get_game_logs(_name, year, playoffs=False, ask_matches=True):
-    name = lookup(_name, ask_matches)
-    suffix = get_player_suffix(name).replace('.html', '')
-    if playoffs:
-        selector = 'pgl_basic_playoffs'
-        url = f'https://www.basketball-reference.com/{suffix}/gamelog-playoffs'
-    else:
-        selector = 'pgl_basic'
-        url = f'https://www.basketball-reference.com/{suffix}/gamelog/{year}'
-    r = get_wrapper(url)
-    if r.status_code == 200:
-        soup = BeautifulSoup(r.content, 'html.parser')
-        table = soup.find('table', { 'id': selector })
-        df = pd.read_html(str(table))[0]
-        df.rename(columns = {'Date': 'DATE', 'Age': 'AGE', 'Tm': 'TEAM', 'Unnamed: 5': 'HOME/AWAY', 'Opp': 'OPPONENT',
-            'Unnamed: 7': 'RESULT', 'GmSc': 'GAME_SCORE', 'Series': 'SERIES' }, inplace=True)
-        df['HOME/AWAY'] = df['HOME/AWAY'].apply(lambda x: 'AWAY' if x=='@' else 'HOME')
-        df = df[df['Rk']!='Rk']
-        df = df.drop(['Rk', 'G'], axis=1).reset_index(drop=True)
-        if not playoffs:
-            df['DATE'] = pd.to_datetime(df['DATE'])
-        return df
-    else:
-        raise ConnectionError('Request to basketball reference failed')
+    print("❌ Final fallback: No match found.")
+    return None
 
 def get_player_link(name):
     suffix = get_player_suffix(name)
@@ -94,59 +139,3 @@ def get_player_headshot(_name, ask_matches=True):
         return None
     url = 'https://www.basketball-reference.com/req/202106291/images/headshots/'+jpg
     return url
-
-def get_player_splits(_name, season_end_year, stat_type='PER_GAME', ask_matches=True):
-    name = lookup(_name, ask_matches)
-    suffix = get_player_suffix(name)[:-5]
-    r = get_wrapper(f'https://www.basketball-reference.com/{suffix}/splits/{season_end_year}')
-    if r.status_code==200:
-        soup = BeautifulSoup(r.content, 'html.parser')
-        table = soup.find('table')
-        if table:
-            df = pd.read_html(str(table))[0]
-            for i in range(1, len(df['Unnamed: 0_level_0','Split'])):
-                if isinstance(df['Unnamed: 0_level_0','Split'][i], float):
-                    df['Unnamed: 0_level_0','Split'][i] = df['Unnamed: 0_level_0','Split'][i-1]
-            df = df[~df['Unnamed: 1_level_0','Value'].str.contains('Total|Value')]
-            
-            headers = df.iloc[:,:2]
-            headers = headers.droplevel(0, axis=1)
-                
-            if stat_type.lower() in ['per_game', 'shooting', 'advanced', 'totals']:
-                if stat_type.lower() == 'per_game':
-                    df = df['Per Game']
-                    df['Split'] = headers['Split']
-                    df['Value'] = headers['Value']
-                    cols = df.columns.tolist()
-                    cols = cols[-2:] + cols[:-2]
-                    df = df[cols]
-                    return df
-                elif stat_type.lower() == 'shooting':
-                    df = df['Shooting']
-                    df['Split'] = headers['Split']
-                    df['Value'] = headers['Value']
-                    cols = df.columns.tolist()
-                    cols = cols[-2:] + cols[:-2]
-                    df = df[cols]
-                    return df
-                
-                elif stat_type.lower() == 'advanced':
-                    df =  df['Advanced']
-                    df['Split'] = headers['Split']
-                    df['Value'] = headers['Value']
-                    cols = df.columns.tolist()
-                    cols = cols[-2:] + cols[:-2]
-                    df = df[cols]
-                    return df
-                elif stat_type.lower() == 'totals':
-                    df = df['Totals']
-                    df['Split'] = headers['Split']
-                    df['Value'] = headers['Value']
-                    cols = df.columns.tolist()
-                    cols = cols[-2:] + cols[:-2]
-                    df = df[cols]
-                    return df
-            else:
-                raise Exception('The "stat_type" you entered does not exist. The following options are: PER_GAME, SHOOTING, ADVANCED, TOTALS')
-    else:
-        raise ConnectionError('Request to basketball reference failed')
