@@ -94,12 +94,19 @@ def getDivision(guessedPlayer):
     for player in allTheData:
         if player['NAME'] == guessedPlayer:
             division = defaultDivision(player)
-            if division == session["division"]:
+            correct_division = session["division"]
+            if division == correct_division:
                 return [division, "#90EE90"]
             else:
+                guessed_conf = None
+                correct_conf = None
                 for conference, divisions in conferenceBreakdown.items():
-                    if division in divisions and session["division"] in divisions:
-                        return [division, "#FFFFC5"]
+                    if division in divisions:
+                        guessed_conf = conference
+                    if correct_division in divisions:
+                        correct_conf = conference
+                if guessed_conf == correct_conf:
+                    return [division, "#FFFFC5"]
                 return [division, "#FFCCCB"]
 
             
