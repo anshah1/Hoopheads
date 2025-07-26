@@ -17,33 +17,35 @@
 <body>
   <!-- 
   -->
-  <nav class="navbar navbar-expand-lg navbar-light">
+  <nav class="navbar navbar-light">
     <div class="container">
       <!-- Mobile layout: Logo and text stacked on left, help on right -->
-      <div class="d-flex justify-content-between align-items-center w-100 d-lg-none mobile-navbar">
-        <div class="d-flex flex-column mobile-brand-section">
-          <a href="/" class="d-flex align-items-center gap-2 text-decoration-none mb-1">
+      <div class="d-flex justify-content-between align-items-start w-100 d-lg-none mobile-navbar">
+        <div class="d-flex flex-column">
+          <div class="d-flex align-items-center gap-2">
             <img src="../static/images/logo.png" alt="Logo" class="nav-icon">
-            <span class="navbar-brand mobile-brand">Poeltl</span>
-          </a>
+            <a href="/" class="text-decoration-none">
+              <span class="navbar-brand mobile-brand">Guess the NBA Player</span>
+            </a>
+          </div>
           <small class="mobile-subtitle">An NBA player guessing game</small>
         </div>
         
-        <div class="d-inline-flex align-items-center gap-2 nav-link-item" role="button" data-bs-toggle="modal" data-bs-target="#infoModal">
+        <div class="d-flex align-items-center gap-2 nav-link-item mobile-help" role="button" data-bs-toggle="modal" data-bs-target="#infoModal">
           <img src="../static/images/help2.png" alt="Help Icon" class="nav-icon">
           <span class="nav-text mobile-nav-text">Help</span>
         </div>
       </div>
 
       <!-- Desktop layout: Original horizontal layout -->
-      <div class="d-none d-lg-flex justify-content-between align-items-center w-100 desktop-navbar">
+      <div class="d-none d-lg-flex justify-content-between align-items-center w-100">
         <a href="/" class="d-flex align-items-center gap-2 text-decoration-none">
           <img src="../static/images/logo.png" alt="Logo" class="nav-icon">
           <span class="navbar-brand">Guess the NBA Player</span>
         </a>
 
         <div class="navbar-nav d-flex align-items-center gap-4">
-          <div class="d-inline-flex align-items-center gap-2 nav-link-item" role="button" data-bs-toggle="modal" data-bs-target="#infoModal">
+          <div class="d-flex align-items-center gap-2 nav-link-item" role="button" data-bs-toggle="modal" data-bs-target="#infoModal">
             <img src="../static/images/help2.png" alt="Help Icon" class="nav-icon">
             <span class="nav-text">Help</span>
           </div>
