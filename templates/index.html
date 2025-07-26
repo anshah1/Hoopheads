@@ -4,6 +4,8 @@
     Play Today's game
 {% endblock %}
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <body>
     {% block main %}
         <div class="game-container">
@@ -27,7 +29,7 @@
         
             <form id="player-form" method="POST" action="/guess">
                 <div class="search-wrapper">
-                    <input type="text" id="player-search" name="player-search" onkeyup="getSuggestions()" autocomplete="off" />
+                    <input type="text" id="player-search" class="player-search", name="player-search" onkeyup="getSuggestions()" autocomplete="off" />
                     <ul class="suggestions-list" id="suggestions"></ul>
                 </div>
             </form>
