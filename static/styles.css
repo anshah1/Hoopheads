@@ -12,7 +12,7 @@
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 1rem;
     border-radius: 12px;
 }
 
@@ -65,7 +65,7 @@ body {
 
 .navbar-brand h2 {
     margin: 0;
-    font-size: 1.8rem;
+    font-size: 6rem;
     color: #333;
 }
 
@@ -109,7 +109,7 @@ body {
 }
 
 .stats-title {
-    font-size: 1.8em;
+    font-size: 1.5em;
     color: #333;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     margin-bottom: 20px;
@@ -132,7 +132,7 @@ body {
 }
 
 .stat-item h3 {
-    font-size: 1.2em;
+    font-size: 1.2rem;
     color: #333;
     margin-bottom: 10px;
 }
@@ -294,7 +294,7 @@ body {
     border: 2px dashed #000;
     padding: 10px;
     text-align: center;
-    font-size: 18px;
+    font-size: 1.1rem;
 }
 
 .game-table th {
