@@ -516,8 +516,6 @@ body {
     color: white; /* Better contrast on hover */
 }
 
-/* Styling the Submit Guess button */
-
 /* Button hover effect */
 .btn-primary:hover {
     background-color: #0056b3; /* Darker blue on hover */
@@ -533,10 +531,4 @@ body {
 #infoModal .modal-dialog {
     max-width: 600px; /* Increase from Bootstrap's default ~500px */
     width: 90%; /* Responsive width */
-}
-
-/* Optional: Make the bio modal wider too if needed */
-#bioModal .modal-dialog {
-    max-width: 700px;
-    width: 90%;
 }
