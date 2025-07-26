@@ -9,7 +9,6 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from data.dataStorage import players, allTheData, divisionBreakdown, conferenceBreakdown
 warnings.simplefilter(action='ignore', category=FutureWarning)
 from datetime import datetime, timedelta
-from scraper.players import get_player_headshot, get_player_link
 from dotenv import load_dotenv
 load_dotenv()
 import unicodedata
@@ -74,13 +73,8 @@ def process_guess():
     guess_count = session.get("guess_count", 0) + 1
     session["guess_count"] = guess_count
 
-    image_url = get_player_headshot(session["correct_player"])
-    print(f"Player Image URL: {image_url}")
-    if image_url is None:
-        image_url = "https://www.logodesignlove.com/images/classic/nba-logo.jpg"
-
-    player_link = get_player_link(session["correct_player"])
-    print(f"Player Link: {player_link}")
+    image_url = "https://www.logodesignlove.com/images/classic/nba-logo.jpg"
+    player_link = r"https://en.wikipedia.org/wiki/2024%E2%80%9325_NBA_season"
 
     if session["correct_player"] == guessedPlayer:
         if "username" in session:
