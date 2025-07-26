@@ -63,35 +63,10 @@ def process_guess():
     print(f"Player Link: {player_link}")
 
     if session["correct_player"] == guessedPlayer:
-        if "username" in session:
-            for pair in matches:
-                if session["guess_count"] == pair[0]:
-                    guess_count_name = pair[1]
-            
-            db = get_db_connection()
-            query = f"SELECT {guess_count_name} FROM stats WHERE personUsername = ?"
-            db['cursor'].execute(query, (session["username"],))
-            result = db['cursor'].fetchone()
-            if result is None or result[0] is None:
-                current_in_that_guess = 1
-            else:
-                current_in_that_guess = result[0] + 1
-            query = f"UPDATE stats SET {guess_count_name} = ? WHERE personUsername = ?"
-            db['cursor'].execute(query, (current_in_that_guess, session["username"]))
-            db['connection'].commit()
-
         return render_template("congrats.html", player_name=session["correct_player"], guess_count=guess_count, image_url=image_url, player_link = player_link)
+    
     else:
         if session["guess_count"] == 8:
-            if "username" in session:
-                db = get_db_connection()
-                current_fails = db['cursor'].execute("SELECT fails FROM stats WHERE personUsername = ?", (session["username"],))
-                if current_fails == None:
-                    current_fails = 1
-                else:
-                    current_fails = current_fails[0] + 1
-                db['cursor'].execute("UPDATE stats SET fails = ? WHERE personUsername = ?", (current_fails, session["username"]))
-                db['connection'].commit()
             return render_template("failure.html", player_name = session["correct_player"], image_url=image_url, player_link = player_link)
         guesses[guess_count - 1]["name"] = guessedPlayer
         guesses[guess_count-1]['division'] = getDivision(guessedPlayer)[0]
