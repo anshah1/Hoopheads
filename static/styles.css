@@ -208,23 +208,6 @@ body {
     border: 2px solid #ccc;
 }
 
-.suggestions-list {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-    background-color: #fff;
-    border: 1px solid #ced4da;
-    border-radius: 5px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    max-height: 150px;
-    overflow-y: auto;
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
 .fade-in {
     animation: fadeIn 0.3s ease-in-out;
   }
@@ -234,44 +217,9 @@ body {
     to { opacity: 1; transform: translateY(0); }
   }
 
-.suggestions-list li {
-    padding: 12px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    text-align: center;
-}
-
-.suggestions-list li:hover {
-    background-color: #04AA6D;
-    color: white;
-}
-
 /* Button hover effect */
 .btn-primary:hover {
     background-color: #037d4a; /* Darker green on hover */
-}
-
-/* Suggestions list */
-.suggestions-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    border: 1px solid #ced4da;
-    border-radius: 5px;
-    max-height: 150px;
-    overflow-y: auto;
-    background-color: #fff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Add shadow for better separation */
-}
-
-.suggestions-list li {
-    padding: 12px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.suggestions-list li:hover {
-    background-color: #f0f0f0; /* Updated hover color */
 }
 
 /* Background */
@@ -310,23 +258,6 @@ body {
     text-align: center;
 }
 
-.suggestions-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    border: 1px solid #ced4da;
-    border-radius: 5px;
-    max-height: 150px;
-    overflow-y: auto;
-    background-color: #fff;
-}
-.suggestions-list li {
-    padding: 8px;
-    cursor: pointer;
-}
-.suggestions-list li:hover {
-    background-color: #e9ecef;
-}
 .congrats-container {
     display: flex;
     flex-direction: column;
@@ -403,20 +334,6 @@ body {
     mix-blend-mode: multiply;
 }
 
-/* Enhanced suggestions list styling */
-.suggestions-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 10px auto;
-    border: 1px solid #ced4da;
-    border-radius: 8px;
-    max-height: 150px;
-    overflow-y: auto;
-    background-color: #fff;
-    width: 80%; /* Make it span below the text box */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Adding shadow */
-}
-
 .green-bg {
     background-color: #90EE90;
 }
@@ -432,19 +349,6 @@ body {
 .transparent-bg {
     background-color: transparent;
 }
-
-.suggestions-list li {
-    padding: 12px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    text-align: center; /* Center text */
-}
-
-.suggestions-list li:hover {
-    background-color: #04AA6D;
-    color: white; /* Better contrast on hover */
-}
-
 /* Styling the Submit Guess button */
 
 /* Button hover effect */
@@ -516,8 +420,6 @@ body {
     color: white; /* Better contrast on hover */
 }
 
-/* Styling the Submit Guess button */
-
 /* Button hover effect */
 .btn-primary:hover {
     background-color: #0056b3; /* Darker blue on hover */
@@ -533,10 +435,4 @@ body {
 #infoModal .modal-dialog {
     max-width: 600px; /* Increase from Bootstrap's default ~500px */
     width: 90%; /* Responsive width */
-}
-
-/* Optional: Make the bio modal wider too if needed */
-#bioModal .modal-dialog {
-    max-width: 700px;
-    width: 90%;
 }
