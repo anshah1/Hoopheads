@@ -2,11 +2,6 @@ import pandas as pd
 from bs4 import BeautifulSoup
 import unicodedata, unidecode
 
-
-from .utils import get_player_suffix
-from .lookup import lookup
-from .request_utils import get_wrapper
-
 '''
 def get_stats(_name, stat_type='PER_GAME', playoffs=False, career=False, ask_matches = True):
     name = lookup(_name, ask_matches)
