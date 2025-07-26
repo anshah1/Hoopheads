@@ -67,29 +67,6 @@
 
       <div class="collapse navbar-collapse" id="navbar">
         <div class="navbar-nav ms-auto d-flex align-items-center gap-4">
-
-          {% if session["username"] %}
-            <a href="/stats" class="d-inline-flex align-items-center gap-2 nav-link-item">
-              <img src="../static/images/stats2.png" alt="Stats Icon" class="nav-icon">
-              <span class="nav-text">Stats</span>
-            </a>
-
-            <a href="/logout" class="d-inline-flex align-items-center gap-2 nav-link-item">
-              <img src="../static/images/logout2.png" alt="Logout Icon" class="nav-icon">
-              <span class="nav-text">Logout</span>
-            </a>
-          {% else %}
-            <a href="/register" class="d-inline-flex align-items-center gap-2 nav-link-item">
-              <img src="../static/images/register2.png" alt="Register Icon" class="nav-icon">
-              <span class="nav-text">Register</span>
-            </a>
-
-            <a href="/login" class="d-inline-flex align-items-center gap-2 nav-link-item">
-              <img src="../static/images/login2.png" alt="Login Icon" class="nav-icon">
-              <span class="nav-text">Login</span>
-            </a>
-          {% endif %}
-
           <div class="d-inline-flex align-items-center gap-2 nav-link-item" role="button" data-bs-toggle="modal" data-bs-target="#infoModal">
             <img src="../static/images/help2.png" alt="Help Icon" class="nav-icon">
             <span class="nav-text">Help</span>
