@@ -88,50 +88,65 @@
 -->
     <!--Modal for info-->
     <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="infoModalLabel">Rules</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p> Guess the NBA Player in as little guesses as possible </p>
-                    <p>For divisions:</p>
-                    <ul>
-                        <li>Red means wrong conference</li>
-                        <li>Yellow means right conference, wrong division</li>
-                        <li>Green means right division</li>
-                    </ul>
-                    
-                    <p>For heights & ages:</p>
-                    <ul>
-                        <li>Yellow means you are within 2 inches/years.</li>
-                        <li>Greens means correct</li>
-                        <li>Arrows point you towards the direction you should head towards.</li>
-                        <li>For example, if the player you guessed is 6'6, but the correct player is 6'8, you will have a yellow highlighted up arrow.</li>
-                    </ul>
-                    </p>
-                    <p>Only players with 6 ppg or above in the 2024-2025 regular season are in the game</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h4 class="modal-title" id="infoModalLabel">How to Play</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body text-start">
+                  <h5 class="mb-2">Guess the NBA Player</h5>
+                  <p>
+                      Try to guess the NBA player within <strong>8 tries</strong>.
+                  </p>
+                  
+                  <h6 class="mt-4 mb-1">Divisions</h6>
+                  <ul>
+                      <li>
+                          <span style="background-color: #FFCCCB; color: #000000; padding: 2px 6px; border-radius: 4px;">Red</span>
+                          = wrong conference
+                      </li>
+                      <li>
+                          <span style="background-color: #FFFFC5; color: #000000; padding: 2px 6px; border-radius: 4px;">Yellow</span>
+                          = right conference, wrong division
+                      </li>
+                      <li>
+                          <span style="background-color: #90EE90; color: #000000; padding: 2px 6px; border-radius: 4px;">Green</span>
+                          = right division
+                      </li>
+                  </ul>
 
-    {% if get_flashed_messages() %}
-        <header>
-            <div class="alert alert-primary mb-0 text-center" role="alert">
-                {{ get_flashed_messages() | join(" ") }}
-            </div>
-        </header>
-    {% endif %}
+                  <h6 class="mt-4 mb-1">Heights &amp; Ages</h6>
+                  <ul>
+                      <li>
+                          <span style="background-color: #FFFFC5; color: #000000; padding: 2px 6px; border-radius: 4px;">Yellow</span>
+                          = within 2 inches/years
+                      </li>
+                      <li>
+                          <span style="background-color: #90EE90; color: #000000; padding: 2px 6px; border-radius: 4px;">Green</span>
+                          = correct
+                      </li>
+                  </ul>
 
-    <main class="container py-5 text-center">
-        {% block main %}{% endblock %}
-    </main>
-    
-</body>
+                  <h5 class="mt-4 mb-2">Examples</h5>
+                  <div class="example-group mb-3">
+                      <img src="../static/images/Example 1.png" alt="Example 1" class="img-fluid">
+                      <p class="mb-2">The correct player is in the Western Conference, but not the Pacific Division. They are taller than 6&#39;5&quot; and slightly younger than 35.</p>
+                  </div>
+                  <div class="example-group mb-3">
+                      <img src="../static/images/Example 2.png" alt="Example 2" class="img-fluid">
+                      <p class="mb-2">The correct player is not in the Eastern Conference and is slightly shorter than 6&#39;7&quot;. They are older than 23.</p>
+                  </div>
+                  <div class="example-group mb-3">
+                      <img src="../static/images/Example 3.png" alt="Example 3" class="img-fluid">
+                      <p class="mb-2">The correct player is in the Southwest Division, slightly shorter than 6&#39;7&quot;, and slightly older than 26.</p>
+                  </div>
 
-</html>
+                  <p class="mt-4"><em>Only players with 6 ppg or above in the 2024-2025 regular season are in the game.</em></p>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+          </div>
+      </div>
+  </div>

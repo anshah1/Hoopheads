@@ -528,3 +528,8 @@ body {
     align-items: center; /* Vertically center the items */
     gap: 10px; /* Add some space between the input and button */
 }
+
+#infoModal .modal-dialog {
+    max-width: 600px; /* Increase from Bootstrap's default ~500px */
+    width: 90%; /* Responsive width */
+}
