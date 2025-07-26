@@ -48,22 +48,26 @@ body {
 }
 
 .navbar {
-    background-color: #90a2b3;
+    background-color: #95a9ba;
 }
 
 .navbar-brand {
-    display: flex;
-    justify-content: center; /* Center horizontally */
-    width: 100%; /* Ensure it takes the full width of the container */
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 1.8rem;
+    color: black;
+    margin: 0;
+    padding-left: 0.75rem; /* adjust this value as needed */
+    line-height: 1;
+    white-space: nowrap;
 }
 
-.navbar-brand a {
+.navbar-brand span {
     text-decoration: none; /* Remove underline from link */
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .nav-link {
-    margin-left: 15px;
-    margin-right: 15px; /* Added margin for spacing */
+    margin-left: 20px;
 }
 
 .navbar-nav {
@@ -76,11 +80,11 @@ body {
 }
 
 .nav-icon {
-  max-height: 1.8rem;
+  max-height: 1.9rem;
 }
 
 .nav-text {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   color: black;
 }
 
@@ -168,6 +172,7 @@ body {
 .navbar-nav {
     display: flex;
     align-items: center;
+    padding-top: 0.8%;
 }
 
 .result-table {
@@ -352,5 +357,5 @@ body {
 
 #infoModal .modal-dialog {
     max-width: 600px; 
-    width: 90%; 
+    width: 100%; 
 }
