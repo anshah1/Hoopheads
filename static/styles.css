@@ -162,21 +162,6 @@ body {
     transition: background-color 0.3s ease;
 }
 
-.search-wrapper {
-    position: relative;
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
-}
-
-#player-search {
-    width: 100%;
-    height: 50px;
-    font-size: 1.2rem;
-    padding: 10px;
-    border-radius: 5px;
-    border: 2px solid #ccc;
-}
 
 .fade-in {
     animation: fadeIn 0.3s ease-in-out;
@@ -244,7 +229,6 @@ body {
     0% { background-position: 0 0; }
     100% { background-position: 100% 100%; }
 }
-
 /* Styling for the player guess input */
 #player_guess {
     width: 100%;
@@ -326,22 +310,45 @@ body {
     background-color: #fff;
 }
 
-/* Enhanced suggestions list styling */
+.search-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 300px; /* slightly narrower */
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+}
+
+#player-search {
+    width: 100%;
+    height: 45px; /* optional: a bit shorter if needed */
+    font-size: 1.1rem;
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #ccc;
+}
+
 .suggestions-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 10px auto;
-    border: 1px solid #ced4da;
-    border-radius: 8px;
-    max-height: 150px;
+    position: absolute;
+    top: 100%;
+    left: -10px; /* shift left to widen */
+    width: calc(100% + 20px); /* make suggestion box wider than input */
+    max-height: 280px; /* taller for more suggestions */
     overflow-y: auto;
-    background-color: #fff;
-    width: 80%; /* Make it span below the text box */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Adding shadow */
+    background-color: white;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 5px 5px;
+    z-index: 1000;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .suggestions-list li {
     padding: 12px;
+    font: 1vw;
     cursor: pointer;
     transition: background-color 0.3s ease;
     text-align: center; 
@@ -356,11 +363,6 @@ body {
     background-color: #0056b3; 
 }
 
-.search-wrapper {
-    display: flex;
-    align-items: center; 
-    gap: 10px; 
-}
 
 #infoModal .modal-dialog {
     max-width: 600px; 
