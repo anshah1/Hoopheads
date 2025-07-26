@@ -17,13 +17,13 @@
 }
 
 .up-arrow {
-    color: green; /* Color for the up arrow */
+    color: black; /* Color for the up arrow */
     font-weight: bold;
     margin-left: 5px; /* Space between height and arrow */
 }
 
 .down-arrow {
-    color: red; /* Color for the down arrow */
+    color: black; /* Color for the down arrow */
     font-weight: bold;
     margin-left: 5px; /* Space between height and arrow */
 }
@@ -33,11 +33,9 @@ tr:hover {
     background-color: #f0f0f0; /* Light gray on hover */
 }
 
-
 h2 {
     font-family: "Verdana Primer", serif;
 }
-
 
 body {
     background: url('https://your-image-url.com/basketball-background.jpg') no-repeat center center fixed;
@@ -63,12 +61,6 @@ body {
     text-decoration: none; /* Remove underline from link */
 }
 
-.navbar-brand h2 {
-    margin: 0;
-    font-size: 6rem;
-    color: #333;
-}
-
 .nav-link {
     margin-left: 15px;
     margin-right: 15px; /* Added margin for spacing */
@@ -84,18 +76,12 @@ body {
 }
 
 .nav-icon {
-  height: 2em;
-  width: auto;
+  max-height: 1.8rem;
 }
 
 .nav-text {
   font-size: 1.6rem;
   color: black;
-}
-
-.logo {
-  height: 2em;
-  width: auto;
 }
 
 /* Stats container styling */
