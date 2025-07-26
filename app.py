@@ -83,35 +83,9 @@ def process_guess():
     print(f"Player Link: {player_link}")
 
     if session["correct_player"] == guessedPlayer:
-        if "username" in session:
-            for pair in matches:
-                if session["guess_count"] == pair[0]:
-                    guess_count_name = pair[1]
-            
-            db = get_db_connection()
-            query = f"SELECT {guess_count_name} FROM stats WHERE personUsername = ?"
-            db['cursor'].execute(query, (session["username"],))
-            result = db['cursor'].fetchone()
-            if result is None or result[0] is None:
-                current_in_that_guess = 1
-            else:
-                current_in_that_guess = result[0] + 1
-            query = f"UPDATE stats SET {guess_count_name} = ? WHERE personUsername = ?"
-            db['cursor'].execute(query, (current_in_that_guess, session["username"]))
-            db['connection'].commit()
-
         return render_template("congrats.html", player_name=session["correct_player"], guess_count=guess_count, image_url=image_url, player_link = player_link)
     else:
         if session["guess_count"] == 8:
-            if "username" in session:
-                db = get_db_connection()
-                current_fails = db['cursor'].execute("SELECT fails FROM stats WHERE personUsername = ?", (session["username"],))
-                if current_fails == None:
-                    current_fails = 1
-                else:
-                    current_fails = current_fails[0] + 1
-                db['cursor'].execute("UPDATE stats SET fails = ? WHERE personUsername = ?", (current_fails, session["username"]))
-                db['connection'].commit()
             return render_template("failure.html", player_name = session["correct_player"], image_url=image_url, player_link = player_link)
         guesses[guess_count - 1]["name"] = guessedPlayer
         guesses[guess_count-1]['division'] = getDivision(guessedPlayer)[0]
@@ -135,93 +109,6 @@ def search():
         return jsonify(matches[:10])
     return jsonify([])
 
-
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    """Log user in"""
-    session.clear()
-    if request.method == "POST":
-        username = request.form.get("username")
-        password = request.form.get("password")
-
-        if not username or not password:
-            error = "Username and password are required."
-            return render_template("login.html", error=error)
-
-        db = get_db_connection()
-        db['cursor'].execute("SELECT hash FROM users WHERE username = ?", (username,))
-        hash_row = db['cursor'].fetchone()
-        if not hash_row:
-            error = "Invalid username and/or password."
-            return render_template("login.html", error=error)
-        passwordCorrect = check_password_hash(hash_row[0], password)
-        if not passwordCorrect:
-            error = "Invalid username and/or password."
-            return render_template("login.html", error=error)
-
-        session["username"] = username
-        return redirect("/")
-    
-    return render_template("login.html")
-
-@app.route("/register", methods=["GET", "POST"])
-def register():
-    if request.method == "POST":
-        username = request.form.get("username")
-        password = request.form.get("password")
-        confirm_password = request.form.get("confirmation")
-
-        if not username or not password or not confirm_password:
-            error = "All fields are required."
-            return render_template("register.html", error=error)
-
-        if password != confirm_password:
-            error = "Passwords don't match."
-            return render_template("register.html", error=error)
-
-        db = get_db_connection()
-        db['cursor'].execute("SELECT username FROM users WHERE username = ?", (username,))
-        existing_user = db['cursor'].fetchone()
-        print(existing_user)
-        if existing_user:
-            error = "Username is already taken."
-            return render_template("register.html", error=error)
-
-        hashed_password = generate_password_hash(password)
-        db['cursor'].execute(
-            "INSERT INTO users (username, hash, streak, winCount, gamesPlayed) VALUES (?, ?, 0, 0, 0)", 
-            (username, hashed_password)
-        )
-        db['cursor'].execute(
-            "INSERT INTO stats (personUsername) VALUES (?)", (username,)
-        )
-        db['connection'].commit()
-        session["username"] = username
-        return redirect("/")
-
-    return render_template("register.html")
-
-@app.route("/stats")
-def stats():
-    db = get_db_connection()
-    valid_keys = {'ones', 'two', 'three', 'four', 'five', 'six', 'sevens', 'eights', 'fails'}
-    stats_to_add = {key: 0 for key in valid_keys}
-
-    for key in stats_to_add:
-        query = f"SELECT {key} FROM stats WHERE personusername = ?"
-        db['cursor'].execute(query, (session["username"],))
-        result = db['cursor'].fetchone()
-        stats_to_add[key] = result[0] if result else 0
-
-    return render_template("stats.html", ones = stats_to_add['ones'], twos = stats_to_add['two'], threes = stats_to_add['three'], fours = stats_to_add['four'], fives = stats_to_add['five'], sixes = stats_to_add['six'], sevens = stats_to_add['sevens'], eights = stats_to_add['eights'], fails = stats_to_add['fails'])
-
-@app.route("/logout")
-def logout():
-    """Log user out"""
-    session.clear()
-    return redirect("/")
-
-            
 def getDivision(guessedPlayer):
     for player in allTheData:
         if player['NAME'] == guessedPlayer:

@@ -529,14 +529,7 @@ body {
     gap: 10px; /* Add some space between the input and button */
 }
 
-/* Make the info modal wider */
 #infoModal .modal-dialog {
     max-width: 600px; /* Increase from Bootstrap's default ~500px */
     width: 90%; /* Responsive width */
-}
-
-/* Optional: Make the bio modal wider too if needed */
-#bioModal .modal-dialog {
-    max-width: 700px;
-    width: 90%;
 }
