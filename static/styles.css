@@ -245,25 +245,6 @@ body {
     100% { background-position: 100% 100%; }
 }
 
-#suggestions {
-    list-style-type: none;
-    padding: 0;
-    border: 1px solid #ccc;
-    max-height: 150px;
-    overflow-y: auto;
-    background-color: white;
-    width: 200px;
-}
-
-#suggestions li {
-    padding: 10px;
-    cursor: pointer;
-}
-
-#suggestions li:hover {
-    background-color: #04AA6D;
-}
-
 /* Styling for the player guess input */
 #player_guess {
     width: 100%;
