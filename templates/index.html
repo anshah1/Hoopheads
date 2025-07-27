@@ -77,9 +77,9 @@
                             ">
                                 {{ guesses[i]['height'][0] or '' }}
                                 {% if guesses[i]['height'][1] in ['up', 'closeup'] %}
-                                    <span class="up-arrow">↑</span>
+                                    <span class="arrow">↑</span>
                                 {% elif guesses[i]['height'][1] in ['down', 'closedown'] %}
-                                    <span class="down-arrow">↓</span>
+                                    <span class="arrow">↓</span>
                                 {% endif %}
                             </td>
                             <td>{{ guesses[i]['ppg'] or '' }}</td>
@@ -96,9 +96,9 @@
                             ">
                                 {{ guesses[i]['age'][0] or '' }}
                                 {% if guesses[i]['age'][1] in ['up', 'closeup'] %}
-                                    <span class="up-arrow">↑</span>
+                                    <span class="arrow">↑</span>
                                 {% elif guesses[i]['age'][1] in ['down', 'closedown'] %}
-                                    <span class="down-arrow">↓</span>
+                                    <span class="arrow">↓</span>
                                 {% endif %}
                             </td>
                         </tr>
