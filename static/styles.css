@@ -1,7 +1,6 @@
 .center {
     margin-left: auto;
     margin-right: auto;
-    padding: 10px;
 }
 
 .topRow{
@@ -390,8 +389,8 @@ body {
 .game-container {
     max-width: 800px;
     margin: 0 auto;
-    padding: 20px;
-    text-align: center; /* Centering content inside */
+    padding: 0 20px 20px 20px; /* Remove top padding, keep others */
+    text-align: center;
 }
 
 .game-table-container {
