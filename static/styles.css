@@ -3,26 +3,8 @@
     margin-right: auto;
 }
 
-.topRow{
-    background-color: #04AA6D; /* Green */
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 1rem;
-    border-radius: 12px;
-}
-
-.up-arrow {
+.arrow {
     color: black; /* Color for the up arrow */
-    font-weight: bold;
-    margin-left: 5px; /* Space between height and arrow */
-}
-
-.down-arrow {
-    color: black; /* Color for the down arrow */
     font-weight: bold;
     margin-left: 5px; /* Space between height and arrow */
 }
@@ -405,7 +387,7 @@ body {
 
 .game-table th, .game-table td {
     border: 2px dashed #000;
-    padding: 10px;
+    padding: 10px 5px 10px 5px;
     text-align: center;
     font-size: 1.1rem;
 }
