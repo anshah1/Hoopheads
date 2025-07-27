@@ -11,7 +11,7 @@
 
 @media (max-width: 767px) {
     .arrow {
-        margin-left: 1px;
+        margin-left: 0px;
     }
 }
 
@@ -430,6 +430,10 @@ body {
         padding: 8px 3px;
         font-size: 0.85rem;
         border: 1px solid #000;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+        line-height: 1.2;
     }
     
     .game-table th {
@@ -452,6 +456,7 @@ body {
         height: 35px;
     }
 }
+
 
 .search-wrapper {
     position: relative;
