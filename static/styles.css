@@ -93,8 +93,8 @@ body {
 /* Additional mobile-specific styles */
 @media (max-width: 991.98px) {
     .mobile-navbar {
-        padding: 0.7rem 0;
-        min-height: 50px;
+        padding: 0.3rem 0;
+        min-height: 40px; 
     }
     
     .mobile-brand {
@@ -105,15 +105,15 @@ body {
     
     .mobile-subtitle {
         color: #666;
-        font-size: 0.85rem;
+        font-size: 1rem; /* Increased from 0.85rem */
         margin-left: 0;
         margin-top: 0.25rem;
         font-family: Georgia, 'Times New Roman', Times, serif;
     }
     
     .mobile-help {
-        align-self: flex-start;
-        margin-top: 0.25rem;
+        align-self: center; /* Changed from flex-start to center */
+        margin-top: 0; /* Removed margin-top */
     }
     
     .mobile-help .nav-icon {
@@ -150,14 +150,13 @@ body {
     }
     
     .mobile-subtitle {
-        font-size: 0.8rem;
+        font-size: 0.95rem; /* Increased from 0.8rem */
     }
     
     .nav-icon {
         max-height: 1.5rem;
     }
 }
-
 /* Stats container styling */
 .stats-container {
     background-color: rgba(255, 255, 255, 0.8); /* Slight transparency */

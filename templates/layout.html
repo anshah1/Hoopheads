@@ -20,12 +20,12 @@
   <nav class="navbar navbar-light">
     <div class="container">
       <!-- Mobile layout: Logo and text stacked on left, help on right -->
-      <div class="d-flex justify-content-between align-items-start w-100 d-lg-none mobile-navbar">
-        <div class="d-flex flex-column">
-          <div class="d-flex align-items-center gap-2">
+      <div class="d-flex justify-content-between align-items-center w-100 d-lg-none mobile-navbar">
+        <div class="d-flex flex-column align-items-center">
+            <div class="d-flex align-items-center gap-2">
             <img src="../static/images/logo.png" alt="Logo" class="nav-icon">
           </div>
-          <small class="mobile-subtitle">Guess the NBA Player</small>
+          <span class="mobile-subtitle">Guess the NBA Player</span>
         </div>
         
         <div class="d-flex align-items-center gap-2 nav-link-item mobile-help" role="button" data-bs-toggle="modal" data-bs-target="#infoModal">
@@ -33,22 +33,18 @@
           <span class="nav-text mobile-nav-text">Help</span>
         </div>
       </div>
-
       <!-- Desktop layout: Original horizontal layout -->
       <div class="d-none d-lg-flex justify-content-between align-items-center w-100">
         <a href="/" class="d-flex align-items-center gap-2 text-decoration-none">
           <img src="../static/images/logo.png" alt="Logo" class="nav-icon">
           <span class="navbar-brand">Guess the NBA Player</span>
         </a>
-
-        <div class="navbar-nav d-flex align-items-center gap-4">
-          <div class="d-flex align-items-center gap-2 nav-link-item" role="button" data-bs-toggle="modal" data-bs-target="#infoModal">
-            <img src="../static/images/help2.png" alt="Help Icon" class="nav-icon">
-            <span class="nav-text">Help</span>
-          </div>
+      
+        <div class="d-flex align-items-center gap-2 nav-link-item" role="button" data-bs-toggle="modal" data-bs-target="#infoModal">
+          <img src="../static/images/help2.png" alt="Help Icon" class="nav-icon">
+          <span class="nav-text">Help</span>
         </div>
       </div>
-    </div>
 </nav>
 <!--
     <div class="modal fade" id="bioModal" tabindex="-1" aria-labelledby="bioModalLabel" aria-hidden="true">
