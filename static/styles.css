@@ -90,11 +90,10 @@ body {
   color: black;
 }
 
-/* Additional mobile-specific styles */
 @media (max-width: 991.98px) {
     .mobile-navbar {
         padding: 0.3rem 0;
-        min-height: 40px; 
+        min-height: 30px; 
     }
     
     .mobile-brand {
@@ -105,19 +104,22 @@ body {
     
     .mobile-subtitle {
         color: #666;
-        font-size: 1rem; /* Increased from 0.85rem */
+        font-size: 1rem;
         margin-left: 0;
         margin-top: 0.25rem;
         font-family: Georgia, 'Times New Roman', Times, serif;
     }
     
     .mobile-help {
-        align-self: center; /* Changed from flex-start to center */
-        margin-top: 0; /* Removed margin-top */
+        align-self: stretch; /* Makes it take full height of parent */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100%; /* Ensures it matches the logo+subtitle height */
     }
     
     .mobile-help .nav-icon {
-        max-height: 2.1rem !important;
+        max-height: 2.8rem !important; /* Increased to fill more space */
     }
     
     .mobile-nav-text {
@@ -150,11 +152,15 @@ body {
     }
     
     .mobile-subtitle {
-        font-size: 0.95rem; /* Increased from 0.8rem */
+        font-size: 0.95rem;
     }
     
     .nav-icon {
         max-height: 1.5rem;
+    }
+    
+    .mobile-help .nav-icon {
+        max-height: 2.2rem !important; /* Adjusted for smaller screens */
     }
 }
 /* Stats container styling */
