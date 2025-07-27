@@ -265,7 +265,6 @@ body {
     transition: background-color 0.3s ease;
 }
 
-
 .fade-in {
     animation: fadeIn 0.3s ease-in-out;
   }
@@ -275,11 +274,10 @@ body {
     to { opacity: 1; transform: translateY(0); }
   }
 
-/* Background */
 body {
     background: url('https://your-image-url.com/basketball-background.jpg') no-repeat center center fixed;
     background-size: cover;
-    color: #333; /* Ensuring text contrast on background */
+    color: #333; 
 }
 
 .result-table {
@@ -327,7 +325,7 @@ body {
     0% { background-position: 0 0; }
     100% { background-position: 100% 100%; }
 }
-/* Styling for the player guess input */
+
 #player_guess {
     width: 100%;
     padding: 12px;
@@ -363,14 +361,11 @@ body {
 .transparent-bg {
     background-color: transparent;
 }
-/* Styling the Submit Guess button */
 
-/* Button hover effect */
 .btn-primary:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: #0056b3; 
 }
 
-/* Centering the game container */
 .game-container {
     max-width: 800px;
     margin: 0 auto;
@@ -408,7 +403,6 @@ body {
     background-color: #fff;
 }
 
-/* Mobile full-width styling */
 @media (max-width: 767px) {
     .game-container {
         max-width: 100%;
@@ -430,15 +424,36 @@ body {
         padding: 8px 3px;
         font-size: 0.85rem;
         border: 1px solid #000;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-        hyphens: auto;
         line-height: 1.2;
+        vertical-align: middle;
     }
     
     .game-table th {
         font-size: 0.8rem;
         font-weight: bold;
+    }
+    
+    /* Name column - allow natural word breaks at spaces/hyphens */
+    .game-table td:nth-child(2) {
+        word-break: normal;
+        overflow-wrap: break-word;
+        hyphens: none;
+        font-size: 0.75rem; /* Smaller font for names to fit better */
+    }
+    
+    /* Division column - prevent breaking, keep on one line */
+    .game-table td:nth-child(3) {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 0.8rem;
+    }
+    
+    /* Height and Age columns - prevent breaking */
+    .game-table td:nth-child(4),
+    .game-table td:nth-child(8) {
+        white-space: nowrap;
+        font-size: 0.8rem;
     }
 }
 
@@ -454,6 +469,16 @@ body {
     
     .game-table td {
         height: 35px;
+    }
+    
+    .game-table td:nth-child(2) {
+        font-size: 0.65rem;
+    }
+    
+    .game-table td:nth-child(3),
+    .game-table td:nth-child(4),
+    .game-table td:nth-child(8) {
+        font-size: 0.7rem;
     }
 }
 
