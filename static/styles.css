@@ -418,6 +418,7 @@ body {
     .game-table {
         margin: 0;
         font-size: 0.9rem;
+        table-layout: fixed; /* Forces fixed column widths */
     }
     
     .game-table th, .game-table td {
@@ -429,6 +430,27 @@ body {
     .game-table th {
         font-size: 0.8rem;
         font-weight: bold;
+    }
+    
+    /* Column width distribution for mobile */
+    .game-table th:nth-child(1), .game-table td:nth-child(1) { width: 8%; } /* # */
+    .game-table th:nth-child(2), .game-table td:nth-child(2) { 
+        width: 20%; /* Name - smaller to allow wrapping */
+        word-wrap: break-word;
+        white-space: normal;
+        line-height: 1.2;
+    }
+    .game-table th:nth-child(3), .game-table td:nth-child(3) { width: 12%; } /* Division */
+    .game-table th:nth-child(4), .game-table td:nth-child(4) { 
+        width: 15%; /* Height - wider for arrow */
+        white-space: nowrap;
+    }
+    .game-table th:nth-child(5), .game-table td:nth-child(5) { width: 10%; } /* PPG */
+    .game-table th:nth-child(6), .game-table td:nth-child(6) { width: 10%; } /* RPG */
+    .game-table th:nth-child(7), .game-table td:nth-child(7) { width: 10%; } /* APG */
+    .game-table th:nth-child(8), .game-table td:nth-child(8) { 
+        width: 15%; /* Age - wider for arrow */
+        white-space: nowrap;
     }
 }
 
@@ -445,8 +467,12 @@ body {
     .game-table td {
         height: 35px;
     }
+    
+    /* Adjust widths for very small screens */
+    .game-table th:nth-child(2), .game-table td:nth-child(2) { width: 18%; } /* Name even smaller */
+    .game-table th:nth-child(4), .game-table td:nth-child(4) { width: 16%; } /* Height slightly wider */
+    .game-table th:nth-child(8), .game-table td:nth-child(8) { width: 16%; } /* Age slightly wider */
 }
-
 
 .search-wrapper {
     position: relative;
