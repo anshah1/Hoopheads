@@ -4,9 +4,15 @@
 }
 
 .arrow {
-    color: black; /* Color for the up arrow */
+    color: black;
     font-weight: bold;
-    margin-left: 5px; /* Space between height and arrow */
+    margin-left: 5px;
+}
+
+@media (max-width: 767px) {
+    .arrow {
+        margin-left: 1px;
+    }
 }
 
 /* Optional: Add a hover effect for table rows */
