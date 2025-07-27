@@ -216,8 +216,8 @@ body {
 /* Mobile adaptations only */
 @media (max-width: 767px) {
     .stats-container {
-        margin-left: 10px;
-        margin-right: 10px;
+        margin-left: 0.1rem;
+        margin-right: 0.1rem;
         padding: 15px;
     }
     
@@ -240,8 +240,8 @@ body {
 
 @media (max-width: 480px) {
     .stats-container {
-        margin-left: 15px;
-        margin-right: 15px;
+        margin-left: 0.1rem;
+        margin-right: 0.1rem;
         padding: 12px;
     }
     
