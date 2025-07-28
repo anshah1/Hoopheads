@@ -73,12 +73,29 @@ def process_guess():
     player_link = get_player_link(session["correct_player"])
     print(f"Player Link: {player_link}")
 
+    # Check if the guess is correct
     if session["correct_player"] == guessedPlayer:
-        return render_template("congrats.html", player_name=session["correct_player"], guess_count=guess_count, image_url=image_url, player_link = player_link)
+        return jsonify({
+            "gameWon": True,
+            "redirectTo": "/congrats",
+            "guessCount": guess_count,
+            "playerName": session["correct_player"],
+            "imageUrl": image_url,
+            "playerLink": player_link
+        })
     
     else:
+        # Check if max guesses reached
         if session["guess_count"] == 8:
-            return render_template("failure.html", player_name = session["correct_player"], image_url=image_url, player_link = player_link)
+            return jsonify({
+                "gameOver": True,
+                "redirectTo": "/failure", 
+                "playerName": session["correct_player"],
+                "imageUrl": image_url,
+                "playerLink": player_link
+            })
+        
+        # Process the guess and update session
         guesses[guess_count - 1]["name"] = guessedPlayer
         division = getDivision(allTheData[guessedPlayer])
         guesses[guess_count-1]['division'] = division[0]
@@ -88,7 +105,16 @@ def process_guess():
         guesses[guess_count - 1]["rpg"] = allTheData[guessedPlayer]['RPG']
         guesses[guess_count - 1]["apg"] = allTheData[guessedPlayer]['APG']
         guesses[guess_count - 1]["age"] = getAge(allTheData[guessedPlayer])
-        return render_template("index.html", ppg=ppg, apg=apg, rpg=rpg, guesses = guesses)
+        
+        # Update session with new guesses
+        session["guesses"] = guesses
+        
+        # Return the guess result for AJAX update
+        return jsonify({
+            "gameWon": False,
+            "gameOver": False,
+            "guessResult": guesses[guess_count - 1]
+        })
 
 @app.route('/search', methods=['GET'])
 def search():
@@ -101,6 +127,30 @@ def search():
         matches = [player for player in list(allTheData.keys()) if norm_query in strip_accents(player.lower())]
         return jsonify(matches)
     return jsonify([])
+
+@app.route("/congrats")
+def congrats():
+    player_name = request.args.get("player_name")
+    guess_count = request.args.get("guess_count", type=int)
+    image_url = request.args.get("image_url")
+    player_link = request.args.get("player_link")
+    
+    return render_template("congrats.html", 
+                         player_name=player_name, 
+                         guess_count=guess_count, 
+                         image_url=image_url, 
+                         player_link=player_link)
+
+@app.route("/failure")
+def failure():
+    player_name = request.args.get("player_name")
+    image_url = request.args.get("image_url")
+    player_link = request.args.get("player_link")
+    
+    return render_template("failure.html", 
+                         player_name=player_name, 
+                         image_url=image_url, 
+                         player_link=player_link)
             
 def getDivision(guessedPlayerData):
     division = defaultDivision(guessedPlayerData)
