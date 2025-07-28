@@ -99,7 +99,7 @@ def search():
     if query:
         norm_query = strip_accents(query)
         matches = [player for player in list(allTheData.keys()) if norm_query in strip_accents(player.lower())]
-        return jsonify(matches[:10])
+        return jsonify(matches)
     return jsonify([])
             
 def getDivision(guessedPlayerData):
