@@ -7,6 +7,9 @@
     color: black;
     font-weight: bold;
     margin-left: 5px;
+    display: inline-block;
+    font-size: 1.2em;
+    animation: bounce 0.6s ease-in-out;
 }
 
 @media (max-width: 767px) {
@@ -27,6 +30,7 @@ h2 {
 body {
     background: url('https://your-image-url.com/basketball-background.jpg') no-repeat center center fixed;
     background-size: cover;
+    color: #333; 
 }
 
 .header-icons {
@@ -265,25 +269,24 @@ body {
     transition: background-color 0.3s ease;
 }
 
+.btn-primary:hover {
+    background-color: #0056b3; 
+}
+
 .fade-in {
     animation: fadeIn 0.3s ease-in-out;
-  }
+}
   
-  @keyframes fadeIn {
+@keyframes fadeIn {
     from { opacity: 0; transform: translateY(-5px); }
     to { opacity: 1; transform: translateY(0); }
-  }
-
-body {
-    background: url('https://your-image-url.com/basketball-background.jpg') no-repeat center center fixed;
-    background-size: cover;
-    color: #333; 
 }
 
 .result-table {
     width: 100%;
     border-collapse: collapse;
 }
+
 .result-table th, .result-table td {
     padding: 10px;
     border: 1px solid #dee2e6;
@@ -346,35 +349,65 @@ body {
     mix-blend-mode: multiply;
 }
 
+/* Background colors with gradients and animations */
 .green-bg {
-    background-color: #90EE90;
+    background: linear-gradient(135deg, #90EE90, #7FDD7F) !important;
+    color: black !important;
+    font-weight: normal !important;
+    position: relative;
+}
+
+.green-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: shimmer 1.5s ease-in-out;
 }
 
 .yellow-bg {
-    background-color: #FFFFC5;
+    background: linear-gradient(135deg, #FFFFC5, #F0F0A8) !important;
+    color: black !important;
+    font-weight: normal !important;
+    position: relative;
+}
+
+.yellow-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: shimmer 1.5s ease-in-out 0.2s;
 }
 
 .red-bg {
-    background-color: #FFCCCB;
+    background: linear-gradient(135deg, #FFCCCB, #FFB3B1) !important;
+    color: black !important;
+    font-weight: normal !important;
 }
 
 .transparent-bg {
     background-color: transparent;
 }
 
-.btn-primary:hover {
-    background-color: #0056b3; 
-}
-
+/* Game container and table styling */
 .game-container {
     max-width: 800px;
     margin: 0 auto;
     padding: 0 10px 10px 10px;
     text-align: center;
+    min-height: 100vh; /* Prevent layout shifts */
 }
 
 .game-table-container {
     margin-top: 20px;
+    min-height: 400px; /* Fixed minimum height for table area */
 }
 
 .game-table {
@@ -396,11 +429,29 @@ body {
 }
 
 .game-table td {
-    height: 40px;
+    height: 2rem;
+    min-height: 2rem;
+    max-height: 2rem;
+    line-height: 2rem; /* Centers text vertically */
+    vertical-align: middle;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    color: black !important; /* Ensure all text is black */
+    box-sizing: border-box; /* Include padding in height calculation */
 }
 
 .game-table td:empty {
     background-color: #fff;
+}
+
+.game-table tbody tr {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.game-table tbody tr:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 @media (max-width: 767px) {
@@ -469,6 +520,10 @@ body {
     
     .game-table td {
         height: 35px;
+        min-height: 35px;
+        max-height: 35px;
+        line-height: 35px;
+        box-sizing: border-box;
     }
     
     .game-table td:nth-child(2) {
@@ -482,11 +537,11 @@ body {
     }
 }
 
-
+/* Search input and suggestions */
 .search-wrapper {
     position: relative;
     width: 100%;
-    max-width: 300px; /* slightly narrower */
+    max-width: 400px; /* Fixed width prevents flexbox jumping */
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -494,11 +549,16 @@ body {
 
 #player-search {
     width: 100%;
-    height: 45px; /* optional: a bit shorter if needed */
+    height: 45px;
     font-size: 1.1rem;
     padding: 10px;
     border-radius: 5px;
     border: 2px solid #ccc;
+    transition: box-shadow 0.3s ease;
+}
+
+#player-search:focus {
+    box-shadow: 0 0 20px rgba(0, 123, 255, 0.3);
 }
 
 .suggestions-list {
@@ -506,8 +566,6 @@ body {
     top: 100%;
     left: -10px; /* shift left to widen */
     width: calc(100% + 20px); /* make suggestion box wider than input */
-    max-height: 280px; /* taller for more suggestions */
-    overflow-y: auto;
     background-color: white;
     border: 1px solid #ccc;
     border-top: none;
@@ -517,27 +575,77 @@ body {
     margin: 0;
     padding: 0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    min-height: 0;
+    max-height: 220px; /* Fixed max height */
+    overflow-y: auto;
+    transition: none; /* Remove size transitions */
 }
 
 .suggestions-list li {
     padding: 12px;
     font: 1vw;
     cursor: pointer;
-    transition: background-color 0.3s ease;
     text-align: center; 
+    transition: all 0.2s ease;
+    opacity: 1; /* Always visible, no fade-in */
+    transform: none; /* No sliding animation */
 }
 
 .suggestions-list li:hover {
+    transform: translateX(5px) scale(1.02);
     background-color: #04AA6D;
-    color: white; 
 }
-
-.btn-primary:hover {
-    background-color: #0056b3; 
-}
-
 
 #infoModal .modal-dialog {
     max-width: 600px; 
     width: 100%; 
+}
+
+/* Animations */
+@keyframes shimmer {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-3px);
+    }
+    60% {
+        transform: translateY(-1px);
+    }
+}
+
+@keyframes correctPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(144, 238, 144, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(144, 238, 144, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(144, 238, 144, 0);
+    }
+}
+
+.row-loading {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
 }

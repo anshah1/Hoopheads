@@ -27,13 +27,13 @@
                 </div>
             </div>
         
-            <form id="player-form" method="POST" action="/guess">
+            <form id="player-form">
                 <div class="search-wrapper">
-                    <input type="text" id="player-search" class="player-search", name="player-search" onkeyup="getSuggestions()" autocomplete="off" />
+                    <input type="text" id="player-search" class="player-search" name="player-search" onkeyup="getSuggestions()" autocomplete="off" />
                     <ul class="suggestions-list" id="suggestions"></ul>
                 </div>
             </form>
-        
+
             <div class="game-table-container">
                 <table class="game-table">
                     <thead>
@@ -109,27 +109,28 @@
         
             <script>
                 let currentFocus = -1; // Tracks which suggestion is highlighted
-            
+                let currentGuessIndex = 0; // Track which row to update next
+
                 function getSuggestions() {
                     const query = document.getElementById('player-search').value;
-            
+
                     if (query.length > 0) {
                         fetch(`/search?q=${query}`)
                             .then(response => response.json())
                             .then(data => {
                                 const suggestionsList = document.getElementById('suggestions');
                                 suggestionsList.innerHTML = ''; // Clear previous suggestions
-            
+
                                 data.forEach((player, index) => {
                                     const listItem = document.createElement('li');
                                     listItem.textContent = player;
-            
-                                    // When the player is clicked, submit the form with that name
+
+                                    // When the player is clicked, submit via AJAX
                                     listItem.addEventListener('click', () => {
                                         document.getElementById('player-search').value = player;
-                                        document.getElementById('player-form').submit();
+                                        submitGuess(player);
                                     });
-            
+
                                     suggestionsList.appendChild(listItem);
                                 });
                                 
@@ -139,7 +140,206 @@
                         document.getElementById('suggestions').innerHTML = ''; 
                     }
                 }
-            
+
+                function submitGuess(playerName) {
+                    // Clear the search input and suggestions
+                    document.getElementById('player-search').value = '';
+                    document.getElementById('suggestions').innerHTML = '';
+                    
+                    // Submit the guess via AJAX
+                    fetch('/guess', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: `player-search=${encodeURIComponent(playerName)}`
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Check if game is won or over (redirect scenarios)
+                        if (data.gameWon) {
+                            // Redirect to congrats page
+                            window.location.href = `/congrats?player_name=${encodeURIComponent(data.playerName)}&guess_count=${data.guessCount}&image_url=${encodeURIComponent(data.imageUrl)}&player_link=${encodeURIComponent(data.playerLink)}`;
+                            return;
+                        } else if (data.gameOver) {
+                            // Redirect to failure page
+                            window.location.href = `/failure?player_name=${encodeURIComponent(data.playerName)}&image_url=${encodeURIComponent(data.imageUrl)}&player_link=${encodeURIComponent(data.playerLink)}`;
+                            return;
+                        }
+                        
+                        // Update only the current row with the new guess data
+                        updateTableRow(currentGuessIndex, data.guessResult);
+                        currentGuessIndex++;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                }
+
+                function updateTableRow(rowIndex, guessData) {
+                    const row = document.querySelector(`tbody tr:nth-child(${rowIndex + 1})`);
+                    const cells = Array.from(row.children).slice(1); // Skip the # column
+                    
+                    // First, add a "loading" state
+                    row.style.transform = 'scale(1.02)';
+                    row.style.transition = 'all 0.3s ease';
+                    
+                    // Animate each cell appearing with a stagger effect
+                    cells.forEach((cell, index) => {
+                        setTimeout(() => {
+                            cell.style.opacity = '0';
+                            cell.style.transform = 'translateY(-10px)';
+                            cell.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+                            
+                            // Update cell content based on index
+                            switch(index) {
+                                case 0: // Name
+                                    cell.textContent = guessData.name;
+                                    break;
+                                case 1: // Division
+                                    cell.textContent = guessData.division;
+                                    cell.className = getBackgroundClass(guessData.divColor);
+                                    break;
+                                case 2: // Height
+                                    updateHeightCell(cell, guessData.height);
+                                    break;
+                                case 3: // PPG
+                                    cell.textContent = guessData.ppg;
+                                    break;
+                                case 4: // RPG
+                                    cell.textContent = guessData.rpg;
+                                    break;
+                                case 5: // APG
+                                    cell.textContent = guessData.apg;
+                                    break;
+                                case 6: // Age
+                                    updateAgeCell(cell, guessData.age);
+                                    break;
+                            }
+                            
+                            // Animate the cell in
+                            setTimeout(() => {
+                                cell.style.opacity = '1';
+                                cell.style.transform = 'translateY(0)';
+                                
+                                // Add a subtle bounce effect for colored cells
+                                if (cell.classList.contains('green-bg')) {
+                                    cell.style.transform = 'scale(1.05)';
+                                    setTimeout(() => {
+                                        cell.style.transform = 'scale(1)';
+                                    }, 200);
+                                }
+                            }, 50);
+                            
+                        }, index * 100); // Stagger each cell by 100ms
+                    });
+                    
+                    // Reset row scale after animation
+                    setTimeout(() => {
+                        row.style.transform = 'scale(1)';
+                        
+                        // Add a subtle pulse effect if there are any correct matches
+                        const hasCorrectMatch = cells.some(cell => cell.classList.contains('green-bg'));
+                        if (hasCorrectMatch) {
+                            row.style.boxShadow = '0 0 20px rgba(144, 238, 144, 0.5)';
+                            setTimeout(() => {
+                                row.style.boxShadow = '';
+                            }, 1000);
+                        }
+                    }, 800);
+                }
+
+                function updateHeightCell(cell, heightData) {
+                    cell.innerHTML = heightData[0];
+                    
+                    if (heightData[1] === 'equal') {
+                        cell.className = 'green-bg';
+                    } else if (['closeup', 'closedown'].includes(heightData[1])) {
+                        cell.className = 'yellow-bg';
+                    } else {
+                        cell.className = 'transparent-bg';
+                    }
+                    
+                    // Add arrow with animation
+                    if (['up', 'closeup'].includes(heightData[1])) {
+                        const arrow = document.createElement('span');
+                        arrow.className = 'arrow';
+                        arrow.innerHTML = '↑';
+                        arrow.style.opacity = '0';
+                        arrow.style.transform = 'translateY(5px)';
+                        arrow.style.transition = 'all 0.3s ease';
+                        cell.appendChild(arrow);
+                        
+                        setTimeout(() => {
+                            arrow.style.opacity = '1';
+                            arrow.style.transform = 'translateY(0)';
+                        }, 100);
+                    } else if (['down', 'closedown'].includes(heightData[1])) {
+                        const arrow = document.createElement('span');
+                        arrow.className = 'arrow';
+                        arrow.innerHTML = '↓';
+                        arrow.style.opacity = '0';
+                        arrow.style.transform = 'translateY(-5px)';
+                        arrow.style.transition = 'all 0.3s ease';
+                        cell.appendChild(arrow);
+                        
+                        setTimeout(() => {
+                            arrow.style.opacity = '1';
+                            arrow.style.transform = 'translateY(0)';
+                        }, 100);
+                    }
+                }
+
+                function updateAgeCell(cell, ageData) {
+                    cell.innerHTML = ageData[0];
+                    
+                    if (ageData[1] === 'equal') {
+                        cell.className = 'green-bg';
+                    } else if (['closeup', 'closedown'].includes(ageData[1])) {
+                        cell.className = 'yellow-bg';
+                    } else {
+                        cell.className = 'transparent-bg';
+                    }
+                    
+                    // Add arrow with animation
+                    if (['up', 'closeup'].includes(ageData[1])) {
+                        const arrow = document.createElement('span');
+                        arrow.className = 'arrow';
+                        arrow.innerHTML = '↑';
+                        arrow.style.opacity = '0';
+                        arrow.style.transform = 'translateY(5px)';
+                        arrow.style.transition = 'all 0.3s ease';
+                        cell.appendChild(arrow);
+                        
+                        setTimeout(() => {
+                            arrow.style.opacity = '1';
+                            arrow.style.transform = 'translateY(0)';
+                        }, 100);
+                    } else if (['down', 'closedown'].includes(ageData[1])) {
+                        const arrow = document.createElement('span');
+                        arrow.className = 'arrow';
+                        arrow.innerHTML = '↓';
+                        arrow.style.opacity = '0';
+                        arrow.style.transform = 'translateY(-5px)';
+                        arrow.style.transition = 'all 0.3s ease';
+                        cell.appendChild(arrow);
+                        
+                        setTimeout(() => {
+                            arrow.style.opacity = '1';
+                            arrow.style.transform = 'translateY(0)';
+                        }, 100);
+                    }
+                }
+
+                function getBackgroundClass(color) {
+                    switch(color) {
+                        case '#90EE90': return 'green-bg';
+                        case '#FFFFC5': return 'yellow-bg';
+                        case '#FFCCCB': return 'red-bg';
+                        default: return 'transparent-bg';
+                    }
+                }
+
                 // Handle key navigation
                 document.getElementById('player-search').addEventListener('keydown', function(e) {
                     const suggestionsList = document.getElementById('suggestions').getElementsByTagName('li');
@@ -154,25 +354,42 @@
                             e.preventDefault();
                             if (currentFocus > -1) {
                                 if (suggestionsList[currentFocus]) {
-                                    suggestionsList[currentFocus].click(); // Simulate click on suggestion
+                                    const playerName = suggestionsList[currentFocus].textContent;
+                                    submitGuess(playerName);
                                 }
                             }
                         }
                     }
                 });
-            
+
                 function addActive(suggestionsList) {
                     removeActive(suggestionsList);
                     if (currentFocus >= suggestionsList.length) currentFocus = 0;
                     if (currentFocus < 0) currentFocus = suggestionsList.length - 1;
                     suggestionsList[currentFocus].classList.add("active");
                 }
-            
+
                 function removeActive(suggestionsList) {
                     for (let i = 0; i < suggestionsList.length; i++) {
                         suggestionsList[i].classList.remove("active");
                     }
                 }
+
+                // Initialize currentGuessIndex based on existing guesses
+                document.addEventListener('DOMContentLoaded', function() {
+                    const rows = document.querySelectorAll('tbody tr');
+                    currentGuessIndex = 0;
+                    
+                    // Count how many rows already have data
+                    for (let i = 0; i < rows.length; i++) {
+                        const nameCell = rows[i].children[1]; // Name column
+                        if (nameCell.textContent.trim() !== '') {
+                            currentGuessIndex++;
+                        } else {
+                            break;
+                        }
+                    }
+                });
             </script>
         </div>
     {% endblock %}
