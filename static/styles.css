@@ -18,11 +18,6 @@
     }
 }
 
-/* Optional: Add a hover effect for table rows */
-tr:hover {
-    background-color: #f0f0f0; /* Light gray on hover */
-}
-
 h2 {
     font-family: "Verdana Primer", serif;
 }
@@ -441,6 +436,8 @@ body {
     box-sizing: border-box; /* Include padding in height calculation */
 }
 
+
+
 .game-table td:empty {
     background-color: #fff;
 }
@@ -477,6 +474,11 @@ body {
         border: 1px solid #000;
         line-height: 1.2;
         vertical-align: middle;
+        height: 1.5rem;
+        min-height: 1.5rem;
+        max-height: 1.5rem;
+        line-height: 1.5rem; /* Centers text vertically */
+    
     }
     
     .game-table th {
