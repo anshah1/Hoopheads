@@ -1,15 +1,14 @@
 import random
 import os
 import warnings
-import sqlite3
+import json
 from io import StringIO
 from flask import Flask, redirect, render_template, session, request, jsonify
 from werkzeug.security import check_password_hash, generate_password_hash
-from data.dataStorage import players, allTheData, divisionBreakdown, conferenceBreakdown
+from data.dataStorage import divisionBreakdown, conferenceBreakdown
 warnings.simplefilter(action='ignore', category=FutureWarning)
 from datetime import datetime, timedelta
 from scraping import get_player_headshot, get_player_link
-from dotenv import load_dotenv
 import unicodedata
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = True
@@ -22,24 +21,24 @@ def start_game():
     session.permanent = True
     player_found = False
     while not player_found:
-        random_player = random.choice(allTheData)
-        print(f"Selected Player: {random_player['NAME']}")
+        random_player = random.choice(list(allTheData.keys()))
+        print(f"Selected Player: random_player")
         try:
-            ppg = float(random_player['PPG'])
-            rpg = float(random_player['RPG'])
-            apg = float(random_player['APG'])
+            ppg = float(allTheData[random_player]['PPG'])
+            rpg = float(allTheData[random_player]['RPG'])
+            apg = float(allTheData[random_player]['APG'])
             player_found = True
         except:
             continue  # skip malformed player
 
-    session["correct_player"] = random_player["NAME"]
+    session["correct_player"] = random_player
     session["ppg"] = ppg
     session["apg"] = apg
     session["rpg"] = rpg
-    session["division"] = defaultDivision(random_player)
-    height = random_player["HEIGHT"]
+    session["division"] = defaultDivision(allTheData[random_player])
+    height = allTheData[random_player]["HEIGHT"]
     session["inches"] = int(height[0]) * 12 + int(height[2])
-    session["age"] = defaultAge(random_player['NAME'])
+    session["age"] = defaultAge(allTheData[random_player])
     session["guess_count"] = 0
     session["guesses"] = [{"name": "", "division": "", "height": "", "age": ""} for _ in range(8)]
     return render_template("index.html", ppg=ppg, apg=apg, rpg=rpg, guesses=session["guesses"])
@@ -70,13 +69,14 @@ def process_guess():
         if session["guess_count"] == 8:
             return render_template("failure.html", player_name = session["correct_player"], image_url=image_url, player_link = player_link)
         guesses[guess_count - 1]["name"] = guessedPlayer
-        guesses[guess_count-1]['division'] = getDivision(guessedPlayer)[0]
-        guesses[guess_count-1]['divColor'] = getDivision(guessedPlayer)[1]
+        division = getDivision(allTheData[guessedPlayer])
+        guesses[guess_count-1]['division'] = division[0]
+        guesses[guess_count-1]['divColor'] = division[1]
         guesses[guess_count - 1]["height"] = getHeight(guessedPlayer)
-        guesses[guess_count - 1]["ppg"] = getPoints(guessedPlayer)
-        guesses[guess_count - 1]["rpg"] = getRebounds(guessedPlayer)
-        guesses[guess_count - 1]["apg"] = getAssists(guessedPlayer)
-        guesses[guess_count - 1]["age"] = getAge(guessedPlayer)
+        guesses[guess_count - 1]["ppg"] = allTheData[guessedPlayer]['PPG']
+        guesses[guess_count - 1]["rpg"] = allTheData[guessedPlayer]['RPG']
+        guesses[guess_count - 1]["apg"] = allTheData[guessedPlayer]['APG']
+        guesses[guess_count - 1]["age"] = getAge(allTheData[guessedPlayer])
         return render_template("index.html", ppg=ppg, apg=apg, rpg=rpg, guesses = guesses)
 
 @app.route('/search', methods=['GET'])
@@ -87,66 +87,48 @@ def search():
 
     if query:
         norm_query = strip_accents(query)
-        matches = [player for player in players if norm_query in strip_accents(player.lower())]
+        matches = [player for player in list(allTheData.keys()) if norm_query in strip_accents(player.lower())]
         return jsonify(matches[:10])
     return jsonify([])
             
-def getDivision(guessedPlayer):
-    for player in allTheData:
-        if player['NAME'] == guessedPlayer:
-            division = defaultDivision(player)
-            correct_division = session["division"]
-            if division == correct_division:
-                return [division, "#90EE90"]
-            else:
-                guessed_conf = None
-                correct_conf = None
-                for conference, divisions in conferenceBreakdown.items():
-                    if division in divisions:
-                        guessed_conf = conference
-                    if correct_division in divisions:
-                        correct_conf = conference
-                if guessed_conf == correct_conf:
-                    return [division, "#FFFFC5"]
-                return [division, "#FFCCCB"]
+def getDivision(guessedPlayerData):
+    division = defaultDivision(guessedPlayerData)
+    correct_division = session["division"]
+    if division == correct_division:
+        return [division, "#90EE90"]
+    else:
+        guessed_conf = None
+        correct_conf = None
+        for conference, divisions in conferenceBreakdown.items():
+            if division in divisions:
+                guessed_conf = conference
+            if correct_division in divisions:
+                correct_conf = conference
+        if guessed_conf == correct_conf:
+            return [division, "#FFFFC5"]
+        return [division, "#FFCCCB"]
 
             
 def getHeight(guessedPlayer):
-    for player in allTheData:
-        if player['NAME'] == guessedPlayer:
-            height = player['HEIGHT']
-            if len(height) == 4:
-                inches = inches = int(height[0]) * 12 + int(height[2]) * 10 + int(height[3])
-            else:
-                inches = int(height[0]) * 12 + int(height[2])
-            if session["inches"] > inches:
-                if session["inches"] - inches == 1 or session["inches"] - inches == 2:
-                    return [height, 'closeup']
-                return [height, 'up']
-            elif session["inches"] < inches:
-                if inches - session["inches"] == 1 or inches - session["inches"] == 2:
-                    return [height, 'closedown']
-                return [height, 'down']
-            else:
-                return [height, 'equal']
+    global allTheData
+    height = allTheData[guessedPlayer]['HEIGHT']
+    if len(height) == 4:
+        inches = inches = int(height[0]) * 12 + int(height[2]) * 10 + int(height[3])
+    else:
+        inches = int(height[0]) * 12 + int(height[2])
+    if session["inches"] > inches:
+        if session["inches"] - inches == 1 or session["inches"] - inches == 2:
+            return [height, 'closeup']
+        return [height, 'up']
+    elif session["inches"] < inches:
+        if inches - session["inches"] == 1 or inches - session["inches"] == 2:
+            return [height, 'closedown']
+        return [height, 'down']
+    else:
+        return [height, 'equal']
 
-def getPoints(guessedPlayer):
-    for player in allTheData:
-        if player['NAME'] == guessedPlayer:
-            return player['PPG']
-        
-def getRebounds(guessedPlayer):
-    for player in allTheData:
-        if player['NAME'] == guessedPlayer:
-            return player['RPG']
-        
-def getAssists(guessedPlayer):
-    for player in allTheData:
-        if player['NAME'] == guessedPlayer:
-            return player['APG']
-        
-def getAge(guessedPlayer):
-    age = defaultAge(guessedPlayer)
+def getAge(guessedPlayerData):
+    age = defaultAge(guessedPlayerData)
     if session["age"] > age:
         if session["age"] - age == 1 or session["age"] - age == 2:
             return [age, 'closeup']
@@ -158,19 +140,20 @@ def getAge(guessedPlayer):
     else:
         return [age, 'equal']
 
-def defaultDivision(player):
+def defaultDivision(playerDict):
+    global allTheData
     for division, teamList in divisionBreakdown.items():
-        if player['TEAM'] in teamList:
+        if playerDict['TEAM'] in teamList:
             return division
         
-def defaultAge(player):
-    for row in allTheData:
-        if player == row['NAME']:
-            bday_str = row['BIRTHDAY']
+def defaultAge(playerDict):
+    bday_str = playerDict['BIRTHDAY']
     bday = datetime.strptime(bday_str, "%Y-%m-%d")  # Adjust format if needed
     age = (datetime.today() - bday).days // 365
     return age
 
 
 if __name__ == "__main__":
+    with open('data.json', 'r') as file:
+        allTheData = json.load(file)
     app.run()

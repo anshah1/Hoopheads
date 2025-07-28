@@ -2,6 +2,8 @@ from nba_api.stats.static import players
 from nba_api.stats.endpoints import commonplayerinfo
 import time
 
+#this is outdated because i no longer structure the data in this way. when rescraping/autoscraping, i need to update
+
 # Used the following function to get a list of players who scored 6+ ppg, in an attempt to put all relevant players and leave out "unknown" players from the game
 def get_players_with_ppg_greater_than_6():
     player_names = []

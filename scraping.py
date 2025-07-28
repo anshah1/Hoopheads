@@ -3,21 +3,15 @@ from time import sleep
 from requests import get
 import unicodedata, unidecode
 
+#Shoutout to basketball-reference-scraper by Vishaal Agartha, who provided the basis for this code which I later modified
 
 def get_wrapper(url):
-    global last_request
-    # Verify last request was 3 seconds ago
-    #if 0 < time() - last_request < 3:
-    #    sleep(3)
-    #last_request = time()
     r = get(url)
     while True:
         if r.status_code == 200:
             return r
         elif r.status_code == 429:
-            retry_time = int(r.headers["Retry-After"])
-            print(f'Retrying after {retry_time} sec...')
-            sleep(retry_time)
+            sleep(3)
         else:
             return r
 
