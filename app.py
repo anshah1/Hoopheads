@@ -153,7 +153,18 @@ def defaultAge(playerDict):
     return age
 
 
+# Load data at module level (runs on import)
+def load_data():
+    try:
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        data_path = os.path.join(current_dir, 'data.json')
+        with open(data_path, 'r') as file:
+            return json.load(file)
+    except FileNotFoundError:
+        print("data.json not found!")
+        return {}
+
+allTheData = load_data()
+
 if __name__ == "__main__":
-    with open('data.json', 'r') as file:
-        allTheData = json.load(file)
     app.run()
