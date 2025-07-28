@@ -436,19 +436,12 @@ body {
     box-sizing: border-box; /* Include padding in height calculation */
 }
 
-
-
 .game-table td:empty {
     background-color: #fff;
 }
 
 .game-table tbody tr {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.game-table tbody tr:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 @media (max-width: 767px) {
@@ -474,10 +467,6 @@ body {
         border: 1px solid #000;
         line-height: 1.2;
         vertical-align: middle;
-        height: 1.5rem;
-        min-height: 1.5rem;
-        max-height: 1.5rem;
-        line-height: 1.5rem; /* Centers text vertically */
     
     }
     
@@ -519,15 +508,7 @@ body {
     .game-table th {
         font-size: 0.7rem;
     }
-    
-    .game-table td {
-        height: 35px;
-        min-height: 35px;
-        max-height: 35px;
-        line-height: 35px;
-        box-sizing: border-box;
-    }
-    
+        
     .game-table td:nth-child(2) {
         font-size: 0.65rem;
     }
