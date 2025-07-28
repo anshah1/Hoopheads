@@ -15,6 +15,17 @@ app.config["SESSION_PERMANENT"] = True
 app.permanent_session_lifetime = timedelta(minutes=30)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev-temp-secret")
 
+def load_data():
+    try:
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        data_path = os.path.join(current_dir, 'data.json')
+        with open(data_path, 'r') as file:
+            return json.load(file)
+    except FileNotFoundError:
+        print("data.json not found!")
+        return {}
+
+allTheData = load_data()
 
 @app.route("/", methods=["GET"])
 def start_game():
@@ -151,20 +162,6 @@ def defaultAge(playerDict):
     bday = datetime.strptime(bday_str, "%Y-%m-%d")  # Adjust format if needed
     age = (datetime.today() - bday).days // 365
     return age
-
-
-# Load data at module level (runs on import)
-def load_data():
-    try:
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        data_path = os.path.join(current_dir, 'data.json')
-        with open(data_path, 'r') as file:
-            return json.load(file)
-    except FileNotFoundError:
-        print("data.json not found!")
-        return {}
-
-allTheData = load_data()
 
 if __name__ == "__main__":
     app.run()
