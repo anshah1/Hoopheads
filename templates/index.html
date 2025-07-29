@@ -4,405 +4,409 @@
     Play Today's game
 {% endblock %}
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<body>
-    {% block main %}
-        <div class="game-container">
-            <div class="stats-container">
-                <h2 class="stats-title">Player's 2024-2025 Regular Season Per Game Stats</h2>
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <h3>Points</h3>
-                        <h1 class="stat-value">{{ ppg }}</h1>
+{% block main %}
+<div class="game-container mx-auto" style="max-width: 800px;">
+    <!-- Stats Container -->
+    <div class="card shadow-sm mb-4 bg-white bg-opacity-75 rounded-4">
+        <div class="card-body text-center">
+            <h2 class="card-title fs-4 mb-4 text-dark fw-normal">Player's 2024-2025 Regular Season Stats (Per Game)</h2>
+            <div class="row g-3">
+                <div class="col-4">
+                    <div class="card h-100 shadow-sm border-0 rounded-3">
+                        <div class="card-body d-flex flex-column justify-content-center align-items-center py-3">
+                            <h6 class="card-subtitle mb-2 text-muted fs-5">Points</h6>
+                            <h1 class="display-5 fw-bold mb-0" style="color: #04AA6D;">{{ ppg }}</h1>
+                        </div>
                     </div>
-                    <div class="stat-item">
-                        <h3>Rebounds</h3>
-                        <h1 class="stat-value">{{ rpg }}</h1>
+                </div>
+                <div class="col-4">
+                    <div class="card h-100 shadow-sm border-0 rounded-3">
+                        <div class="card-body d-flex flex-column justify-content-center align-items-center py-3">
+                            <h6 class="card-subtitle mb-2 text-muted fs-5">Rebounds</h6>
+                            <h1 class="display-4 fw-bold mb-0" style="color: #04AA6D;">{{ rpg }}</h1>
+                        </div>
                     </div>
-                    <div class="stat-item">
-                        <h3>Assists</h3>
-                        <h1 class="stat-value">{{ apg }}</h1>
+                </div>
+                <div class="col-4">
+                    <div class="card h-100 shadow-sm border-0 rounded-3">
+                        <div class="card-body d-flex flex-column justify-content-center align-items-center py-3">
+                            <h6 class="card-subtitle mb-2 text-muted fs-5">Assists</h6>
+                            <h1 class="display-4 fw-bold mb-0" style="color: #04AA6D;">{{ apg }}</h1>
+                        </div>
                     </div>
                 </div>
             </div>
-        
-            <form id="player-form">
-                <div class="search-wrapper">
-                    <input type="text" id="player-search" class="player-search" name="player-search" onkeyup="getSuggestions()" autocomplete="off" />
-                    <ul class="suggestions-list" id="suggestions"></ul>
-                </div>
-            </form>
-
-            <div class="game-table-container">
-                <table class="game-table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Name</th>
-                            <th>Division</th>
-                            <th>Height</th>
-                            <th>PPG</th>
-                            <th>RPG</th>
-                            <th>APG</th>
-                            <th>Age</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for i in range(8) %}
-                        <tr class="fade-in">
-                            <td>{{ i+1 }}</td>
-                            <td>{{ guesses[i]['name'] or '' }}</td>
-                            <td class="
-                                {% if guesses[i]['divColor'] == '#90EE90' %}
-                                    green-bg
-                                {% elif guesses[i]['divColor'] == '#FFFFC5' %}
-                                    yellow-bg
-                                {% elif guesses[i]['divColor'] == '#FFCCCB' %}
-                                    red-bg
-                                {% else %}
-                                    transparent-bg
-                                {% endif %}
-                            ">
-                                {{ guesses[i]['division'] or '' }}
-                            </td>
-                            <td class="
-                                {% if guesses[i]['height'][1] == 'equal' %}
-                                    green-bg
-                                {% elif guesses[i]['height'][1] in ['closeup', 'closedown'] %}
-                                    yellow-bg
-                                {% else %}
-                                    transparent-bg
-                                {% endif %}
-                            ">
-                                {{ guesses[i]['height'][0] or '' }}
-                                {% if guesses[i]['height'][1] in ['up', 'closeup'] %}
-                                    <span class="arrow">↑</span>
-                                {% elif guesses[i]['height'][1] in ['down', 'closedown'] %}
-                                    <span class="arrow">↓</span>
-                                {% endif %}
-                            </td>
-                            <td>{{ guesses[i]['ppg'] or '' }}</td>
-                            <td>{{ guesses[i]['rpg'] or '' }}</td>
-                            <td>{{ guesses[i]['apg'] or '' }}</td>
-                            <td class="
-                                {% if guesses[i]['age'][1] == 'equal' %}
-                                    green-bg
-                                {% elif guesses[i]['age'][1] in ['closeup', 'closedown'] %}
-                                    yellow-bg
-                                {% else %}
-                                    transparent-bg
-                                {% endif %}
-                            ">
-                                {{ guesses[i]['age'][0] or '' }}
-                                {% if guesses[i]['age'][1] in ['up', 'closeup'] %}
-                                    <span class="arrow">↑</span>
-                                {% elif guesses[i]['age'][1] in ['down', 'closedown'] %}
-                                    <span class="arrow">↓</span>
-                                {% endif %}
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-
         </div>
-        
-        <div class="button-container">
-            <button href="/failure" class="forfeit-button">
-                Give Up & Show Answer
-            </button>
-            <a href="/reset" class="reset-button">
-                🔄 New Game
-            </a>
+    </div>
+
+    <!-- Search Form -->
+    <form id="player-form" class="mb-4">
+        <div class="search-wrapper position-relative mx-auto" style="max-width: 400px;">
+            <input type="text" id="player-search" class="form-control form-control-lg border-2 shadow-sm" 
+                   name="player-search" onkeyup="getSuggestions()" autocomplete="off" 
+                   placeholder="Search for a player..." />
+            <ul class="suggestions-list position-absolute w-100 bg-white border border-top-0 rounded-bottom shadow list-unstyled m-0 p-0" 
+                id="suggestions" style="z-index: 1000; max-height: 220px; overflow-y: auto;"></ul>
         </div>
-        
-            <script>
-                let currentFocus = -1; // Tracks which suggestion is highlighted
-                let currentGuessIndex = 0; // Track which row to update next
+    </form>
 
-                function getSuggestions() {
-                    const query = document.getElementById('player-search').value;
+    <!-- Game Table -->
+    <div class="game-table-container table-responsive">
+        <table class="table table-bordered text-center game-table">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col" class="fw-bold">#</th>
+                    <th scope="col" class="fw-bold">Name</th>
+                    <th scope="col" class="fw-bold">Division</th>
+                    <th scope="col" class="fw-bold">Height</th>
+                    <th scope="col" class="fw-bold">PPG</th>
+                    <th scope="col" class="fw-bold">RPG</th>
+                    <th scope="col" class="fw-bold">APG</th>
+                    <th scope="col" class="fw-bold">Age</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in range(8) %}
+                <tr class="fade-in">
+                    <td class="fw-semibold">{{ i+1 }}</td>
+                    <td>{{ guesses[i]['name'] or '' }}</td>
+                    <td class="
+                        {% if guesses[i]['divColor'] == '#90EE90' %}
+                            green-bg
+                        {% elif guesses[i]['divColor'] == '#FFFFC5' %}
+                            yellow-bg
+                        {% elif guesses[i]['divColor'] == '#FFCCCB' %}
+                            red-bg
+                        {% endif %}
+                    ">
+                        {{ guesses[i]['division'] or '' }}
+                    </td>
+                    <td class="
+                        {% if guesses[i]['height'][1] == 'equal' %}
+                            green-bg
+                        {% elif guesses[i]['height'][1] in ['closeup', 'closedown'] %}
+                            yellow-bg
+                        {% endif %}
+                    ">
+                        {{ guesses[i]['height'][0] or '' }}
+                        {% if guesses[i]['height'][1] in ['up', 'closeup'] %}
+                            <span class="arrow">↑</span>
+                        {% elif guesses[i]['height'][1] in ['down', 'closedown'] %}
+                            <span class="arrow">↓</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ guesses[i]['ppg'] or '' }}</td>
+                    <td>{{ guesses[i]['rpg'] or '' }}</td>
+                    <td>{{ guesses[i]['apg'] or '' }}</td>
+                    <td class="
+                        {% if guesses[i]['age'][1] == 'equal' %}
+                            green-bg
+                        {% elif guesses[i]['age'][1] in ['closeup', 'closedown'] %}
+                            yellow-bg
+                        {% endif %}
+                    ">
+                        {{ guesses[i]['age'][0] or '' }}
+                        {% if guesses[i]['age'][1] in ['up', 'closeup'] %}
+                            <span class="arrow">↑</span>
+                        {% elif guesses[i]['age'][1] in ['down', 'closedown'] %}
+                            <span class="arrow">↓</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-                    if (query.length > 0) {
-                        fetch(`/search?q=${query}`)
-                            .then(response => response.json())
-                            .then(data => {
-                                const suggestionsList = document.getElementById('suggestions');
-                                suggestionsList.innerHTML = ''; // Clear previous suggestions
+    <!-- Action Buttons -->
+    <div class="d-flex gap-3 justify-content-center mt-4 flex-wrap">
+        <button href="/failure" class="btn btn-danger btn-lg flex-fill" style="max-width: 300px;">
+            Give Up & Show Answer
+        </button>
+        <a href="/reset" class="btn btn-success btn-lg d-flex align-items-center justify-content-center gap-2 flex-fill" 
+           style="max-width: 200px;">
+            🔄 New Game
+        </a>
+    </div>
+</div>
 
-                                data.forEach((player, index) => {
-                                    const listItem = document.createElement('li');
-                                    listItem.textContent = player;
+<script>
+    let currentFocus = -1;
+    let currentGuessIndex = 0;
 
-                                    // When the player is clicked, submit via AJAX
-                                    listItem.addEventListener('click', () => {
-                                        document.getElementById('player-search').value = player;
-                                        submitGuess(player);
-                                    });
+    function getSuggestions() {
+        const query = document.getElementById('player-search').value;
 
-                                    suggestionsList.appendChild(listItem);
-                                });
-                                
-                                currentFocus = -1; // Reset the focus
-                            });
-                    } else {
-                        document.getElementById('suggestions').innerHTML = ''; 
-                    }
-                }
+        if (query.length > 0) {
+            fetch(`/search?q=${query}`)
+                .then(response => response.json())
+                .then(data => {
+                    const suggestionsList = document.getElementById('suggestions');
+                    suggestionsList.innerHTML = '';
 
-                function submitGuess(playerName) {
-                    // Clear the search input and suggestions
-                    document.getElementById('player-search').value = '';
-                    document.getElementById('suggestions').innerHTML = '';
-                    
-                    // Submit the guess via AJAX
-                    fetch('/guess', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                        body: `player-search=${encodeURIComponent(playerName)}`
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        // Check if game is won or over (redirect scenarios)
-                        if (data.gameWon) {
-                            // Redirect to congrats page
-                            window.location.href = `/congrats?player_name=${encodeURIComponent(data.playerName)}&guess_count=${data.guessCount}&image_url=${encodeURIComponent(data.imageUrl)}&player_link=${encodeURIComponent(data.playerLink)}`;
-                            return;
-                        } else if (data.gameOver) {
-                            // Redirect to failure page
-                            window.location.href = `/failure?player_name=${encodeURIComponent(data.playerName)}&image_url=${encodeURIComponent(data.imageUrl)}&player_link=${encodeURIComponent(data.playerLink)}`;
-                            return;
-                        }
-                        
-                        // Update only the current row with the new guess data
-                        updateTableRow(currentGuessIndex, data.guessResult);
-                        currentGuessIndex++;
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-                }
+                    data.forEach((player, index) => {
+                        const listItem = document.createElement('li');
+                        listItem.className = 'list-group-item list-group-item-action border-0 py-2 px-3 text-center';
+                        listItem.style.cursor = 'pointer';
+                        listItem.textContent = player;
 
-                function updateTableRow(rowIndex, guessData) {
-                    const row = document.querySelector(`tbody tr:nth-child(${rowIndex + 1})`);
-                    const cells = Array.from(row.children).slice(1); // Skip the # column
-                    
-                    // First, add a "loading" state
-                    row.style.transform = 'scale(1.02)';
-                    row.style.transition = 'all 0.3s ease';
-                    
-                    // Animate each cell appearing with a stagger effect
-                    cells.forEach((cell, index) => {
-                        setTimeout(() => {
-                            cell.style.opacity = '0';
-                            cell.style.transform = 'translateY(-10px)';
-                            cell.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
-                            
-                            // Update cell content based on index
-                            switch(index) {
-                                case 0: // Name
-                                    cell.textContent = guessData.name;
-                                    break;
-                                case 1: // Division
-                                    cell.textContent = guessData.division;
-                                    cell.className = getBackgroundClass(guessData.divColor);
-                                    break;
-                                case 2: // Height
-                                    updateHeightCell(cell, guessData.height);
-                                    break;
-                                case 3: // PPG
-                                    cell.textContent = guessData.ppg;
-                                    break;
-                                case 4: // RPG
-                                    cell.textContent = guessData.rpg;
-                                    break;
-                                case 5: // APG
-                                    cell.textContent = guessData.apg;
-                                    break;
-                                case 6: // Age
-                                    updateAgeCell(cell, guessData.age);
-                                    break;
-                            }
-                            
-                            // Animate the cell in
-                            setTimeout(() => {
-                                cell.style.opacity = '1';
-                                cell.style.transform = 'translateY(0)';
-                                
-                                // Add a subtle bounce effect for colored cells
-                                if (cell.classList.contains('green-bg')) {
-                                    cell.style.transform = 'scale(1.05)';
-                                    setTimeout(() => {
-                                        cell.style.transform = 'scale(1)';
-                                    }, 200);
-                                }
-                            }, 50);
-                            
-                        }, index * 100); // Stagger each cell by 100ms
+                        listItem.addEventListener('click', () => {
+                            document.getElementById('player-search').value = player;
+                            submitGuess(player);
+                        });
+
+                        listItem.addEventListener('mouseenter', () => {
+                            listItem.classList.add('text-white');
+                            listItem.style.backgroundColor = '#04AA6D';
+                        });
+
+                        listItem.addEventListener('mouseleave', () => {
+                            listItem.classList.remove('text-white');
+                            listItem.style.backgroundColor = '';
+                        });
+
+                        suggestionsList.appendChild(listItem);
                     });
                     
-                    // Reset row scale after animation
-                    setTimeout(() => {
-                        row.style.transform = 'scale(1)';
-                        
-                        // Add a subtle pulse effect if there are any correct matches
-                        const hasCorrectMatch = cells.some(cell => cell.classList.contains('green-bg'));
-                        if (hasCorrectMatch) {
-                            row.style.boxShadow = '0 0 20px rgba(144, 238, 144, 0.5)';
-                            setTimeout(() => {
-                                row.style.boxShadow = '';
-                            }, 1000);
-                        }
-                    }, 800);
-                }
-
-                function updateHeightCell(cell, heightData) {
-                    cell.innerHTML = heightData[0];
-                    
-                    if (heightData[1] === 'equal') {
-                        cell.className = 'green-bg';
-                    } else if (['closeup', 'closedown'].includes(heightData[1])) {
-                        cell.className = 'yellow-bg';
-                    } else {
-                        cell.className = 'transparent-bg';
-                    }
-                    
-                    // Add arrow with animation
-                    if (['up', 'closeup'].includes(heightData[1])) {
-                        const arrow = document.createElement('span');
-                        arrow.className = 'arrow';
-                        arrow.innerHTML = '↑';
-                        arrow.style.opacity = '0';
-                        arrow.style.transform = 'translateY(5px)';
-                        arrow.style.transition = 'all 0.3s ease';
-                        cell.appendChild(arrow);
-                        
-                        setTimeout(() => {
-                            arrow.style.opacity = '1';
-                            arrow.style.transform = 'translateY(0)';
-                        }, 100);
-                    } else if (['down', 'closedown'].includes(heightData[1])) {
-                        const arrow = document.createElement('span');
-                        arrow.className = 'arrow';
-                        arrow.innerHTML = '↓';
-                        arrow.style.opacity = '0';
-                        arrow.style.transform = 'translateY(-5px)';
-                        arrow.style.transition = 'all 0.3s ease';
-                        cell.appendChild(arrow);
-                        
-                        setTimeout(() => {
-                            arrow.style.opacity = '1';
-                            arrow.style.transform = 'translateY(0)';
-                        }, 100);
-                    }
-                }
-
-                function updateAgeCell(cell, ageData) {
-                    cell.innerHTML = ageData[0];
-                    
-                    if (ageData[1] === 'equal') {
-                        cell.className = 'green-bg';
-                    } else if (['closeup', 'closedown'].includes(ageData[1])) {
-                        cell.className = 'yellow-bg';
-                    } else {
-                        cell.className = 'transparent-bg';
-                    }
-                    
-                    // Add arrow with animation
-                    if (['up', 'closeup'].includes(ageData[1])) {
-                        const arrow = document.createElement('span');
-                        arrow.className = 'arrow';
-                        arrow.innerHTML = '↑';
-                        arrow.style.opacity = '0';
-                        arrow.style.transform = 'translateY(5px)';
-                        arrow.style.transition = 'all 0.3s ease';
-                        cell.appendChild(arrow);
-                        
-                        setTimeout(() => {
-                            arrow.style.opacity = '1';
-                            arrow.style.transform = 'translateY(0)';
-                        }, 100);
-                    } else if (['down', 'closedown'].includes(ageData[1])) {
-                        const arrow = document.createElement('span');
-                        arrow.className = 'arrow';
-                        arrow.innerHTML = '↓';
-                        arrow.style.opacity = '0';
-                        arrow.style.transform = 'translateY(-5px)';
-                        arrow.style.transition = 'all 0.3s ease';
-                        cell.appendChild(arrow);
-                        
-                        setTimeout(() => {
-                            arrow.style.opacity = '1';
-                            arrow.style.transform = 'translateY(0)';
-                        }, 100);
-                    }
-                }
-
-                function getBackgroundClass(color) {
-                    switch(color) {
-                        case '#90EE90': return 'green-bg';
-                        case '#FFFFC5': return 'yellow-bg';
-                        case '#FFCCCB': return 'red-bg';
-                        default: return 'transparent-bg';
-                    }
-                }
-
-                // Handle key navigation
-                document.getElementById('player-search').addEventListener('keydown', function(e) {
-                    const suggestionsList = document.getElementById('suggestions').getElementsByTagName('li');
-                    if (suggestionsList.length > 0) {
-                        if (e.key === 'ArrowDown') {
-                            currentFocus++;
-                            addActive(suggestionsList);
-                        } else if (e.key === 'ArrowUp') {
-                            currentFocus--;
-                            addActive(suggestionsList);
-                        } else if (e.key === 'Enter') {
-                            e.preventDefault();
-                            if (currentFocus > -1) {
-                                if (suggestionsList[currentFocus]) {
-                                    const playerName = suggestionsList[currentFocus].textContent;
-                                    submitGuess(playerName);
-                                }
-                            }
-                        }
-                    }
+                    currentFocus = -1;
                 });
+        } else {
+            document.getElementById('suggestions').innerHTML = ''; 
+        }
+    }
 
-                function addActive(suggestionsList) {
-                    removeActive(suggestionsList);
-                    if (currentFocus >= suggestionsList.length) currentFocus = 0;
-                    if (currentFocus < 0) currentFocus = suggestionsList.length - 1;
-                    suggestionsList[currentFocus].classList.add("active");
+    function submitGuess(playerName) {
+        document.getElementById('player-search').value = '';
+        document.getElementById('suggestions').innerHTML = '';
+        
+        fetch('/guess', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `player-search=${encodeURIComponent(playerName)}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.gameWon) {
+                window.location.href = `/congrats?player_name=${encodeURIComponent(data.playerName)}&guess_count=${data.guessCount}&image_url=${encodeURIComponent(data.imageUrl)}&player_link=${encodeURIComponent(data.playerLink)}`;
+                return;
+            } else if (data.gameOver) {
+                window.location.href = `/failure?player_name=${encodeURIComponent(data.playerName)}&image_url=${encodeURIComponent(data.imageUrl)}&player_link=${encodeURIComponent(data.playerLink)}`;
+                return;
+            }
+            
+            updateTableRow(currentGuessIndex, data.guessResult);
+            currentGuessIndex++;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+    function updateTableRow(rowIndex, guessData) {
+        const row = document.querySelector(`tbody tr:nth-child(${rowIndex + 1})`);
+        const cells = Array.from(row.children).slice(1);
+        
+        row.style.transform = 'scale(1.02)';
+        row.style.transition = 'all 0.3s ease';
+        
+        cells.forEach((cell, index) => {
+            setTimeout(() => {
+                cell.style.opacity = '0';
+                cell.style.transform = 'translateY(-10px)';
+                cell.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+                
+                switch(index) {
+                    case 0:
+                        cell.textContent = guessData.name;
+                        break;
+                    case 1:
+                        cell.textContent = guessData.division;
+                        cell.className = getBackgroundClass(guessData.divColor);
+                        break;
+                    case 2:
+                        updateHeightCell(cell, guessData.height);
+                        break;
+                    case 3:
+                        cell.textContent = guessData.ppg;
+                        break;
+                    case 4:
+                        cell.textContent = guessData.rpg;
+                        break;
+                    case 5:
+                        cell.textContent = guessData.apg;
+                        break;
+                    case 6:
+                        updateAgeCell(cell, guessData.age);
+                        break;
                 }
-
-                function removeActive(suggestionsList) {
-                    for (let i = 0; i < suggestionsList.length; i++) {
-                        suggestionsList[i].classList.remove("active");
-                    }
-                }
-
-                // Initialize currentGuessIndex based on existing guesses
-                document.addEventListener('DOMContentLoaded', function() {
-                    const rows = document.querySelectorAll('tbody tr');
-                    currentGuessIndex = 0;
+                
+                setTimeout(() => {
+                    cell.style.opacity = '1';
+                    cell.style.transform = 'translateY(0)';
                     
-                    // Count how many rows already have data
-                    for (let i = 0; i < rows.length; i++) {
-                        const nameCell = rows[i].children[1]; // Name column
-                        if (nameCell.textContent.trim() !== '') {
-                            currentGuessIndex++;
-                        } else {
-                            break;
-                        }
+                    if (cell.classList.contains('green-bg')) {
+                        cell.style.transform = 'scale(1.05)';
+                        setTimeout(() => {
+                            cell.style.transform = 'scale(1)';
+                        }, 200);
                     }
-                });
-            </script>
-        </div>
-    {% endblock %}
-</body>
-</html>
+                }, 50);
+                
+            }, index * 100);
+        });
+        
+        setTimeout(() => {
+            row.style.transform = 'scale(1)';
+            
+            const hasCorrectMatch = cells.some(cell => cell.classList.contains('green-bg'));
+            if (hasCorrectMatch) {
+                row.style.boxShadow = '0 0 20px rgba(144, 238, 144, 0.5)';
+                setTimeout(() => {
+                    row.style.boxShadow = '';
+                }, 1000);
+            }
+        }, 800);
+    }
+
+    function updateHeightCell(cell, heightData) {
+        cell.innerHTML = heightData[0];
+        
+        if (heightData[1] === 'equal') {
+            cell.className = 'green-bg';
+        } else if (['closeup', 'closedown'].includes(heightData[1])) {
+            cell.className = 'yellow-bg';
+        } else {
+            cell.className = '';
+        }
+        
+        if (['up', 'closeup'].includes(heightData[1])) {
+            const arrow = document.createElement('span');
+            arrow.className = 'arrow';
+            arrow.innerHTML = '↑';
+            arrow.style.opacity = '0';
+            arrow.style.transform = 'translateY(5px)';
+            arrow.style.transition = 'all 0.3s ease';
+            cell.appendChild(arrow);
+            
+            setTimeout(() => {
+                arrow.style.opacity = '1';
+                arrow.style.transform = 'translateY(0)';
+            }, 100);
+        } else if (['down', 'closedown'].includes(heightData[1])) {
+            const arrow = document.createElement('span');
+            arrow.className = 'arrow';
+            arrow.innerHTML = '↓';
+            arrow.style.opacity = '0';
+            arrow.style.transform = 'translateY(-5px)';
+            arrow.style.transition = 'all 0.3s ease';
+            cell.appendChild(arrow);
+            
+            setTimeout(() => {
+                arrow.style.opacity = '1';
+                arrow.style.transform = 'translateY(0)';
+            }, 100);
+        }
+    }
+
+    function updateAgeCell(cell, ageData) {
+        cell.innerHTML = ageData[0];
+        
+        if (ageData[1] === 'equal') {
+            cell.className = 'green-bg';
+        } else if (['closeup', 'closedown'].includes(ageData[1])) {
+            cell.className = 'yellow-bg';
+        } else {
+            cell.className = '';
+        }
+        
+        if (['up', 'closeup'].includes(ageData[1])) {
+            const arrow = document.createElement('span');
+            arrow.className = 'arrow';
+            arrow.innerHTML = '↑';
+            arrow.style.opacity = '0';
+            arrow.style.transform = 'translateY(5px)';
+            arrow.style.transition = 'all 0.3s ease';
+            cell.appendChild(arrow);
+            
+            setTimeout(() => {
+                arrow.style.opacity = '1';
+                arrow.style.transform = 'translateY(0)';
+            }, 100);
+        } else if (['down', 'closedown'].includes(ageData[1])) {
+            const arrow = document.createElement('span');
+            arrow.className = 'arrow';
+            arrow.innerHTML = '↓';
+            arrow.style.opacity = '0';
+            arrow.style.transform = 'translateY(-5px)';
+            arrow.style.transition = 'all 0.3s ease';
+            cell.appendChild(arrow);
+            
+            setTimeout(() => {
+                arrow.style.opacity = '1';
+                arrow.style.transform = 'translateY(0)';
+            }, 100);
+        }
+    }
+
+    function getBackgroundClass(color) {
+        switch(color) {
+            case '#90EE90': return 'green-bg';
+            case '#FFFFC5': return 'yellow-bg';
+            case '#FFCCCB': return 'red-bg';
+            default: return '';
+        }
+    }
+
+    document.getElementById('player-search').addEventListener('keydown', function(e) {
+        const suggestionsList = document.getElementById('suggestions').getElementsByTagName('li');
+        if (suggestionsList.length > 0) {
+            if (e.key === 'ArrowDown') {
+                currentFocus++;
+                addActive(suggestionsList);
+            } else if (e.key === 'ArrowUp') {
+                currentFocus--;
+                addActive(suggestionsList);
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                if (currentFocus > -1) {
+                    if (suggestionsList[currentFocus]) {
+                        const playerName = suggestionsList[currentFocus].textContent;
+                        submitGuess(playerName);
+                    }
+                }
+            }
+        }
+    });
+
+    function addActive(suggestionsList) {
+        removeActive(suggestionsList);
+        if (currentFocus >= suggestionsList.length) currentFocus = 0;
+        if (currentFocus < 0) currentFocus = suggestionsList.length - 1;
+        suggestionsList[currentFocus].classList.add("text-white");
+        suggestionsList[currentFocus].style.backgroundColor = '#04AA6D';
+    }
+
+    function removeActive(suggestionsList) {
+        for (let i = 0; i < suggestionsList.length; i++) {
+            suggestionsList[i].classList.remove("text-white");
+            suggestionsList[i].style.backgroundColor = '';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const rows = document.querySelectorAll('tbody tr');
+        currentGuessIndex = 0;
+        
+        for (let i = 0; i < rows.length; i++) {
+            const nameCell = rows[i].children[1];
+            if (nameCell.textContent.trim() !== '') {
+                currentGuessIndex++;
+            } else {
+                break;
+            }
+        }
+    });
+</script>
+{% endblock %}

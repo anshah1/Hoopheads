@@ -34,7 +34,7 @@ def start_game():
         player_found = False
         while not player_found:
             random_player = random.choice(list(allTheData.keys()))
-            print(f"Selected Player: random_player")
+            print(f"Selected Player: {random_player}")
             try:
                 ppg = float(allTheData[random_player]['PPG'])
                 rpg = float(allTheData[random_player]['RPG'])

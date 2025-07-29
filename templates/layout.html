@@ -8,72 +8,49 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <link href="/static/favicon.ico" rel="icon">
-
     <link href="/static/styles.css" rel="stylesheet">
 
     <title>Hoophead: Guess the NBA Player</title>
 </head>
 
-<body>
-  <!-- 
-  -->
-  <nav class="navbar navbar-light">
-    <div class="container">
-      <!-- Mobile layout: Logo and text stacked on left, help on right -->
-      <div class="d-flex justify-content-between align-items-center w-100 d-lg-none mobile-navbar">
-        <div class="d-flex flex-column align-items-center">
-            <div class="d-flex align-items-center gap-2">
-            <img src="../static/images/logo.png" alt="Logo" class="nav-icon">
-          </div>
-          <span class="mobile-subtitle">Guess the NBA Player</span>
-        </div>
-        
-        <div class="d-flex align-items-center gap-2 nav-link-item mobile-help" role="button" data-bs-toggle="modal" data-bs-target="#infoModal">
-          <img src="../static/images/help2.png" alt="Help Icon" class="nav-icon">
-          <span class="nav-text mobile-nav-text">Help</span>
-        </div>
-      </div>
-      <!-- Desktop layout: Original horizontal layout -->
-      <div class="d-none d-lg-flex justify-content-between align-items-center w-100">
-        <a href="/" class="d-flex align-items-center gap-2 text-decoration-none">
-          <img src="../static/images/logo.png" alt="Logo" class="nav-icon">
-          <span class="navbar-brand">Guess the NBA Player</span>
-        </a>
-      
-        <div class="d-flex align-items-center gap-2 nav-link-item" role="button" data-bs-toggle="modal" data-bs-target="#infoModal">
-          <img src="../static/images/help2.png" alt="Help Icon" class="nav-icon">
-          <span class="nav-text">Help</span>
-        </div>
-      </div>
-</nav>
-<!--
-    <div class="modal fade" id="bioModal" tabindex="-1" aria-labelledby="bioModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="bioModalLabel">About Me</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<body class="bg-light">
+    <nav class="navbar navbar-light border-bottom py-0" style="background-color: #dbe0e6;">
+        <div class="container">
+            <!-- Mobile layout: Logo and text stacked on left, help on right -->
+            <div class="d-flex justify-content-between align-items-center w-100 d-lg-none py-1">
+                <div class="d-flex flex-column align-items-center">
+                    <div class="d-flex align-items-center gap-2">
+                        <img src="../static/images/logo.png" alt="Logo" class="nav-icon" style="max-height: 1.9rem;">
+                    </div>
+                    <span class="text-muted fs-6" style="font-family: Georgia, 'Times New Roman', Times, serif;">Guess the NBA Player</span>
                 </div>
-                <div class="modal-body">
-                    <p>Hello, I'm Ansh Shah, a current senior in high school. I built this Flask project as a game for fellow basketball fans to enjoy. To learn more about my previous experience, please refer to my Linkedin and Github</p>
-                    <ul>
-                        <li><a href="https://www.linkedin.com/in/ansh-shah-62580b223/" target="_blank">LinkedIn</a></li>
-                        <li><a href="https://github.com/anshah1" target="_blank">GitHub</a></li>
-                    </ul>
-                    <p>I am always looking for new ways to build my technical skills. Please reach out to me with any questions or opportunities:</p>
-                    <a href="mailto:anshshah2025@gmail.com">anshshah2025@gmail.com</a>
-                    <p>Hope you enjoy HoopHeads!</p>
+                
+                <div class="d-flex align-items-center gap-2 text-decoration-none text-dark rounded p-2 hover-bg-light" 
+                     role="button" data-bs-toggle="modal" data-bs-target="#infoModal">
+                    <img src="../static/images/help2.png" alt="Help Icon" class="nav-icon" style="max-height: 2.8rem;">
+                    <span class="fs-4">Help</span>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+            
+            <!-- Desktop layout: Original horizontal layout -->
+            <div class="d-none d-lg-flex justify-content-between align-items-center w-100">
+                <a href="/" class="d-flex align-items-center gap-2 text-decoration-none">
+                    <img src="../static/images/logo.png" alt="Logo" class="nav-icon" style="max-height: 1.9rem;">
+                    <span class="navbar-brand text-dark fs-2 m-0 ps-2" style="font-family: Georgia, 'Times New Roman', Times, serif;">Guess the NBA Player</span>
+                </a>
+            
+                <div class="d-flex align-items-center gap-2 text-decoration-none text-dark rounded p-2 hover-bg-light" 
+                     role="button" data-bs-toggle="modal" data-bs-target="#infoModal">
+                    <img src="../static/images/help2.png" alt="Help Icon" class="nav-icon" style="max-height: 1.9rem;">
+                    <span class="fs-2">Help</span>
                 </div>
             </div>
         </div>
-    </div>
--->
-    <!--Modal for info-->
+    </nav>
+
+    <!-- Info Modal -->
     <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="infoModalLabel">How to Play</h4>
@@ -82,48 +59,48 @@
                 <div class="modal-body text-start">
                     <h5 class="mb-3">Guess the NBA Player within 8 tries</h5>       
                     <h6 class="mt-4 mb-1">Divisions</h6>
-                    <ul>
-                        <li>
-                            <span style="background-color: #FFCCCB; color: #000000; padding: 2px 6px; border-radius: 4px;">Red</span>
+                    <ul class="list-unstyled">
+                        <li class="mb-1">
+                            <span class="badge text-dark" style="background-color: #FFCCCB;">Red</span>
                             = wrong conference
                         </li>
-                        <li>
-                            <span style="background-color: #FFFFC5; color: #000000; padding: 2px 6px; border-radius: 4px;">Yellow</span>
+                        <li class="mb-1">
+                            <span class="badge text-dark" style="background-color: #FFFFC5;">Yellow</span>
                             = right conference, wrong division
                         </li>
-                        <li>
-                            <span style="background-color: #90EE90; color: #000000; padding: 2px 6px; border-radius: 4px;">Green</span>
+                        <li class="mb-1">
+                            <span class="badge text-dark" style="background-color: #90EE90;">Green</span>
                             = right division
                         </li>
                     </ul>
 
                     <h6 class="mt-4 mb-1">Heights &amp; Ages</h6>
-                    <ul>
-                        <li>
-                            <span style="background-color: #FFFFC5; color: #000000; padding: 2px 6px; border-radius: 4px;">Yellow</span>
+                    <ul class="list-unstyled">
+                        <li class="mb-1">
+                            <span class="badge text-dark" style="background-color: #FFFFC5;">Yellow</span>
                             = within 2 inches/years
                         </li>
-                        <li>
-                            <span style="background-color: #90EE90; color: #000000; padding: 2px 6px; border-radius: 4px;">Green</span>
+                        <li class="mb-1">
+                            <span class="badge text-dark" style="background-color: #90EE90;">Green</span>
                             = correct
                         </li>
                     </ul>
 
                     <h5 class="mt-4 mb-2">Examples</h5>
-                    <div class="example-group mb-3">
-                        <img src="../static/images/Example 1.png" alt="Example 1" class="img-fluid">
-                        <p class="mb-2">The correct player is in the Western Conference, but not the Pacific Division. They are taller than 6&#39;5&quot; and slightly younger than 35.</p>
+                    <div class="mb-3">
+                        <img src="../static/images/Example 1.png" alt="Example 1" class="img-fluid rounded">
+                        <p class="mt-2 mb-2 text-muted">The correct player is in the Western Conference, but not the Pacific Division. They are taller than 6'5" and slightly younger than 35.</p>
                     </div>
-                    <div class="example-group mb-3">
-                        <img src="../static/images/Example 2.png" alt="Example 2" class="img-fluid">
-                        <p class="mb-2">The correct player is not in the Eastern Conference and is slightly shorter than 6&#39;7&quot;. They are older than 23.</p>
+                    <div class="mb-3">
+                        <img src="../static/images/Example 2.png" alt="Example 2" class="img-fluid rounded">
+                        <p class="mt-2 mb-2 text-muted">The correct player is not in the Eastern Conference and is slightly shorter than 6'7". They are older than 23.</p>
                     </div>
-                    <div class="example-group mb-3">
-                        <img src="../static/images/Example 3.png" alt="Example 3" class="img-fluid">
-                        <p class="mb-2">The correct player is in the Southwest Division, slightly shorter than 6&#39;7&quot;, and slightly older than 26.</p>
+                    <div class="mb-3">
+                        <img src="../static/images/Example 3.png" alt="Example 3" class="img-fluid rounded">
+                        <p class="mt-2 mb-2 text-muted">The correct player is in the Southwest Division, slightly shorter than 6'7", and slightly older than 26.</p>
                     </div>
 
-                    <p class="mt-4"><em>Only players with 6 ppg or above in the 2024-2025 regular season are in the game.</em></p>
+                    <p class="mt-4 fst-italic text-muted">Only players with 6 ppg or above in the 2024-2025 regular season are in the game.</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -147,4 +124,3 @@
 </body>
 
 </html>
-
