@@ -632,3 +632,124 @@ body {
         background-position: -200% 0;
     }
 }
+
+/* Button container for forfeit and reset */
+.button-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Updated forfeit button for side-by-side layout */
+.forfeit-button {
+    flex: 2;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #dc3545, #c82333);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(220, 53, 69, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.forfeit-button:hover {
+    background: linear-gradient(135deg, #c82333, #bd2130);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
+
+.forfeit-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(220, 53, 69, 0.2);
+}
+
+/* Reset button styling */
+.reset-button {
+    flex: 1;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(40, 167, 69, 0.2);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.reset-button:hover {
+    background: linear-gradient(135deg, #20c997, #1e7e34);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+    color: white;
+    text-decoration: none;
+}
+
+.reset-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(40, 167, 69, 0.2);
+}
+
+/* Subtle shine effect for both buttons */
+.forfeit-button::before,
+.reset-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.forfeit-button:hover::before,
+.reset-button:hover::before {
+    left: 100%;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 767px) {
+    .button-container {
+        margin: 15px 10px;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .forfeit-button,
+    .reset-button {
+        width: 100%;
+        padding: 10px 16px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .button-container {
+        margin: 12px 15px;
+        gap: 8px;
+    }
+    
+    .forfeit-button,
+    .reset-button {
+        padding: 9px 14px;
+        font-size: 0.95rem;
+    }
+}

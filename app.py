@@ -30,29 +30,33 @@ allTheData = load_data()
 @app.route("/", methods=["GET"])
 def start_game():
     session.permanent = True
-    player_found = False
-    while not player_found:
-        random_player = random.choice(list(allTheData.keys()))
-        print(f"Selected Player: random_player")
-        try:
-            ppg = float(allTheData[random_player]['PPG'])
-            rpg = float(allTheData[random_player]['RPG'])
-            apg = float(allTheData[random_player]['APG'])
-            player_found = True
-        except:
-            continue  # skip malformed player
+    if not session.get("game_active") or session.get("game_complete"):
+        player_found = False
+        while not player_found:
+            random_player = random.choice(list(allTheData.keys()))
+            print(f"Selected Player: random_player")
+            try:
+                ppg = float(allTheData[random_player]['PPG'])
+                rpg = float(allTheData[random_player]['RPG'])
+                apg = float(allTheData[random_player]['APG'])
+                player_found = True
+            except:
+                continue 
 
-    session["correct_player"] = random_player
-    session["ppg"] = ppg
-    session["apg"] = apg
-    session["rpg"] = rpg
-    session["division"] = defaultDivision(allTheData[random_player])
-    height = allTheData[random_player]["HEIGHT"]
-    session["inches"] = int(height[0]) * 12 + int(height[2])
-    session["age"] = defaultAge(allTheData[random_player])
-    session["guess_count"] = 0
-    session["guesses"] = [{"name": "", "division": "", "height": "", "age": ""} for _ in range(8)]
-    return render_template("index.html", ppg=ppg, apg=apg, rpg=rpg, guesses=session["guesses"])
+            session["game_active"] = True
+            session["game_complete"] = False
+            session["correct_player"] = random_player
+            session["ppg"] = ppg
+            session["apg"] = apg
+            session["rpg"] = rpg
+            session["division"] = defaultDivision(allTheData[random_player])
+            height = allTheData[random_player]["HEIGHT"]
+            session["inches"] = int(height[0]) * 12 + int(height[2])
+            session["age"] = defaultAge(allTheData[random_player])
+            session["guess_count"] = 0
+            session["guesses"] = [{"name": "", "division": "", "height": "", "age": ""} for _ in range(8)]
+
+    return render_template("index.html", ppg=session["ppg"], apg=session["apg"], rpg=session["rpg"], guesses=session["guesses"])
 
 @app.route("/guess", methods=["POST"])
 def process_guess():
@@ -75,6 +79,7 @@ def process_guess():
 
     # Check if the guess is correct
     if session["correct_player"] == guessedPlayer:
+        session["game_complete"] = True  # Mark as complete
         return jsonify({
             "gameWon": True,
             "redirectTo": "/congrats",
@@ -87,6 +92,7 @@ def process_guess():
     else:
         # Check if max guesses reached
         if session["guess_count"] == 8:
+            session["game_complete"] = True  # Mark as complete
             return jsonify({
                 "gameOver": True,
                 "redirectTo": "/failure", 
@@ -151,6 +157,16 @@ def failure():
                          player_name=player_name, 
                          image_url=image_url, 
                          player_link=player_link)
+
+@app.route("/reset")
+def reset_game():
+    # Clear game state to force new player selection
+    session.pop("game_active", None)
+    session.pop("game_complete", None)
+    session.pop("correct_player", None)
+    session.pop("guesses", None)
+    session.pop("guess_count", None)
+    return redirect("/")
             
 def getDivision(guessedPlayerData):
     division = defaultDivision(guessedPlayerData)
