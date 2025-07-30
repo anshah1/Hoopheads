@@ -98,7 +98,8 @@ def process_guess():
                 "redirectTo": "/failure", 
                 "playerName": session["correct_player"],
                 "imageUrl": image_url,
-                "playerLink": player_link
+                "playerLink": player_link,
+                "eight_guesses": True
             })
         
         # Process the guess and update session
@@ -148,16 +149,42 @@ def congrats():
                          player_link=player_link)
 
 @app.route("/failure")
-def failure():
+def failure():    
+    session["game_complete"] = True
     image_url = request.args.get("image_url")
     player_link = request.args.get("player_link")
+    eight_guesses = request.args.get("eight_guesses")
+    if eight_guesses == "True":
+        eight_guesses = True
 
+        print(f'eight_guesses: {eight_guesses}')
+    print(f'image_url from params: {image_url}')
+    print(f'player_link from params: {player_link}')
+    print(f'correct_player from session: {session.get("correct_player")}')
     
+    # Get fallback values if parameters are missing
+    if image_url is None:
+        print("Getting image_url from get_player_headshot...")
+        image_url = get_player_headshot(session["correct_player"])
+        print(f'fallback image_url: {image_url}')
+    
+    if player_link is None:
+        print("Getting player_link from get_player_link...")
+        player_link = get_player_link(session["correct_player"])
+        print(f'fallback player_link: {player_link}')
+    
+    # Final fallback for image if still None
+    if image_url is None:
+        image_url = "https://www.logodesignlove.com/images/classic/nba-logo.jpg"
+        print(f'using NBA logo fallback: {image_url}')
+
+    print(f'eight_guesses: {eight_guesses}')
     return render_template("failure.html", 
                          player_name=session["correct_player"], 
                          image_url=image_url, 
-                         player_link=player_link)
-
+                         player_link=player_link,
+                         eight_guesses=eight_guesses)
+                         
 @app.route("/reset")
 def reset_game():
     # Clear game state to force new player selection

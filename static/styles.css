@@ -248,7 +248,7 @@
 }
 
 .congrats-container h1 {
-    font-size: 4.5rem;
+    font-size: 3.5rem;
     font-weight: 900;
     background: linear-gradient(135deg, #ffd700, #ffb347, #ff8c00);
     -webkit-background-clip: text;
@@ -305,13 +305,13 @@
     height: 250px;
     border-radius: 50%;
     object-fit: cover;
-    object-position: center 20%;
+    object-position: center 25%;
     transform: scale(0.55);
-    border: 4px solid rgba(255, 215, 0, 0.5);
-    margin: 32px auto 24px auto;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    margin: 32px auto;
     display: block;
-    animation: imageGlow 2s ease-in-out infinite alternate, victoryBounce 3s ease-in-out infinite;
-    box-shadow: 0 0 40px rgba(255, 215, 0, 0.4);
+    animation: imageGlow 2s ease-in-out infinite alternate;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
 }
 
 /* Confetti Styles */
@@ -447,7 +447,7 @@
 }
 
 .failure-container h1 {
-    font-size: 4.5rem;
+    font-size: 3.5rem;
     font-weight: 900;
     background: linear-gradient(135deg, #ff6b6b, #ff4081, #e91e63);
     -webkit-background-clip: text;
@@ -492,7 +492,7 @@
     height: 250px;
     border-radius: 50%;
     object-fit: cover;
-    object-position: center 20%;
+    object-position: center 25%;
     transform: scale(0.55);
     border: 3px solid rgba(255, 255, 255, 0.3);
     margin: 32px auto;

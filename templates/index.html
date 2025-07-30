@@ -192,7 +192,7 @@
                 window.location.href = `/congrats?player_name=${encodeURIComponent(data.playerName)}&guess_count=${data.guessCount}&image_url=${encodeURIComponent(data.imageUrl)}&player_link=${encodeURIComponent(data.playerLink)}`;
                 return;
             } else if (data.gameOver) {
-                window.location.href = `/failure?player_name=${encodeURIComponent(data.playerName)}&image_url=${encodeURIComponent(data.imageUrl)}&player_link=${encodeURIComponent(data.playerLink)}`;
+                window.location.href = `/failure?player_name=${encodeURIComponent(data.playerName)}&image_url=${encodeURIComponent(data.imageUrl)}&player_link=${encodeURIComponent(data.playerLink)}&eight_guesses=${encodeURIComponent(data.eight_guesses)}`;
                 return;
             }
             
