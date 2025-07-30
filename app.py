@@ -149,12 +149,12 @@ def congrats():
 
 @app.route("/failure")
 def failure():
-    player_name = request.args.get("player_name")
     image_url = request.args.get("image_url")
     player_link = request.args.get("player_link")
+
     
     return render_template("failure.html", 
-                         player_name=player_name, 
+                         player_name=session["correct_player"], 
                          image_url=image_url, 
                          player_link=player_link)
 
