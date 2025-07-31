@@ -7,22 +7,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 {% block main %}
-<div class="failure-container">
-    <h1>Game Over</h1>
-    <p> {% if eight_guesses %} Sorry, you've used all 8 guesses. {% endif %} The correct player was <br>
-    <a href="{{ player_link }}" target="_blank">
-        <strong>{{ player_name }}</strong>
-    </a>
-    </p>
-    {% if image_url %}
-        <img src="{{ image_url }}" alt="Player Image" class="player-image">
-    {% endif %}
-    <p>Better luck next time</p>
-</div>
-
-<div class="text-center mt-4">
-    <a href="/reset" class="btn btn-danger btn-lg px-4 py-2" style="font-weight: 600; box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);">
-        Play Another Round
-    </a> 
+<div class="container-fluid">
+    <div class="failure-container">
+        <h1>Game Over</h1>
+        <p>Sorry, you've used all 8 guesses. The correct player was</p>
+        <a href="#" target="_blank">
+            <strong>Julian Strawther</strong>
+        </a>
+        <img src="https://via.placeholder.com/200x200/4a90e2/ffffff?text=NBA+Player" alt="Player Image" class="player-image">
+        <p>Better luck next time</p>
+        
+        <div class="play-again-section">
+            <a href="/reset" class="btn-play-again">Play Another Round</a>
+        </div>
+    </div>
 </div>
 {% endblock %}

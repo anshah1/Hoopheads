@@ -208,8 +208,8 @@
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 215, 0, 0.2);
     border-radius: 24px;
-    padding: 80px 60px;
-    max-width: 700px;
+    padding: 40px 40px 30px 40px; /* Reduced from 80px 60px */
+    max-width: 500px; /* Reduced from 700px */
     width: 95%;
     margin: 0 auto;
     box-shadow: 
@@ -248,13 +248,13 @@
 }
 
 .congrats-container h1 {
-    font-size: 3.5rem;
+    font-size: 2.8rem; /* Reduced from 3.5rem */
     font-weight: 900;
     background: linear-gradient(135deg, #ffd700, #ffb347, #ff8c00);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-bottom: 24px;
+    margin-bottom: 20px; /* Reduced from 24px */
     text-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
     animation: titlePulse 3s ease-in-out infinite, bounce 2s ease-in-out infinite;
     letter-spacing: -2px;
@@ -262,35 +262,35 @@
 
 .congrats-container h2 {
     color: rgba(255, 255, 255, 0.9);
-    font-size: 1.4rem;
+    font-size: 1.2rem; /* Reduced from 1.4rem */
     font-weight: 600;
-    margin-bottom: 32px;
+    margin-bottom: 20px; /* Reduced from 32px */
     animation: fadeInUp 1s ease-out 0.3s both;
     line-height: 1.4;
 }
 
 .congrats-container p {
     color: rgba(255, 255, 255, 0.8);
-    font-size: 1.3rem;
-    margin-bottom: 32px;
-    margin-top: 32px;
+    font-size: 1.1rem; /* Reduced from 1.3rem */
+    margin-bottom: 20px; /* Reduced from 32px */
+    margin-top: 20px; /* Reduced from 32px */
     animation: fadeInUp 1s ease-out 0.7s both;
-    line-height: 1.6;
+    line-height: 1.5; /* Reduced from 1.6 */
 }
 
 .congrats-container .player-name {
     color: rgba(255, 255, 255, 0.95);
     text-decoration: none;
-    font-size: 1.6rem;
+    font-size: 1.4rem; /* Reduced from 1.6rem */
     font-weight: 700;
     border-bottom: 2px solid rgba(255, 215, 0, 0.4);
     transition: all 0.3s ease;
     position: relative;
-    padding: 8px 0;
+    padding: 4px 0; /* Reduced from 8px */
     display: inline-block;
     vertical-align: middle;
     line-height: 1.2;
-    margin-bottom: 24px;
+    margin-bottom: 20px; /* Reduced from 24px */
 }
 
 .congrats-container .player-name:hover {
@@ -303,14 +303,14 @@
 /* CONSISTENT IMAGE STYLING FOR BOTH PAGES */
 .congrats-container .player-image,
 .failure-container .player-image {
-    width: 270px;
-    height: 270px;
-    transform: scale(0.65);
+    width: 200px; /* Reduced from 300px */
+    height: 200px; /* Reduced from 300px */
+    transform: scale(0.9); /* Increased from 0.65 */
     object-position: center 6%;
     border-radius: 10px;
     object-fit: cover;
     border: 3px solid rgba(255, 255, 255, 0.3);
-    margin: 8px auto;
+    margin: 15px auto; /* Reduced from 8px auto */
     display: block;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     animation: imageGlow 2s ease-in-out infinite alternate;
@@ -320,56 +320,35 @@
     animation: victoryImageGlow 2s ease-in-out infinite alternate, victoryBounce 3s ease-in-out infinite;
 }
 
-/* Confetti Styles */
-.confetti {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none;
-    z-index: 1000;
+/* Button styling for success page */
+.congrats-success-section {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 215, 0, 0.2);
 }
 
-.confetti::before,
-.confetti::after {
-    content: '';
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    background: #ffd700;
-    animation: confettiFall 3s linear infinite;
+.btn-success-custom {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+    display: inline-block;
 }
 
-.confetti::before {
-    left: 10%;
-    animation-delay: 0s;
-    background: linear-gradient(45deg, #ffd700, #ff8c00);
+.btn-success-custom:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+    background: linear-gradient(135deg, #20c997, #28a745);
+    color: white;
 }
-
-.confetti::after {
-    left: 20%;
-    animation-delay: 0.5s;
-    background: linear-gradient(45deg, #ff6b6b, #ffd700);
-}
-
-/* Additional confetti particles */
-.confetti-particle {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    background: #ffd700;
-    animation: confettiFall 4s linear infinite;
-}
-
-.confetti-particle:nth-child(1) { left: 15%; animation-delay: 0.2s; background: #ff6b6b; }
-.confetti-particle:nth-child(2) { left: 25%; animation-delay: 0.8s; background: #4ecdc4; }
-.confetti-particle:nth-child(3) { left: 35%; animation-delay: 1.2s; background: #45b7d1; }
-.confetti-particle:nth-child(4) { left: 45%; animation-delay: 0.6s; background: #96ceb4; }
-.confetti-particle:nth-child(5) { left: 55%; animation-delay: 1.4s; background: #feca57; }
-.confetti-particle:nth-child(6) { left: 65%; animation-delay: 0.4s; background: #ff9ff3; }
-.confetti-particle:nth-child(7) { left: 75%; animation-delay: 1.0s; background: #54a0ff; }
-.confetti-particle:nth-child(8) { left: 85%; animation-delay: 1.6s; background: #5f27cd; }
 
 /* Victory Animations */
 @keyframes victoryPulse {
@@ -381,12 +360,6 @@
     }
 }
 
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-    40% { transform: translateY(-10px); }
-    60% { transform: translateY(-5px); }
-}
-
 @keyframes victoryBounce {
     0%, 100% { transform: scale(1) rotate(0deg); }
     25% { transform: scale(1.05) rotate(2deg); }
@@ -394,18 +367,88 @@
     75% { transform: scale(1.05) rotate(-2deg); }
 }
 
-@keyframes confettiFall {
-    0% {
-        transform: translateY(-100vh) rotate(0deg);
-        opacity: 1;
+/* Victory image glow override */
+@keyframes victoryImageGlow {
+    0% { 
+        box-shadow: 0 4px 8px rgba(255, 215, 0, 0.4);
+        border-color: rgba(255, 215, 0, 0.5);
     }
-    100% {
-        transform: translateY(100vh) rotate(720deg);
-        opacity: 0;
+    100% { 
+        box-shadow: 0 8px 16px rgba(255, 215, 0, 0.7);
+        border-color: rgba(255, 215, 0, 0.8);
     }
 }
 
-/* Cool Failure Container Styles */
+/* Responsive design for congrats container */
+@media (max-width: 768px) {
+    .congrats-container {
+        padding: 30px 25px 25px 25px;
+        margin: 15px;
+        max-width: 90%;
+    }
+    
+    .congrats-container h1 {
+        font-size: 2.2rem;
+        margin-bottom: 15px;
+    }
+    
+    .congrats-container h2 {
+        font-size: 1.1rem;
+        margin-bottom: 15px;
+    }
+    
+    .congrats-container p {
+        font-size: 1rem;
+        margin-bottom: 15px;
+        margin-top: 15px;
+    }
+    
+    .congrats-container .player-name {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+    }
+    
+    /* Consistent mobile image sizing */
+    .congrats-container .player-image,
+    .failure-container .player-image {
+        width: 150px;
+        height: 150px;
+        margin: 10px auto;
+    }
+
+    .congrats-success-section {
+        margin-top: 20px;
+        padding-top: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .congrats-container {
+        padding: 25px 20px 20px 20px;
+    }
+    
+    .congrats-container h1 {
+        font-size: 1.8rem;
+    }
+    
+    .congrats-container h2 {
+        font-size: 1rem;
+    }
+    
+    .congrats-container p {
+        font-size: 0.9rem;
+    }
+    
+    .congrats-container .player-name {
+        font-size: 1.1rem;
+    }
+
+    .btn-success-custom {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+}
+
 .failure-container {
     position: relative;
     text-align: center;
@@ -413,10 +456,10 @@
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 24px;
-    padding: 80px 60px;
-    max-width: 700px;
+    padding: 40px 40px 30px 40px; /* Reduced from 80px 60px */
+    max-width: 500px; /* Reduced from 700px */
     width: 95%;
-    margin: 0 auto;
+    margin: 20px auto;
     box-shadow: 
         0 20px 40px rgba(0, 0, 0, 0.4),
         inset 0 1px 0 rgba(255, 255, 255, 0.2);
@@ -453,35 +496,35 @@
 }
 
 .failure-container h1 {
-    font-size: 3.5rem;
+    font-size: 2.8rem; /* Reduced from 3.5rem */
     font-weight: 900;
     background: linear-gradient(135deg, #ff6b6b, #ff4081, #e91e63);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-bottom: 32px;
+    margin-bottom: 20px; /* Reduced from 32px */
     text-shadow: 0 0 40px rgba(255, 64, 129, 0.5);
     animation: titlePulse 3s ease-in-out infinite;
     letter-spacing: -2px;
 }
 
 .failure-container p {
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 1.3rem;
-    margin-bottom: 32px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 1.1rem; /* Reduced from 1.3rem */
+    margin-bottom: 20px; /* Reduced from 32px */
     animation: fadeInUp 1s ease-out 0.5s both;
-    line-height: 1.6;
+    line-height: 1.5; /* Reduced from 1.6 */
 }
 
 .failure-container a {
     color: rgba(255, 255, 255, 0.95);
     text-decoration: none;
-    font-size: 1.6rem;
+    font-size: 1.4rem; /* Reduced from 1.6rem */
     font-weight: 700;
     border-bottom: 2px solid rgba(255, 255, 255, 0.3);
     transition: all 0.3s ease;
     position: relative;
-    padding: 8px 0;
+    padding: 4px 0; /* Reduced from 8px */
     display: inline-block;
     vertical-align: middle;
     line-height: 1.2;
@@ -493,61 +536,55 @@
     transform: translateY(-1px);
 }
 
-/* Particle effect background */
-.failure-container .particles {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: -2;
+/* Improved image styling */
+.failure-container .player-image {
+    width: 200px; /* Reduced from 300px */
+    height: 200px; /* Reduced from 300px */
+    transform: scale(0.9); /* Reduced from 0.65 */
+    object-position: center 10%;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    margin: 15px auto; /* Reduced from default */
+    display: block;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation: imageGlow 2s ease-in-out infinite alternate;
 }
 
-.failure-container .particle {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    background: rgba(100, 255, 218, 0.6);
-    border-radius: 50%;
-    animation: floatParticle 8s linear infinite;
+/* Better button styling integrated into container */
+.play-again-section {
+    margin-top: 25px; /* Reduced spacing */
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.failure-container .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
-.failure-container .particle:nth-child(2) { left: 20%; animation-delay: 1s; }
-.failure-container .particle:nth-child(3) { left: 30%; animation-delay: 2s; }
-.failure-container .particle:nth-child(4) { left: 40%; animation-delay: 3s; }
-.failure-container .particle:nth-child(5) { left: 50%; animation-delay: 4s; }
-.failure-container .particle:nth-child(6) { left: 60%; animation-delay: 5s; }
-.failure-container .particle:nth-child(7) { left: 70%; animation-delay: 6s; }
-.failure-container .particle:nth-child(8) { left: 80%; animation-delay: 7s; }
-
-/* Button for retry action */
-.failure-container .retry-btn {
+.btn-play-again {
     background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;
     border: none;
-    padding: 16px 32px;
-    font-size: 1.1rem;
+    padding: 12px 200px; /* Slightly reduced */
+    font-size: 1rem;
     font-weight: 600;
     border-radius: 12px;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin-top: 24px;
     text-transform: uppercase;
     letter-spacing: 1px;
+    text-decoration: none;
+    display: inline-block;
 }
 
-.failure-container .retry-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+.btn-play-again:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
     background: linear-gradient(135deg, #764ba2, #667eea);
+    color: white;
 }
 
 /* Animations */
 @keyframes containerFloat {
     0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
+    50% { transform: translateY(-8px); }
 }
 
 @keyframes rotate {
@@ -569,7 +606,7 @@
 @keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(20px);
     }
     to {
         opacity: 1;
@@ -588,109 +625,59 @@
     }
 }
 
-/* Victory image glow override */
-@keyframes victoryImageGlow {
-    0% { 
-        box-shadow: 0 4px 8px rgba(255, 215, 0, 0.4);
-        border-color: rgba(255, 215, 0, 0.5);
-    }
-    100% { 
-        box-shadow: 0 8px 16px rgba(255, 215, 0, 0.7);
-        border-color: rgba(255, 215, 0, 0.8);
-    }
-}
-
-@keyframes floatParticle {
-    0% {
-        transform: translateY(100vh) rotate(0deg);
-        opacity: 0;
-    }
-    10% {
-        opacity: 1;
-    }
-    90% {
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(-100px) rotate(360deg);
-        opacity: 0;
-    }
-}
-
-/* Responsive design */
+/* Mobile responsive */
 @media (max-width: 768px) {
     .failure-container {
-        padding: 60px 32px;
-        margin: 20px;
+        padding: 30px 25px 25px 25px;
+        margin: 15px;
+        max-width: 90%;
     }
     
     .failure-container h1 {
-        font-size: 3.2rem;
+        font-size: 2.2rem;
+        margin-bottom: 15px;
     }
     
     .failure-container p {
-        font-size: 1.1rem;
+        font-size: 1rem;
+        margin-bottom: 15px;
     }
     
     .failure-container a {
-        font-size: 1.4rem;
-    }
-    
-    .congrats-container {
-        padding: 60px 32px;
-        margin: 20px;
-    }
-    
-    .congrats-container h1 {
-        font-size: 3.2rem;
-    }
-    
-    .congrats-container h2 {
         font-size: 1.2rem;
     }
     
-    .congrats-container p {
-        font-size: 1.1rem;
-    }
-    
-    .congrats-container .player-name {
-        font-size: 1.4rem;
-    }
-    
-    /* Consistent mobile image sizing */
-    .congrats-container .player-image,
     .failure-container .player-image {
         width: 150px;
         height: 150px;
+        margin: 10px auto;
+    }
+
+    .play-again-section {
+        margin-top: 20px;
+        padding-top: 15px;
     }
 }
 
 @media (max-width: 480px) {
+    .failure-container {
+        padding: 25px 20px 20px 20px;
+    }
+    
     .failure-container h1 {
-        font-size: 2.5rem;
+        font-size: 1.8rem;
     }
     
     .failure-container p {
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
     
     .failure-container a {
-        font-size: 1.2rem;
-    }
-    
-    .congrats-container h1 {
-        font-size: 2.5rem;
-    }
-    
-    .congrats-container h2 {
         font-size: 1.1rem;
     }
-    
-    .congrats-container p {
-        font-size: 1rem;
-    }
-    
-    .congrats-container .player-name {
-        font-size: 1.2rem;
+
+    .btn-play-again {
+        padding: 10px 20px;
+        font-size: 0.9rem;
     }
 }
