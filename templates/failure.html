@@ -11,10 +11,10 @@
     <div class="failure-container">
         <h1>Game Over</h1>
         <p>Sorry, you've used all 8 guesses. The correct player was</p>
-        <a href="#" target="_blank">
-            <strong>Julian Strawther</strong>
+        <a href="{{ player_link }}" target="_blank">
+            <strong>{{ player_name }}</strong>
         </a>
-        <img src="https://via.placeholder.com/200x200/4a90e2/ffffff?text=NBA+Player" alt="Player Image" class="player-image">
+        <img src="{{ image_url }}" alt="Player Image" class="player-image">
         <p>Better luck next time</p>
         
         <div class="play-again-section">
