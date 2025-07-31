@@ -303,9 +303,9 @@
 /* CONSISTENT IMAGE STYLING FOR BOTH PAGES */
 .congrats-container .player-image,
 .failure-container .player-image {
-    width: 200px; /* Reduced from 300px */
-    height: 200px; /* Reduced from 300px */
-    transform: scale(0.9); /* Increased from 0.65 */
+    width: 200px; 
+    height: 200px; 
+    transform: scale(0.8); 
     object-position: center 6%;
     border-radius: 10px;
     object-fit: cover;
@@ -540,7 +540,7 @@
 .failure-container .player-image {
     width: 200px; /* Reduced from 300px */
     height: 200px; /* Reduced from 300px */
-    transform: scale(0.9); /* Reduced from 0.65 */
+    transform: scale(0.8); /* Reduced from 0.65 */
     object-position: center 10%;
     border-radius: 10px;
     object-fit: cover;
