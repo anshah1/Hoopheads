@@ -5,7 +5,7 @@ import time
 #this is outdated because i no longer structure the data in this way. when rescraping/autoscraping, i need to update
 
 # Used the following function to get a list of players who scored 6+ ppg, in an attempt to put all relevant players and leave out "unknown" players from the game
-def get_players_with_ppg_greater_than_6():
+def get_players_who_meet_threshold():
     player_names = []
     all_players = players.get_active_players()
     for player in all_players:
@@ -23,7 +23,7 @@ def get_players_with_ppg_greater_than_6():
     return player_names
 
 # Call the function to get players with PPG greater than 6
-allPlayers = get_players_with_ppg_greater_than_6()
+allPlayers = get_players_who_meet_threshold()
 
 # Used the following function to get all the information need for the game, appending it to a list of dictionaries
 def getFullData(allPlayers):
@@ -51,27 +51,7 @@ def getFullData(allPlayers):
 # Call the function to get full data for all players
 fullData = getFullData(allPlayers)
 
-#Used the following function to sort the players list, hence the search suggestions, by descending ppg, putting more relevant players higher
-def selectionSort(array, allTheData):
-    swapCount = 0
-    size = len(array)
-    for ind in range(size):
-        for row in allTheData:
-            if row['NAME'] == array[ind]:
-                I_ppg = row['PPG']
-        for j in range(ind + 1, size):
-            for row in allTheData:
-                if row['NAME'] == array[j]:
-                    J_ppg = row['PPG']
-            if J_ppg > I_ppg:
-                min_index = j
-                I_ppg = J_ppg
-
-        array[ind], array[min_index] = array[min_index], array[ind]
-        swapCount += 1
-        print(f"Swapped {array[ind]} with {array[min_index]}")
-
-    return array
+#Used the following function to sort the players list, hence the search suggestions, by descending alphabetical
 
 #Call the function to sort the players list
-allPlayersSorted = selectionSort(allPlayers, fullData)
+allPlayersSorted = sort(allPlayers, fullData)
