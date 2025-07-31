@@ -303,9 +303,10 @@
 /* CONSISTENT IMAGE STYLING FOR BOTH PAGES */
 .congrats-container .player-image,
 .failure-container .player-image {
-    width: 270px;
-    height: 270px;
-    transform: scale(0.7);
+    width: 200px;
+    height: 200px;
+    transform: scale(0.65);
+    object-position: center 3%
     border-radius: 10px;
     object-fit: cover;
     object-position: center top;
