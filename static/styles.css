@@ -300,18 +300,23 @@
     text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
 }
 
-.congrats-container .player-image {
-    width: 250px;
-    height: 250px;
-    border-radius: 50%;
+/* CONSISTENT IMAGE STYLING FOR BOTH PAGES */
+.congrats-container .player-image,
+.failure-container .player-image {
+    width: 200px;
+    height: 200px;
+    border-radius: 10px;
     object-fit: cover;
     object-position: center 25%;
-    transform: scale(0.55);
     border: 3px solid rgba(255, 255, 255, 0.3);
     margin: 32px auto;
     display: block;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     animation: imageGlow 2s ease-in-out infinite alternate;
-    box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+}
+
+.congrats-container .player-image {
+    animation: victoryImageGlow 2s ease-in-out infinite alternate, victoryBounce 3s ease-in-out infinite;
 }
 
 /* Confetti Styles */
@@ -487,20 +492,6 @@
     transform: translateY(-1px);
 }
 
-.failure-container .player-image {
-    width: 250px;
-    height: 250px;
-    border-radius: 50%;
-    object-fit: cover;
-    object-position: center 25%;
-    transform: scale(0.55);
-    border: 3px solid rgba(255, 255, 255, 0.3);
-    margin: 32px auto;
-    display: block;
-    animation: imageGlow 2s ease-in-out infinite alternate;
-    box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
-}
-
 /* Particle effect background */
 .failure-container .particles {
     position: absolute;
@@ -587,27 +578,23 @@
 
 @keyframes imageGlow {
     0% { 
-        box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         border-color: rgba(255, 255, 255, 0.3);
     }
     100% { 
-        box-shadow: 0 0 50px rgba(255, 255, 255, 0.4);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
         border-color: rgba(255, 255, 255, 0.6);
     }
 }
 
 /* Victory image glow override */
-.congrats-container .player-image {
-    animation: victoryImageGlow 2s ease-in-out infinite alternate, victoryBounce 3s ease-in-out infinite;
-}
-
 @keyframes victoryImageGlow {
     0% { 
-        box-shadow: 0 0 40px rgba(255, 215, 0, 0.4);
+        box-shadow: 0 4px 8px rgba(255, 215, 0, 0.4);
         border-color: rgba(255, 215, 0, 0.5);
     }
     100% { 
-        box-shadow: 0 0 60px rgba(255, 215, 0, 0.7);
+        box-shadow: 0 8px 16px rgba(255, 215, 0, 0.7);
         border-color: rgba(255, 215, 0, 0.8);
     }
 }
@@ -648,11 +635,6 @@
         font-size: 1.4rem;
     }
     
-    .failure-container .player-image {
-        width: 160px;
-        height: 160px;
-    }
-    
     .congrats-container {
         padding: 60px 32px;
         margin: 20px;
@@ -674,9 +656,11 @@
         font-size: 1.4rem;
     }
     
-    .congrats-container .player-image {
-        width: 160px;
-        height: 160px;
+    /* Consistent mobile image sizing */
+    .congrats-container .player-image,
+    .failure-container .player-image {
+        width: 150px;
+        height: 150px;
     }
 }
 
