@@ -305,7 +305,7 @@
 .failure-container .player-image {
     width: 300px;
     height: 300px;
-    transform: scale(0.9);
+    transform: scale(0.7);
     border-radius: 10px;
     object-fit: cover;
     object-position: center top;
