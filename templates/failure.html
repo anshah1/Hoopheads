@@ -10,7 +10,7 @@
 <div class="container-fluid">
     <div class="failure-container">
         <h1>Game Over</h1>
-        <p>Sorry, you've used all 8 guesses. The correct player was</p>
+        <p>{% if eight_guesses %} Sorry, you've used all 8 guesses.{% endif %} The correct player was</p>
         <a href="{{ player_link }}" target="_blank">
             <strong>{{ player_name }}</strong>
         </a>
