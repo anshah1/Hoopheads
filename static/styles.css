@@ -1,4 +1,5 @@
 /* Custom hover effect for navigation */
+
 .hover-bg-light:hover {
     background-color: rgba(0, 0, 0, 0.05) !important;
 }
@@ -12,6 +13,8 @@
 /* Game table font sizing */
 .game-table {
     font-size: 1.05rem;
+    border-collapse: collapse;
+
 }
 
 /* Arrow animations and styling */
@@ -92,16 +95,20 @@
     max-height: 2rem;
     line-height: 2rem;
     vertical-align: middle;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
     color: black !important;
     box-sizing: border-box;
-    border: 2px dashed #000 !important;
+    border: 1px solid #000000;
+    backface-visibility: hidden;
+    transform: translateZ(0);
 }
 
 .game-table th {
-    border: 2px dashed #000 !important;
+    border: 1px solid #000000;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    
 }
 
 .game-table td:empty {
@@ -145,6 +152,8 @@
         font-size: 0.85rem !important;
         border: 1px solid #000 !important;
         line-height: 1.2 !important;
+        transform: none !important;
+        transition: none !important;
     }
     
     .game-table th {
