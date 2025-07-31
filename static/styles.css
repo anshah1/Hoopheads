@@ -305,10 +305,10 @@
 .failure-container .player-image {
     width: 200px;
     height: 200px;
-    zoom: 0.75;
+    zoom: 0.7;
     border-radius: 10px;
     object-fit: cover;
-    object-position: center 25%;
+    object-position: center 40%;
     border: 3px solid rgba(255, 255, 255, 0.3);
     margin: 32px auto;
     display: block;
