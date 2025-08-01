@@ -7,7 +7,7 @@ Hoophead is an interactive basketball-themed game where users guess NBA players 
 - Frontend: HTML, CSS, JavaScript (for real-time player search)
 - Backend: Python (Flask)
 -	Database: SQLite3 (for storing user accounts and stats)
--	Data Scraping: basketball-reference-scraper for pulling player data
+-	Data Scraping: basketball-reference-scraper and nba-api for pulling player data
 -	Session Management: Flask session to maintain game state
 
 ## Features
