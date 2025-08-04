@@ -73,9 +73,3 @@ flask run
 ## Contact
 
 Ansh Shah - [LinkedIn](https://www.linkedin.com/in/anshah18/)
-
-
-
-
-Gitingore
-
