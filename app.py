@@ -184,7 +184,7 @@ def failure():
                          image_url=image_url, 
                          player_link=player_link,
                          eight_guesses=eight_guesses)
-                         
+
 @app.route("/reset")
 def reset_game():
     # Clear game state to force new player selection
