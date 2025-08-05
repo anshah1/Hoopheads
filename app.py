@@ -8,7 +8,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from data.dataStorage import divisionBreakdown, conferenceBreakdown
 warnings.simplefilter(action='ignore', category=FutureWarning)
 from datetime import datetime, timedelta
-from scraping import get_player_headshot, get_player_link
+from data import players
 import unicodedata
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = True
@@ -18,7 +18,7 @@ app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev-temp-secret")
 def load_data():
     try:
         current_dir = os.path.dirname(os.path.abspath(__file__))
-        data_path = os.path.join(current_dir, 'data.json')
+        data_path = os.path.join(current_dir, 'players.json')
         with open(data_path, 'r') as file:
             return json.load(file)
     except FileNotFoundError:
@@ -39,7 +39,8 @@ def start_game():
                 ppg = float(allTheData[random_player]['PPG'])
                 rpg = float(allTheData[random_player]['RPG'])
                 apg = float(allTheData[random_player]['APG'])
-                player_found = True
+                if ppg >= 7:
+                    player_found = True
             except:
                 continue 
 
@@ -69,12 +70,12 @@ def process_guess():
     guess_count = session.get("guess_count", 0) + 1
     session["guess_count"] = guess_count
 
-    image_url = get_player_headshot(session["correct_player"])
+    image_url = players.get_player_headshot(session["correct_player"])
     print(f"Player Image URL: {image_url}")
     if image_url is None:
         image_url = "https://www.logodesignlove.com/images/classic/nba-logo.jpg"
 
-    player_link = get_player_link(session["correct_player"])
+    player_link = players.get_player_link(session["correct_player"])
     print(f"Player Link: {player_link}")
 
     # Check if the guess is correct
@@ -165,12 +166,12 @@ def failure():
     # Get fallback values if parameters are missing
     if image_url is None:
         print("Getting image_url from get_player_headshot...")
-        image_url = get_player_headshot(session["correct_player"])
+        image_url = players.get_player_headshot(session["correct_player"])
         print(f'fallback image_url: {image_url}')
     
     if player_link is None:
         print("Getting player_link from get_player_link...")
-        player_link = get_player_link(session["correct_player"])
+        player_link = players.get_player_link(session["correct_player"])
         print(f'fallback player_link: {player_link}')
     
     # Final fallback for image if still None

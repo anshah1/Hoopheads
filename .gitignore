@@ -1,3 +1,4 @@
 .vercel
 .db
 __pycache__
+data/
