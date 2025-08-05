@@ -1,28 +1,4 @@
 {
-    "Hunter Sallis": {
-        "ID": "025425f1-19b0-495f-b2db-8556b253c8e4",
-        "TEAM": "76ers",
-        "HEIGHT": "6-5",
-        "BIRTHDAY": "2003-03-06"
-    },
-    "VJ Edgecombe": {
-        "ID": "1bd4a869-80a3-47b7-bac9-789bda6e6e92",
-        "TEAM": "76ers",
-        "HEIGHT": "6-4",
-        "BIRTHDAY": "2005-07-30"
-    },
-    "Jared McCain": {
-        "ID": "2646b0b2-4aa8-40f8-ad9d-f0e97590c8d8",
-        "TEAM": "76ers",
-        "HEIGHT": "6-3",
-        "BIRTHDAY": "2004-02-20"
-    },
-    "Johni Broome": {
-        "ID": "2edce68b-39ae-4307-9136-8b31b5222039",
-        "TEAM": "76ers",
-        "HEIGHT": "6-9",
-        "BIRTHDAY": "2002-07-19"
-    },
     "Justin Edwards": {
         "ID": "41ed1b83-4a60-4d43-b985-3c8d239d4da6",
         "TEAM": "76ers",
@@ -86,12 +62,6 @@
         "APG": 2.6,
         "RPG": 3.6
     },
-    "Joel Embiid": {
-        "ID": "bf9ad0fd-0cb8-4360-8970-5f1b5cf3fa8d",
-        "TEAM": "76ers",
-        "HEIGHT": "7-0",
-        "BIRTHDAY": "1994-03-16"
-    },
     "Adem Bona": {
         "ID": "d325bed1-c812-4bf4-b2a1-3cb32fcb86fa",
         "TEAM": "76ers",
@@ -137,12 +107,6 @@
         "APG": 0.6,
         "RPG": 3.5
     },
-    "Jamaree Bouyea": {
-        "ID": "18c4bd7c-e293-4c0a-95d4-5e9983d301b3",
-        "TEAM": "Bucks",
-        "HEIGHT": "6-2",
-        "BIRTHDAY": "1999-06-27"
-    },
     "Myles Turner": {
         "ID": "323f9ef8-ecdd-41a7-859e-dd3db48ba913",
         "TEAM": "Bucks",
@@ -151,18 +115,6 @@
         "PPG": 15.6,
         "APG": 1.5,
         "RPG": 6.5
-    },
-    "Bogoljub Markovi\u0107": {
-        "ID": "3e31a736-3d28-4a02-96bc-97badd2deb4a",
-        "TEAM": "Bucks",
-        "HEIGHT": "6-11",
-        "BIRTHDAY": "2005-07-12"
-    },
-    "Tyler Smith": {
-        "ID": "44fe2902-0a78-440e-bbad-d28cd0308e21",
-        "TEAM": "Bucks",
-        "HEIGHT": "6-9",
-        "BIRTHDAY": "2004-11-02"
     },
     "Taurean Prince": {
         "ID": "4f80cdb1-1b10-4669-9774-045bc8a99c99",
@@ -236,12 +188,6 @@
         "APG": 6.5,
         "RPG": 11.9
     },
-    "Pete Nance": {
-        "ID": "8006987e-cd53-4e60-a26e-83cb96fb81ac",
-        "TEAM": "Bucks",
-        "HEIGHT": "6-10",
-        "BIRTHDAY": "2000-02-19"
-    },
     "Andre Jackson Jr.": {
         "ID": "8aaf1808-f7af-4894-9b14-cc7655005313",
         "TEAM": "Bucks",
@@ -250,12 +196,6 @@
         "PPG": 3.4,
         "APG": 1.2,
         "RPG": 2.7
-    },
-    "Mark Sears": {
-        "ID": "a5cbb611-8e69-41c2-8678-a2e83f26749f",
-        "TEAM": "Bucks",
-        "HEIGHT": "6-1",
-        "BIRTHDAY": "2002-12-19"
     },
     "Cole Anthony": {
         "ID": "b6ba1ad1-c57b-4215-8ded-5eeee7171017",
@@ -274,12 +214,6 @@
         "PPG": 10.3,
         "APG": 3.4,
         "RPG": 3.7
-    },
-    "Chris Livingston": {
-        "ID": "cb3ded6d-8874-4b93-8a89-6a6785f6fac0",
-        "TEAM": "Bucks",
-        "HEIGHT": "6-6",
-        "BIRTHDAY": "2003-10-15"
     },
     "Ryan Rollins": {
         "ID": "e8def95a-cdf0-423f-9cac-a3e7e92364db",
@@ -308,12 +242,6 @@
         "APG": 1.3,
         "RPG": 1.7
     },
-    "Noa Essengue": {
-        "ID": "5ab15bad-59b4-43c9-98fc-1d0aa8182d01",
-        "TEAM": "Bulls",
-        "HEIGHT": "6-9",
-        "BIRTHDAY": "2006-12-18"
-    },
     "Josh Giddey": {
         "ID": "66ea876a-1cc9-47ed-ae31-2ed3c8f9350e",
         "TEAM": "Bulls",
@@ -341,12 +269,6 @@
         "APG": 1.0,
         "RPG": 5.6
     },
-    "Emanuel Miller": {
-        "ID": "6f4f5e4b-37d7-4d28-a226-4f52d09aab02",
-        "TEAM": "Bulls",
-        "HEIGHT": "6-7",
-        "BIRTHDAY": "2000-06-19"
-    },
     "Nikola Vu\u010devi\u0107": {
         "ID": "7366b2b7-5959-4dd9-9204-760e861b3119",
         "TEAM": "Bulls",
@@ -355,12 +277,6 @@
         "PPG": 18.5,
         "APG": 3.5,
         "RPG": 10.1
-    },
-    "Lachlan Olbrich": {
-        "ID": "7924cc02-9fbb-4fd0-a036-0130084eb9b3",
-        "TEAM": "Bulls",
-        "HEIGHT": "6-9",
-        "BIRTHDAY": "2003-12-30"
     },
     "Jevon Carter": {
         "ID": "79cd9581-3aaa-484c-a8b1-a349cdc5c34c",
@@ -416,12 +332,6 @@
         "APG": 1.2,
         "RPG": 2.4
     },
-    "Yuki Kawamura": {
-        "ID": "f619cc0b-5fa0-4189-9091-596e843e93b1",
-        "TEAM": "Bulls",
-        "HEIGHT": "5-8",
-        "BIRTHDAY": "2001-05-02"
-    },
     "Ayo Dosunmu": {
         "ID": "f8a7e4c7-d60e-4751-9203-30a772dd9272",
         "TEAM": "Bulls",
@@ -449,18 +359,6 @@
         "APG": 3.3,
         "RPG": 3.4
     },
-    "Tyrese Proctor": {
-        "ID": "22be3275-1ef8-47f7-a30d-af38f7bc96b2",
-        "TEAM": "Cavaliers",
-        "HEIGHT": "6-6",
-        "BIRTHDAY": "2004-04-01"
-    },
-    "Nae'Qwan Tomlin": {
-        "ID": "5bb6159f-27ae-406e-ac5b-e8911f0cbb7c",
-        "TEAM": "Cavaliers",
-        "HEIGHT": "6-10",
-        "BIRTHDAY": "2000-12-19"
-    },
     "Sam Merrill": {
         "ID": "6b8ed06d-a33f-46ce-b416-647100736df8",
         "TEAM": "Cavaliers",
@@ -478,12 +376,6 @@
         "PPG": 3.7,
         "APG": 1.4,
         "RPG": 1.3
-    },
-    "Saliou Niang": {
-        "ID": "7a4ce761-2aa1-4d51-9c34-c9189267e99f",
-        "TEAM": "Cavaliers",
-        "HEIGHT": "6-8",
-        "BIRTHDAY": "2004-05-14"
     },
     "Jaylon Tyson": {
         "ID": "90b52759-3f0e-4d93-b5ca-fcb53afce857",
@@ -512,12 +404,6 @@
         "APG": 1.4,
         "RPG": 4.0
     },
-    "Larry Nance Jr.": {
-        "ID": "ad389979-d1d5-4f26-ad64-3e516b3373a3",
-        "TEAM": "Cavaliers",
-        "HEIGHT": "6-8",
-        "BIRTHDAY": "1993-01-01"
-    },
     "Donovan Mitchell": {
         "ID": "b6dde96e-3748-4cbe-86d2-798d5dffb3c0",
         "TEAM": "Cavaliers",
@@ -544,12 +430,6 @@
         "PPG": 5.4,
         "APG": 1.3,
         "RPG": 4.2
-    },
-    "Luke Travers": {
-        "ID": "c56aee2f-4321-40c9-bc96-f69cf5164c49",
-        "TEAM": "Cavaliers",
-        "HEIGHT": "6-7",
-        "BIRTHDAY": "2001-09-03"
     },
     "Evan Mobley": {
         "ID": "d64b602e-45f2-4ba9-878b-0a4f7210ec77",
@@ -578,24 +458,6 @@
         "APG": 3.5,
         "RPG": 3.8
     },
-    "Hugo Gonz\u00e1lez": {
-        "ID": "18512d7a-ea08-408c-8ecb-7f436ca41120",
-        "TEAM": "Celtics",
-        "HEIGHT": "6-6",
-        "BIRTHDAY": "2006-02-05"
-    },
-    "Amari Williams": {
-        "ID": "258ed390-1d72-42ee-9c52-f7064051e35f",
-        "TEAM": "Celtics",
-        "HEIGHT": "7-0",
-        "BIRTHDAY": "2002-01-28"
-    },
-    "Miles Norris": {
-        "ID": "39de0b5b-8cf5-41f7-baa3-9b19c71f8c14",
-        "TEAM": "Celtics",
-        "HEIGHT": "6-7",
-        "BIRTHDAY": "2000-04-15"
-    },
     "Jordan Walsh": {
         "ID": "59f3c089-7642-4792-99a2-97795c3d7648",
         "TEAM": "Celtics",
@@ -622,12 +484,6 @@
         "PPG": 5.0,
         "APG": 0.7,
         "RPG": 3.8
-    },
-    "Max Shulga": {
-        "ID": "879370c1-afe6-45c7-9ba1-93a78d4b8d61",
-        "TEAM": "Celtics",
-        "HEIGHT": "6-4",
-        "BIRTHDAY": "2002-06-25"
     },
     "Luka Garza": {
         "ID": "8da31ebc-6614-4209-8685-5442bc09887b",
@@ -710,12 +566,6 @@
         "APG": 4.5,
         "RPG": 5.8
     },
-    "Kobe Sanders": {
-        "ID": "1f665b2c-789e-4471-af7a-f86105f2466c",
-        "TEAM": "Clippers",
-        "HEIGHT": "6-7",
-        "BIRTHDAY": "2002-05-30"
-    },
     "John Collins": {
         "ID": "28a2e698-9f33-4d4d-9a5d-9bea66ee42a1",
         "TEAM": "Clippers",
@@ -733,18 +583,6 @@
         "PPG": 16.8,
         "APG": 2.7,
         "RPG": 12.6
-    },
-    "TyTy Washington Jr.": {
-        "ID": "3054d6e1-033b-4b8d-93e5-b807ea122c75",
-        "TEAM": "Clippers",
-        "HEIGHT": "6-3",
-        "BIRTHDAY": "2001-11-15"
-    },
-    "Yanic Konan Niederh\u00e4user": {
-        "ID": "4ec576c6-d74d-4b23-83e5-7a94e76526c9",
-        "TEAM": "Clippers",
-        "HEIGHT": "6-11",
-        "BIRTHDAY": "2003-03-14"
     },
     "Derrick Jones Jr.": {
         "ID": "54cf6e06-9172-44b8-8d3b-ea1b6926553d",
@@ -836,18 +674,6 @@
         "APG": 1.8,
         "RPG": 5.0
     },
-    "Trentyn Flowers": {
-        "ID": "d2738ed5-19ea-43d0-8a5b-73b887d91086",
-        "TEAM": "Clippers",
-        "HEIGHT": "6-9",
-        "BIRTHDAY": "2005-03-08"
-    },
-    "Cam Christie": {
-        "ID": "dac0090b-6d39-4275-98ac-db8aab39502f",
-        "TEAM": "Clippers",
-        "HEIGHT": "6-6",
-        "BIRTHDAY": "2005-07-24"
-    },
     "Bradley Beal": {
         "ID": "ff461754-ad20-4eeb-af02-2b46cc980b24",
         "TEAM": "Clippers",
@@ -875,12 +701,6 @@
         "APG": 3.4,
         "RPG": 2.5
     },
-    "Vince Williams Jr.": {
-        "ID": "0e5eb37e-e112-4587-98d8-8a9b46254f28",
-        "TEAM": "Grizzlies",
-        "HEIGHT": "6-4",
-        "BIRTHDAY": "2000-08-30"
-    },
     "Santi Aldama": {
         "ID": "266cd359-f378-45c6-957e-6e21378e5219",
         "TEAM": "Grizzlies",
@@ -889,12 +709,6 @@
         "PPG": 12.5,
         "APG": 2.9,
         "RPG": 6.4
-    },
-    "GG Jackson": {
-        "ID": "28549c0f-c6e6-4757-a515-dbc2e1b78007",
-        "TEAM": "Grizzlies",
-        "HEIGHT": "6-9",
-        "BIRTHDAY": "2004-12-17"
     },
     "Jaren Jackson Jr.": {
         "ID": "3e492a6a-ed3c-499d-b3f5-ff68ca16f6fd",
@@ -932,24 +746,6 @@
         "APG": 7.3,
         "RPG": 4.1
     },
-    "Cam Spencer": {
-        "ID": "9e51be65-7d39-433c-8d8c-de896da6267d",
-        "TEAM": "Grizzlies",
-        "HEIGHT": "6-4",
-        "BIRTHDAY": "2000-04-06"
-    },
-    "Cedric Coward": {
-        "ID": "9f666f68-046c-4315-a89d-d9ec2e9a852d",
-        "TEAM": "Grizzlies",
-        "HEIGHT": "6-6",
-        "BIRTHDAY": "2003-09-11"
-    },
-    "PJ Hall": {
-        "ID": "abe7b1d1-e992-4ab5-8f0c-8a0d7747ca1f",
-        "TEAM": "Grizzlies",
-        "HEIGHT": "6-10",
-        "BIRTHDAY": "2002-02-21"
-    },
     "Brandon Clarke": {
         "ID": "c978afe7-cf22-45fc-8d0f-da8f867eb5ee",
         "TEAM": "Grizzlies",
@@ -967,12 +763,6 @@
         "PPG": 8.7,
         "APG": 1.8,
         "RPG": 2.2
-    },
-    "Javon Small": {
-        "ID": "d1951755-732a-453b-bede-69ff9e5a595c",
-        "TEAM": "Grizzlies",
-        "HEIGHT": "6-1",
-        "BIRTHDAY": "2002-12-19"
     },
     "Scotty Pippen Jr.": {
         "ID": "df62b7c5-faaa-4f37-a716-b7e034aa03eb",
@@ -1037,12 +827,6 @@
         "APG": 1.2,
         "RPG": 3.6
     },
-    "Eli John Ndiaye": {
-        "ID": "449da167-8e2f-4db4-a466-51e2b3f6efee",
-        "TEAM": "Hawks",
-        "HEIGHT": "6-8",
-        "BIRTHDAY": "2004-06-26"
-    },
     "Onyeka Okongwu": {
         "ID": "70e50e53-ca3b-425d-ac49-b156d6d1e016",
         "TEAM": "Hawks",
@@ -1052,12 +836,6 @@
         "APG": 2.3,
         "RPG": 8.9
     },
-    "Asa Newell": {
-        "ID": "820a9363-1ad3-46a0-b577-2588f85b27f2",
-        "TEAM": "Hawks",
-        "HEIGHT": "6-9",
-        "BIRTHDAY": "2005-10-05"
-    },
     "V\u00edt Krej\u010d\u00ed": {
         "ID": "8db2a730-bafb-4936-915f-3dd4920a0aa9",
         "TEAM": "Hawks",
@@ -1066,24 +844,6 @@
         "PPG": 7.2,
         "APG": 2.6,
         "RPG": 2.7
-    },
-    "Nikola \u0110uri\u0161i\u0107": {
-        "ID": "8e0c0e99-7060-4dce-a76a-777c3ee22da8",
-        "TEAM": "Hawks",
-        "HEIGHT": "6-7",
-        "BIRTHDAY": "2004-02-23"
-    },
-    "Kobe Bufkin": {
-        "ID": "a10a4352-53b3-47b6-a336-201dc9e8401e",
-        "TEAM": "Hawks",
-        "HEIGHT": "6-4",
-        "BIRTHDAY": "2003-09-21"
-    },
-    "Jacob Toppin": {
-        "ID": "a4f71454-3994-4994-a03d-1279da83989d",
-        "TEAM": "Hawks",
-        "HEIGHT": "6-8",
-        "BIRTHDAY": "2000-05-08"
     },
     "Luke Kennard": {
         "ID": "a537047d-c29f-4dfe-99b0-3bac4e258dc7",
@@ -1130,12 +890,6 @@
         "APG": 4.3,
         "RPG": 9.6
     },
-    "Vladislav Goldin": {
-        "ID": "158db875-4660-42e0-9ba3-6b29c2a85e5a",
-        "TEAM": "Heat",
-        "HEIGHT": "7-1",
-        "BIRTHDAY": "2001-05-12"
-    },
     "Davion Mitchell": {
         "ID": "38a9b2cc-008e-406b-ad5a-87e0e54f93b7",
         "TEAM": "Heat",
@@ -1153,12 +907,6 @@
         "PPG": 8.6,
         "APG": 2.5,
         "RPG": 4.4
-    },
-    "Keshad Johnson": {
-        "ID": "5ae05a68-db05-45ea-a4e7-87462cb576aa",
-        "TEAM": "Heat",
-        "HEIGHT": "6-7",
-        "BIRTHDAY": "2001-06-23"
     },
     "Pelle Larsson": {
         "ID": "6be87eb4-8a62-44e5-893b-d44ba516ac62",
@@ -1187,12 +935,6 @@
         "APG": 2.6,
         "RPG": 4.5
     },
-    "Josh Christopher": {
-        "ID": "8121242f-45a6-4632-b8ae-f0846a45016a",
-        "TEAM": "Heat",
-        "HEIGHT": "6-4",
-        "BIRTHDAY": "2001-12-08"
-    },
     "Tyler Herro": {
         "ID": "8bd80771-843f-4d7f-a4e7-b4d4f6c4e7c6",
         "TEAM": "Heat",
@@ -1202,12 +944,6 @@
         "APG": 5.5,
         "RPG": 5.2
     },
-    "Myron Gardner": {
-        "ID": "9cfaa435-cd0c-4616-924f-feb9c3df1c12",
-        "TEAM": "Heat",
-        "HEIGHT": "6-6",
-        "BIRTHDAY": "2001-05-21"
-    },
     "Haywood Highsmith": {
         "ID": "a17d9b20-4e2b-4612-aecd-27938c997e94",
         "TEAM": "Heat",
@@ -1216,18 +952,6 @@
         "PPG": 6.5,
         "APG": 1.5,
         "RPG": 3.4
-    },
-    "Dru Smith": {
-        "ID": "a6d12593-86ca-485f-b775-2abb14eb6d99",
-        "TEAM": "Heat",
-        "HEIGHT": "6-2",
-        "BIRTHDAY": "1997-12-30"
-    },
-    "Kasparas Jaku\u010dionis": {
-        "ID": "d0400039-111a-4b67-8666-4f29e0549a77",
-        "TEAM": "Heat",
-        "HEIGHT": "6-6",
-        "BIRTHDAY": "2006-05-29"
     },
     "Terry Rozier": {
         "ID": "d1ee8ac8-f550-4269-ab4f-604b7bba441a",
@@ -1274,12 +998,6 @@
         "APG": 0.9,
         "RPG": 2.9
     },
-    "Kon Knueppel": {
-        "ID": "0b9a642d-d6f6-4c65-a7bd-d82e016e1b5d",
-        "TEAM": "Hornets",
-        "HEIGHT": "6-7",
-        "BIRTHDAY": "2005-08-03"
-    },
     "Pat Connaughton": {
         "ID": "298852ca-299d-4cb9-a9e5-6ac909582f78",
         "TEAM": "Hornets",
@@ -1288,12 +1006,6 @@
         "PPG": 5.3,
         "APG": 1.7,
         "RPG": 2.7
-    },
-    "Ryan Kalkbrenner": {
-        "ID": "388ec80d-171a-48f7-9cc8-5a8bebde54e0",
-        "TEAM": "Hornets",
-        "HEIGHT": "7-1",
-        "BIRTHDAY": "2002-01-17"
     },
     "DaQuan Jeffries": {
         "ID": "3a2b38a1-23da-4af8-8c1a-e52694c2416a",
@@ -1313,24 +1025,6 @@
         "APG": 1.2,
         "RPG": 4.7
     },
-    "Grant Williams": {
-        "ID": "59209028-6712-47ef-b87c-bdb19f91523b",
-        "TEAM": "Hornets",
-        "HEIGHT": "6-6",
-        "BIRTHDAY": "1998-11-30"
-    },
-    "Tre Mann": {
-        "ID": "5b681679-4d8c-4964-bbba-5ed058257745",
-        "TEAM": "Hornets",
-        "HEIGHT": "6-3",
-        "BIRTHDAY": "2001-02-03"
-    },
-    "Brandon Miller": {
-        "ID": "775e4450-cdcd-43a1-b4cd-dc29fba48503",
-        "TEAM": "Hornets",
-        "HEIGHT": "6-7",
-        "BIRTHDAY": "2002-11-22"
-    },
     "Moussa Diabat\u00e9": {
         "ID": "78dc76b4-a810-4e4a-9418-5cf3fa03582f",
         "TEAM": "Hornets",
@@ -1348,12 +1042,6 @@
         "PPG": 18.4,
         "APG": 4.2,
         "RPG": 2.7
-    },
-    "Drew Peterson": {
-        "ID": "82c98130-ca75-4fad-be40-59133af1027e",
-        "TEAM": "Hornets",
-        "HEIGHT": "6-9",
-        "BIRTHDAY": "1999-11-09"
     },
     "Spencer Dinwiddie": {
         "ID": "8426ab40-888d-4f89-976c-cd9e23717653",
@@ -1427,18 +1115,6 @@
         "APG": 0.9,
         "RPG": 1.4
     },
-    "Liam McNeeley": {
-        "ID": "fa142a43-00a4-4e79-be7b-d469c09dfdd0",
-        "TEAM": "Hornets",
-        "HEIGHT": "6-7",
-        "BIRTHDAY": "2005-10-10"
-    },
-    "Sion James": {
-        "ID": "fba3e1cf-82e4-412a-b8db-148f9b93ebf3",
-        "TEAM": "Hornets",
-        "HEIGHT": "6-5",
-        "BIRTHDAY": "2002-12-04"
-    },
     "Isaiah Collier": {
         "ID": "019a0f57-b63a-4521-8a5d-45942a15eb7b",
         "TEAM": "Jazz",
@@ -1447,12 +1123,6 @@
         "PPG": 8.7,
         "APG": 6.3,
         "RPG": 3.3
-    },
-    "RJ Luis Jr.": {
-        "ID": "1c9d8c19-6251-4feb-9641-811e05a66aa1",
-        "TEAM": "Jazz",
-        "HEIGHT": "6-7",
-        "BIRTHDAY": "2002-11-27"
     },
     "Kyle Anderson": {
         "ID": "2e49c27a-06c5-4c4a-87fd-69840b783947",
@@ -1481,12 +1151,6 @@
         "APG": 5.6,
         "RPG": 3.8
     },
-    "Elijah Harkless": {
-        "ID": "57807c7c-5866-4eb9-8d2c-b83351f3e288",
-        "TEAM": "Jazz",
-        "HEIGHT": "6-3",
-        "BIRTHDAY": "2000-02-03"
-    },
     "Lauri Markkanen": {
         "ID": "583d7994-36f9-4a9a-b527-c18704406981",
         "TEAM": "Jazz",
@@ -1505,12 +1169,6 @@
         "APG": 1.9,
         "RPG": 6.1
     },
-    "Kevin Love": {
-        "ID": "7d615ccd-db96-42a3-9a6c-7f18ea25634e",
-        "TEAM": "Jazz",
-        "HEIGHT": "6-8",
-        "BIRTHDAY": "1988-09-07"
-    },
     "Walker Kessler": {
         "ID": "7eccbdf9-58a3-4b96-8b1e-eaa8ea9da836",
         "TEAM": "Jazz",
@@ -1519,12 +1177,6 @@
         "PPG": 11.1,
         "APG": 1.7,
         "RPG": 12.2
-    },
-    "Oscar Tshiebwe": {
-        "ID": "810c84a1-e260-4aa3-9849-1b2ee3657fe3",
-        "TEAM": "Jazz",
-        "HEIGHT": "6-8",
-        "BIRTHDAY": "1999-11-27"
     },
     "Svi Mykhailiuk": {
         "ID": "8c0929ae-ce3d-47e0-a964-bf6b8d3981ab",
@@ -1544,24 +1196,6 @@
         "APG": 2.3,
         "RPG": 7.8
     },
-    "Walter Clayton": {
-        "ID": "b8fd0298-4027-47e2-9531-fa7c01b8bbba",
-        "TEAM": "Jazz",
-        "HEIGHT": "6-3",
-        "BIRTHDAY": "2003-03-06"
-    },
-    "Ace Bailey": {
-        "ID": "c5fca05e-7292-464b-b9cd-d5d0f5e2fd07",
-        "TEAM": "Jazz",
-        "HEIGHT": "6-10",
-        "BIRTHDAY": "2006-08-13"
-    },
-    "John Tonje": {
-        "ID": "cf4d4c23-9ccc-4cf3-b620-9749a8e65064",
-        "TEAM": "Jazz",
-        "HEIGHT": "6-5",
-        "BIRTHDAY": "2001-04-23"
-    },
     "Brice Sensabaugh": {
         "ID": "e747747c-3053-4ad3-a44d-7ac0b9cbdb4c",
         "TEAM": "Jazz",
@@ -1580,12 +1214,6 @@
         "APG": 1.2,
         "RPG": 2.3
     },
-    "Taylor Hendricks": {
-        "ID": "fb6e5496-cfa5-42c2-bbfa-f776734a25a8",
-        "TEAM": "Jazz",
-        "HEIGHT": "6-9",
-        "BIRTHDAY": "2003-11-22"
-    },
     "Devin Carter": {
         "ID": "00080fe6-49ad-4685-a308-eb96b1f11ddf",
         "TEAM": "Kings",
@@ -1594,12 +1222,6 @@
         "PPG": 3.8,
         "APG": 1.1,
         "RPG": 2.1
-    },
-    "Dario \u0160ari\u0107": {
-        "ID": "06255060-3d3d-44f6-a776-2aab8e57584a",
-        "TEAM": "Kings",
-        "HEIGHT": "6-10",
-        "BIRTHDAY": "1994-04-08"
     },
     "Drew Eubanks": {
         "ID": "0fbb8fd5-9b9c-48a2-a355-18aba7b5d9d5",
@@ -1627,24 +1249,6 @@
         "PPG": 17.2,
         "APG": 5.6,
         "RPG": 3.8
-    },
-    "Dylan Cardwell": {
-        "ID": "37cbf881-ab20-44e7-bfb9-af3f7c7fe5d1",
-        "TEAM": "Kings",
-        "HEIGHT": "6-11",
-        "BIRTHDAY": "2001-12-16"
-    },
-    "Terence Davis": {
-        "ID": "5054a7a7-7fc2-40fa-867e-486c3ff6de03",
-        "TEAM": "Kings",
-        "HEIGHT": "6-4",
-        "BIRTHDAY": "1997-05-16"
-    },
-    "Isaiah Stevens": {
-        "ID": "529cb618-8e48-4011-bd42-dd0b9d91fdcb",
-        "TEAM": "Kings",
-        "HEIGHT": "6-0",
-        "BIRTHDAY": "2000-11-01"
     },
     "DeMar DeRozan": {
         "ID": "5e86a9c3-b4d0-4fe1-a551-acd83e5d60eb",
@@ -1691,18 +1295,6 @@
         "APG": 5.4,
         "RPG": 2.6
     },
-    "Daeqwon Plowden": {
-        "ID": "badef3c4-e77e-4444-ac80-95d71332e974",
-        "TEAM": "Kings",
-        "HEIGHT": "6-6",
-        "BIRTHDAY": "1998-08-29"
-    },
-    "Nique Clifford": {
-        "ID": "cd6c786e-3c65-4f88-9c7b-4a243295f0d6",
-        "TEAM": "Kings",
-        "HEIGHT": "6-5",
-        "BIRTHDAY": "2002-02-09"
-    },
     "Zach LaVine": {
         "ID": "db72e294-1c54-454a-96b9-0b4fd2f38112",
         "TEAM": "Kings",
@@ -1711,12 +1303,6 @@
         "PPG": 23.3,
         "APG": 4.2,
         "RPG": 4.3
-    },
-    "Maxime Raynaud": {
-        "ID": "e783937f-31dc-41bd-9510-2572d2dc35ee",
-        "TEAM": "Kings",
-        "HEIGHT": "7-0",
-        "BIRTHDAY": "2003-04-07"
     },
     "Isaac Jones": {
         "ID": "ff6f99de-5cd8-4bf1-a5d2-6bebcf4350ee",
@@ -1735,18 +1321,6 @@
         "PPG": 16.2,
         "APG": 3.7,
         "RPG": 3.2
-    },
-    "Kevin McCullar Jr.": {
-        "ID": "106a6290-fe0d-47dd-8cc5-0a0e34a77165",
-        "TEAM": "Knicks",
-        "HEIGHT": "6-6",
-        "BIRTHDAY": "2001-03-15"
-    },
-    "Mohamed Diawara": {
-        "ID": "227c2e8f-087e-4c15-8386-758ba10e06d2",
-        "TEAM": "Knicks",
-        "HEIGHT": "6-8",
-        "BIRTHDAY": "2005-04-29"
     },
     "Guerschon Yabusele": {
         "ID": "31f78854-0d23-4318-959c-0314588136e1",
@@ -1775,12 +1349,6 @@
         "APG": 1.7,
         "RPG": 0.7
     },
-    "Ariel Hukporti": {
-        "ID": "7e06d5ac-b8f3-47e7-809c-92cf63a864f7",
-        "TEAM": "Knicks",
-        "HEIGHT": "6-11",
-        "BIRTHDAY": "2002-04-12"
-    },
     "Mikal Bridges": {
         "ID": "83cc5b28-36a7-43ba-ba20-8347bd1de583",
         "TEAM": "Knicks",
@@ -1808,12 +1376,6 @@
         "APG": 2.2,
         "RPG": 4.8
     },
-    "Mitchell Robinson": {
-        "ID": "97e25d19-7c5c-49f9-91c0-5cd9b9cebdcb",
-        "TEAM": "Knicks",
-        "HEIGHT": "7-0",
-        "BIRTHDAY": "1998-04-01"
-    },
     "Karl-Anthony Towns": {
         "ID": "ab532a66-9314-4d57-ade7-bb54a70c65ad",
         "TEAM": "Knicks",
@@ -1831,18 +1393,6 @@
         "PPG": 13.6,
         "APG": 5.9,
         "RPG": 9.6
-    },
-    "Pac\u00f4me Dadiet": {
-        "ID": "fd131bac-4644-4f4d-b715-2bc093775cd5",
-        "TEAM": "Knicks",
-        "HEIGHT": "6-8",
-        "BIRTHDAY": "2005-07-27"
-    },
-    "Augustas Marciulionis": {
-        "ID": "084af66a-df88-4c27-a0b2-f75d4cd91340",
-        "TEAM": "Lakers",
-        "HEIGHT": "6-4",
-        "BIRTHDAY": "2002-03-21"
     },
     "LeBron James": {
         "ID": "0afbe608-940a-4d5d-a1f7-468718c67d91",
@@ -1880,17 +1430,6 @@
         "APG": 1.3,
         "RPG": 2.8
     },
-    "Arthur Kaluma": {
-        "ID": "46b94cd8-444a-4108-829f-8112661bd0bd",
-        "TEAM": "Lakers",
-        "HEIGHT": "6-7",
-        "BIRTHDAY": "2002-03-01"
-    },
-    "Chris Ma\u00f1on": {
-        "ID": "4ab32c74-1d47-41aa-8fa7-7dabe48a9fd6",
-        "TEAM": "Lakers",
-        "HEIGHT": "6-5"
-    },
     "Jaxson Hayes": {
         "ID": "582db35d-33ae-4913-9bb3-5de4fb763e46",
         "TEAM": "Lakers",
@@ -1909,12 +1448,6 @@
         "APG": 1.4,
         "RPG": 5.0
     },
-    "Eric Dixon": {
-        "ID": "5d5ee6f7-03aa-4693-a81a-207c3e374d5d",
-        "TEAM": "Lakers",
-        "HEIGHT": "6-8",
-        "BIRTHDAY": "2001-01-26"
-    },
     "Deandre Ayton": {
         "ID": "7ca4beac-bbd6-454f-b820-4e8442a3e1e5",
         "TEAM": "Lakers",
@@ -1923,12 +1456,6 @@
         "PPG": 14.4,
         "APG": 1.6,
         "RPG": 10.2
-    },
-    "RJ Davis": {
-        "ID": "7cf2a222-e95e-4598-b5a3-d5715983d824",
-        "TEAM": "Lakers",
-        "HEIGHT": "6-0",
-        "BIRTHDAY": "2001-10-21"
     },
     "Dalton Knecht": {
         "ID": "816ef930-8918-4b1d-9f0e-d0d867e6956a",
@@ -1947,12 +1474,6 @@
         "PPG": 9.0,
         "APG": 3.2,
         "RPG": 2.1
-    },
-    "Adou Thiero": {
-        "ID": "b69837ca-4e1d-4124-956d-00e3febe358e",
-        "TEAM": "Lakers",
-        "HEIGHT": "6-6",
-        "BIRTHDAY": "2004-05-08"
     },
     "Austin Reaves": {
         "ID": "c4981f56-93a2-47b1-8d31-4e8635f45e1d",
@@ -1981,12 +1502,6 @@
         "APG": 7.7,
         "RPG": 8.2
     },
-    "Bronny James": {
-        "ID": "e693c3a1-c958-48d5-9edc-46d95aae0ad1",
-        "TEAM": "Lakers",
-        "HEIGHT": "6-3",
-        "BIRTHDAY": "2004-10-06"
-    },
     "Christian Koloko": {
         "ID": "ed643452-917d-40c5-badd-2e72958b059c",
         "TEAM": "Lakers",
@@ -2014,12 +1529,6 @@
         "APG": 2.0,
         "RPG": 6.6
     },
-    "Jase Richardson": {
-        "ID": "3ac2181f-3bec-4ffc-809f-30f2357b36c1",
-        "TEAM": "Magic",
-        "HEIGHT": "6-1",
-        "BIRTHDAY": "2005-10-15"
-    },
     "Desmond Bane": {
         "ID": "49962b13-0afc-43f5-a3e2-7e37b7736260",
         "TEAM": "Magic",
@@ -2037,12 +1546,6 @@
         "PPG": 25.9,
         "APG": 4.8,
         "RPG": 7.5
-    },
-    "Noah Penda": {
-        "ID": "5099364d-2c4b-4d38-ac66-a86d9489474c",
-        "TEAM": "Magic",
-        "HEIGHT": "6-8",
-        "BIRTHDAY": "2005-01-07"
     },
     "Franz Wagner": {
         "ID": "514fd4aa-5384-4bc7-a670-367a426ca235",
@@ -2143,12 +1646,6 @@
         "APG": 1.4,
         "RPG": 4.9
     },
-    "Dant\u00e9 Exum": {
-        "ID": "0d187d04-4cd9-44b3-9a29-408fac5b011e",
-        "TEAM": "Mavericks",
-        "HEIGHT": "6-5",
-        "BIRTHDAY": "1995-07-13"
-    },
     "Kai Jones": {
         "ID": "116f036d-9233-462b-80bc-3ede69b97706",
         "TEAM": "Mavericks",
@@ -2166,18 +1663,6 @@
         "PPG": 8.7,
         "APG": 2.4,
         "RPG": 7.5
-    },
-    "Cooper Flagg": {
-        "ID": "1d323a11-1758-4975-ba6f-1a03b7a2157c",
-        "TEAM": "Mavericks",
-        "HEIGHT": "6-8",
-        "BIRTHDAY": "2006-12-21"
-    },
-    "Miles Kelly": {
-        "ID": "2c6dfdfd-f624-4738-b6b0-d96871d0620f",
-        "TEAM": "Mavericks",
-        "HEIGHT": "6-6",
-        "BIRTHDAY": "2003-01-26"
     },
     "Klay Thompson": {
         "ID": "4e152a06-673e-4701-b115-aa7e2cd00d2d",
@@ -2214,12 +1699,6 @@
         "PPG": 3.9,
         "APG": 0.8,
         "RPG": 2.4
-    },
-    "Ryan Nembhard": {
-        "ID": "68175411-ce98-4b2c-9ff0-3e26bff33191",
-        "TEAM": "Mavericks",
-        "HEIGHT": "6-0",
-        "BIRTHDAY": "2003-03-10"
     },
     "P.J. Washington": {
         "ID": "6d7f4f2f-7ea7-4c56-8082-dfdce67f5487",
@@ -2311,18 +1790,6 @@
         "APG": 3.5,
         "RPG": 11.6
     },
-    "Dariq Whitehead": {
-        "ID": "169083b9-0653-44c8-ac69-bc5360a468c6",
-        "TEAM": "Nets",
-        "HEIGHT": "6-6",
-        "BIRTHDAY": "2004-08-01"
-    },
-    "Drew Timme": {
-        "ID": "1c19138b-1769-4418-b481-af76751739f0",
-        "TEAM": "Nets",
-        "HEIGHT": "6-10",
-        "BIRTHDAY": "2000-09-09"
-    },
     "Day'Ron Sharpe": {
         "ID": "1c82e36d-8975-4778-9d49-d872d2f3f1be",
         "TEAM": "Nets",
@@ -2368,12 +1835,6 @@
         "APG": 1.3,
         "RPG": 2.9
     },
-    "Nolan Traor\u00e9": {
-        "ID": "4cee9366-c78d-4ae9-a04a-eb695ee2fac0",
-        "TEAM": "Nets",
-        "HEIGHT": "6-3",
-        "BIRTHDAY": "2006-05-28"
-    },
     "Keon Johnson": {
         "ID": "4e3d287a-49d4-4f1a-8f88-da3a5abb3e4a",
         "TEAM": "Nets",
@@ -2382,24 +1843,6 @@
         "PPG": 10.6,
         "APG": 2.2,
         "RPG": 3.8
-    },
-    "Tyson Etienne": {
-        "ID": "674b6d37-16d4-4851-81c2-b279754b9b82",
-        "TEAM": "Nets",
-        "HEIGHT": "6-2",
-        "BIRTHDAY": "1999-09-17"
-    },
-    "Tosan Evbuomwan": {
-        "ID": "68ed2fac-e117-48e1-ac43-314098f600ea",
-        "TEAM": "Nets",
-        "HEIGHT": "6-7",
-        "BIRTHDAY": "2001-02-16"
-    },
-    "Danny Wolf": {
-        "ID": "6bee5098-f27a-4877-8df6-41c1687a8fb6",
-        "TEAM": "Nets",
-        "HEIGHT": "6-11",
-        "BIRTHDAY": "2004-05-05"
     },
     "Jalen Wilson": {
         "ID": "73d92041-1258-4f1f-8bd3-55e07407115b",
@@ -2418,30 +1861,6 @@
         "PPG": 7.7,
         "APG": 1.8,
         "RPG": 3.0
-    },
-    "Egor Demin": {
-        "ID": "b5e408ae-86d3-44a0-aa16-6977c6aaed41",
-        "TEAM": "Nets",
-        "HEIGHT": "6-8",
-        "BIRTHDAY": "2006-03-03"
-    },
-    "Drake Powell": {
-        "ID": "b60665b0-b5f3-4662-b7f8-454def5886db",
-        "TEAM": "Nets",
-        "HEIGHT": "6-6",
-        "BIRTHDAY": "2005-09-08"
-    },
-    "Ben Saraf": {
-        "ID": "bc86dba7-561a-4fa0-9639-83d50b2c29ba",
-        "TEAM": "Nets",
-        "HEIGHT": "6-6",
-        "BIRTHDAY": "2006-04-14"
-    },
-    "Cam Thomas": {
-        "ID": "c6289b1b-7bb2-4ee6-8111-1a6e96aa9104",
-        "TEAM": "Nets",
-        "HEIGHT": "6-3",
-        "BIRTHDAY": "2001-10-13"
     },
     "Noah Clowney": {
         "ID": "dbf9e1f5-7573-4c24-992a-04ea080c61e1",
@@ -2524,12 +1943,6 @@
         "APG": 0.4,
         "RPG": 1.6
     },
-    "Tamar Bates": {
-        "ID": "5c010a64-12a9-423e-a466-fc49c427e058",
-        "TEAM": "Nuggets",
-        "HEIGHT": "6-5",
-        "BIRTHDAY": "2003-02-21"
-    },
     "Jamal Murray": {
         "ID": "685576ef-ea6c-4ccf-affd-18916baf4e60",
         "TEAM": "Nuggets",
@@ -2566,24 +1979,6 @@
         "APG": 2.6,
         "RPG": 5.2
     },
-    "Spencer Jones": {
-        "ID": "dfce9679-dd27-4522-ab74-e197b3635d73",
-        "TEAM": "Nuggets",
-        "HEIGHT": "6-7",
-        "BIRTHDAY": "2001-06-14"
-    },
-    "Curtis Jones": {
-        "ID": "e434ac41-033a-496a-b1ea-89fd33e0ed5b",
-        "TEAM": "Nuggets",
-        "HEIGHT": "6-4",
-        "BIRTHDAY": "2001-10-04"
-    },
-    "DaRon Holmes II": {
-        "ID": "e6c9ddf9-088c-4e10-866b-0ff5172f6ba9",
-        "TEAM": "Nuggets",
-        "HEIGHT": "6-10",
-        "BIRTHDAY": "2002-08-15"
-    },
     "Nikola Joki\u0107": {
         "ID": "f2625432-3903-4f90-9b0b-2e4f63856bb0",
         "TEAM": "Nuggets",
@@ -2610,12 +2005,6 @@
         "PPG": 10.0,
         "APG": 5.0,
         "RPG": 3.3
-    },
-    "Isaiah Jackson": {
-        "ID": "067d9f05-a6b8-4a4b-854c-3364234e62b1",
-        "TEAM": "Pacers",
-        "HEIGHT": "6-9",
-        "BIRTHDAY": "2002-01-10"
     },
     "Jay Huff": {
         "ID": "1d1fa699-a455-4082-9df8-f97dbb0ca678",
@@ -2671,18 +2060,6 @@
         "APG": 1.9,
         "RPG": 5.3
     },
-    "James Wiseman": {
-        "ID": "5228b552-2eb0-4476-96c2-f3c9f82a7a35",
-        "TEAM": "Pacers",
-        "HEIGHT": "6-11",
-        "BIRTHDAY": "2001-03-31"
-    },
-    "Tony Bradley": {
-        "ID": "6130d33e-5725-4f5d-8f81-76ecd691a5b2",
-        "TEAM": "Pacers",
-        "HEIGHT": "6-11",
-        "BIRTHDAY": "1998-01-08"
-    },
     "Jarace Walker": {
         "ID": "6fd99205-e159-4ff2-b291-80fb2d067bb3",
         "TEAM": "Pacers",
@@ -2692,12 +2069,6 @@
         "APG": 1.5,
         "RPG": 3.1
     },
-    "Quenton Jackson": {
-        "ID": "8571e039-8802-453a-aca5-7fdcb3ae1a28",
-        "TEAM": "Pacers",
-        "HEIGHT": "6-5",
-        "BIRTHDAY": "1998-09-15"
-    },
     "Aaron Nesmith": {
         "ID": "90d63a71-e4fe-411c-9773-2e74b5e1cb3b",
         "TEAM": "Pacers",
@@ -2706,24 +2077,6 @@
         "PPG": 12.0,
         "APG": 1.2,
         "RPG": 4.0
-    },
-    "Kam Jones": {
-        "ID": "b159e65b-fd2f-415e-9cdd-46525e9897da",
-        "TEAM": "Pacers",
-        "HEIGHT": "6-3",
-        "BIRTHDAY": "2002-02-25"
-    },
-    "Taelon Peter": {
-        "ID": "cdf51fa0-724e-48f3-9ee4-6a01ae4d9542",
-        "TEAM": "Pacers",
-        "HEIGHT": "6-4",
-        "BIRTHDAY": "2002-02-27"
-    },
-    "RayJ Dennis": {
-        "ID": "d146629c-2584-4760-89af-e4378d7569c1",
-        "TEAM": "Pacers",
-        "HEIGHT": "6-2",
-        "BIRTHDAY": "2001-03-30"
     },
     "T.J. McConnell": {
         "ID": "e3dfa2a2-6272-4f3f-adf0-dd5dadea9481",
@@ -2752,18 +2105,6 @@
         "APG": 1.2,
         "RPG": 2.8
     },
-    "Trey Alexander": {
-        "ID": "23462d55-9f15-4632-915f-2ab8e4458219",
-        "TEAM": "Pelicans",
-        "HEIGHT": "6-4",
-        "BIRTHDAY": "2003-05-02"
-    },
-    "Jeremiah Fears": {
-        "ID": "26ad516e-5b80-4d33-a40a-b0dfacbaa992",
-        "TEAM": "Pelicans",
-        "HEIGHT": "6-3",
-        "BIRTHDAY": "2006-10-14"
-    },
     "Jordan Poole": {
         "ID": "2ed2f76f-5a2f-4d79-ab7c-e84a8a42dc21",
         "TEAM": "Pelicans",
@@ -2772,12 +2113,6 @@
         "PPG": 20.5,
         "APG": 4.5,
         "RPG": 3.0
-    },
-    "Bryce McGowens": {
-        "ID": "3c4a7fda-fca3-4a68-9886-ea7eec4cc2e3",
-        "TEAM": "Pelicans",
-        "HEIGHT": "6-6",
-        "BIRTHDAY": "2002-11-08"
     },
     "Trey Murphy III": {
         "ID": "51b62fe8-1e5c-4c65-8ad3-2ad06e749b70",
@@ -2796,12 +2131,6 @@
         "PPG": 24.6,
         "APG": 5.3,
         "RPG": 7.2
-    },
-    "Herbert Jones": {
-        "ID": "66b88001-06c2-4f4a-9825-b6e0cc1df6cc",
-        "TEAM": "Pelicans",
-        "HEIGHT": "6-7",
-        "BIRTHDAY": "1998-10-06"
     },
     "Dejounte Murray": {
         "ID": "7d27ec3b-1e31-4b0f-abcf-e12039a0e27b",
@@ -2830,18 +2159,6 @@
         "APG": 4.6,
         "RPG": 2.4
     },
-    "Derik Queen": {
-        "ID": "a4de5912-bd72-4993-ac93-fb65d2164660",
-        "TEAM": "Pelicans",
-        "HEIGHT": "6-10",
-        "BIRTHDAY": "2004-12-27"
-    },
-    "Saddiq Bey": {
-        "ID": "d531a451-6377-4942-a26f-3507d60fb36b",
-        "TEAM": "Pelicans",
-        "HEIGHT": "6-7",
-        "BIRTHDAY": "1999-04-09"
-    },
     "Kevon Looney": {
         "ID": "ebb50069-6fdf-4c07-9a21-a63d5c814536",
         "TEAM": "Pelicans",
@@ -2859,18 +2176,6 @@
         "PPG": 7.7,
         "APG": 1.1,
         "RPG": 5.0
-    },
-    "Micah Peavy": {
-        "ID": "f2c67fa6-8093-46fb-b3fb-62916b9c1dad",
-        "TEAM": "Pelicans",
-        "HEIGHT": "6-8",
-        "BIRTHDAY": "2001-07-16"
-    },
-    "Hunter Dickinson": {
-        "ID": "f4e6ac10-c2d3-4412-b85b-9511b93313e6",
-        "TEAM": "Pelicans",
-        "HEIGHT": "7-2",
-        "BIRTHDAY": "2000-11-25"
     },
     "Jalen Duren": {
         "ID": "00fb2704-aa25-4ef7-8972-cde454810810",
@@ -2908,12 +2213,6 @@
         "APG": 2.3,
         "RPG": 1.2
     },
-    "Tolu Smith": {
-        "ID": "536e0e15-02b5-4994-9613-0f5ec88f82e0",
-        "TEAM": "Pistons",
-        "HEIGHT": "6-11",
-        "BIRTHDAY": "2000-07-26"
-    },
     "Cade Cunningham": {
         "ID": "57d55cd4-6ab8-4255-a248-bef800c0cbab",
         "TEAM": "Pistons",
@@ -2922,12 +2221,6 @@
         "PPG": 26.1,
         "APG": 9.1,
         "RPG": 6.1
-    },
-    "Daniss Jenkins": {
-        "ID": "79fc04d6-0dcf-4817-ab79-2528026d72be",
-        "TEAM": "Pistons",
-        "HEIGHT": "6-3",
-        "BIRTHDAY": "2001-08-17"
     },
     "Tobias Harris": {
         "ID": "82f09975-6a8d-42e4-b42c-a52b9349ed50",
@@ -2956,12 +2249,6 @@
         "APG": 1.0,
         "RPG": 2.7
     },
-    "Chaz Lanier": {
-        "ID": "ac9f5700-2da0-4c7d-a031-ed1acf0d6581",
-        "TEAM": "Pistons",
-        "HEIGHT": "6-4",
-        "BIRTHDAY": "2001-12-19"
-    },
     "Colby Jones": {
         "ID": "b173be95-9411-4fa9-afa3-ff231db0ed4d",
         "TEAM": "Pistons",
@@ -2970,12 +2257,6 @@
         "PPG": 4.0,
         "APG": 1.1,
         "RPG": 2.2
-    },
-    "Bobi Klintman": {
-        "ID": "b4b3cfce-16f1-4f30-acc0-2bac1eb51d66",
-        "TEAM": "Pistons",
-        "HEIGHT": "6-9",
-        "BIRTHDAY": "2003-03-06"
     },
     "Caris LeVert": {
         "ID": "c34996e5-8be6-4053-a2f2-0acb0155e18c",
@@ -3031,12 +2312,6 @@
         "APG": 5.4,
         "RPG": 6.3
     },
-    "Chucky Hepburn": {
-        "ID": "58c0852f-6fc1-4a9a-b019-fabab1b25536",
-        "TEAM": "Raptors",
-        "HEIGHT": "6-2",
-        "BIRTHDAY": "2003-02-09"
-    },
     "Gradey Dick": {
         "ID": "59c707c2-fc69-4ed5-aa33-d446709dad9f",
         "TEAM": "Raptors",
@@ -3045,30 +2320,6 @@
         "PPG": 14.4,
         "APG": 1.8,
         "RPG": 3.6
-    },
-    "A.J. Lawson": {
-        "ID": "6bc71e02-9a03-40db-aed4-332ab5193336",
-        "TEAM": "Raptors",
-        "HEIGHT": "6-6",
-        "BIRTHDAY": "2000-07-15"
-    },
-    "Collin Murray-Boyles": {
-        "ID": "7b169c92-2d4d-4218-9557-4e0ec1b43378",
-        "TEAM": "Raptors",
-        "HEIGHT": "6-8",
-        "BIRTHDAY": "2005-06-10"
-    },
-    "Brandon Ingram": {
-        "ID": "8082841d-e516-43c6-a81b-7987fa321acd",
-        "TEAM": "Raptors",
-        "HEIGHT": "6-8",
-        "BIRTHDAY": "1997-09-02"
-    },
-    "Ulrich Chomche": {
-        "ID": "964573c1-d054-4dce-84c0-3238f8cbf0be",
-        "TEAM": "Raptors",
-        "HEIGHT": "6-11",
-        "BIRTHDAY": "2005-12-30"
     },
     "Ochai Agbaji": {
         "ID": "a7466782-6f87-414f-9458-7fea82922e00",
@@ -3096,12 +2347,6 @@
         "PPG": 6.2,
         "APG": 2.3,
         "RPG": 4.9
-    },
-    "Alijah Martin": {
-        "ID": "c17e25c7-1306-4301-8548-2fc129a62041",
-        "TEAM": "Raptors",
-        "HEIGHT": "6-2",
-        "BIRTHDAY": "2001-12-26"
     },
     "Jamal Shead": {
         "ID": "c5df8387-9b94-4109-bcf5-96d850e994a9",
@@ -3139,12 +2384,6 @@
         "APG": 2.8,
         "RPG": 9.6
     },
-    "Garrett Temple": {
-        "ID": "ee2644c1-1260-4bf4-9c70-7c5b0cee4770",
-        "TEAM": "Raptors",
-        "HEIGHT": "6-5",
-        "BIRTHDAY": "1986-05-08"
-    },
     "Josh Okogie": {
         "ID": "1938fb4b-347a-43fd-ba41-1abdb9540699",
         "TEAM": "Rockets",
@@ -3171,12 +2410,6 @@
         "PPG": 12.2,
         "APG": 1.1,
         "RPG": 7.0
-    },
-    "Cameron Matthews": {
-        "ID": "3eadc5ba-5c71-498e-be21-532f17a3be5e",
-        "TEAM": "Rockets",
-        "HEIGHT": "6-7",
-        "BIRTHDAY": "2001-12-23"
     },
     "Dorian Finney-Smith": {
         "ID": "426357dc-340b-4d89-8e3b-7d6b4022b460",
@@ -3214,12 +2447,6 @@
         "APG": 4.2,
         "RPG": 6.0
     },
-    "JD Davison": {
-        "ID": "6e468041-8174-4161-8c1d-8ac620e0cbb0",
-        "TEAM": "Rockets",
-        "HEIGHT": "6-1",
-        "BIRTHDAY": "2002-10-03"
-    },
     "Aaron Holiday": {
         "ID": "877eb456-2827-475f-b858-2bc00480e24f",
         "TEAM": "Rockets",
@@ -3229,12 +2456,6 @@
         "APG": 1.3,
         "RPG": 1.3
     },
-    "Isaiah Crawford": {
-        "ID": "8c68e544-39ac-4016-8741-a498a979a95a",
-        "TEAM": "Rockets",
-        "HEIGHT": "6-6",
-        "BIRTHDAY": "2001-11-01"
-    },
     "Steven Adams": {
         "ID": "a208e22a-6b63-45f9-b7c6-bf913a68f3df",
         "TEAM": "Rockets",
@@ -3243,12 +2464,6 @@
         "PPG": 3.9,
         "APG": 1.1,
         "RPG": 5.6
-    },
-    "Kevon Harris": {
-        "ID": "a9cd8509-6115-4408-bcec-19e88118b016",
-        "TEAM": "Rockets",
-        "HEIGHT": "6-5",
-        "BIRTHDAY": "1997-06-24"
     },
     "Reed Sheppard": {
         "ID": "af1ba5e5-3f34-4ada-aa9f-f818baf7706f",
@@ -3295,12 +2510,6 @@
         "APG": 1.5,
         "RPG": 6.4
     },
-    "David Jones-Garcia": {
-        "ID": "0a485720-7ec1-4e1b-a9e9-dcf912dde8db",
-        "TEAM": "Spurs",
-        "HEIGHT": "6-3",
-        "BIRTHDAY": "2001-11-24"
-    },
     "Keldon Johnson": {
         "ID": "190797ba-a6f4-4286-9d5e-d157ff834829",
         "TEAM": "Spurs",
@@ -3319,12 +2528,6 @@
         "APG": 2.4,
         "RPG": 6.5
     },
-    "Riley Minix": {
-        "ID": "5efce548-15a0-4a8c-9f63-5f5db4851696",
-        "TEAM": "Spurs",
-        "HEIGHT": "6-7",
-        "BIRTHDAY": "2000-09-22"
-    },
     "Lindy Waters III": {
         "ID": "80328aab-9ce6-49c8-b3f2-f5bf73cdf319",
         "TEAM": "Spurs",
@@ -3333,12 +2536,6 @@
         "PPG": 4.9,
         "APG": 1.0,
         "RPG": 2.1
-    },
-    "Carter Bryant": {
-        "ID": "85cd25fd-f437-48dd-b736-af5422c0feb7",
-        "TEAM": "Spurs",
-        "HEIGHT": "6-8",
-        "BIRTHDAY": "2005-11-26"
     },
     "Kelly Olynyk": {
         "ID": "8e288d6e-50b8-404b-812b-823ae5bab61f",
@@ -3357,12 +2554,6 @@
         "PPG": 24.3,
         "APG": 3.7,
         "RPG": 11.0
-    },
-    "Dylan Harper": {
-        "ID": "b16123e8-c885-4276-9994-8d5e390c0f0d",
-        "TEAM": "Spurs",
-        "HEIGHT": "6-5",
-        "BIRTHDAY": "2006-03-02"
     },
     "Jordan McLaughlin": {
         "ID": "bde7f42e-7296-453d-bcba-cac6fad2d03f",
@@ -3390,12 +2581,6 @@
         "PPG": 23.5,
         "APG": 6.3,
         "RPG": 4.8
-    },
-    "Harrison Ingram": {
-        "ID": "d7276f4c-b9ee-43bf-860d-07b01a0fe7b6",
-        "TEAM": "Spurs",
-        "HEIGHT": "6-5",
-        "BIRTHDAY": "2002-11-27"
     },
     "Stephon Castle": {
         "ID": "ddee4a31-2791-4339-bfc3-a058ce2d1397",
@@ -3433,12 +2618,6 @@
         "APG": 1.6,
         "RPG": 5.3
     },
-    "Jordan Goodwin": {
-        "ID": "0b9bab33-66c3-4e01-b91e-df6b8c40ea2b",
-        "TEAM": "Suns",
-        "HEIGHT": "6-5",
-        "BIRTHDAY": "1998-10-23"
-    },
     "Jared Butler": {
         "ID": "0d9cd878-b94e-4daa-9848-dee6d950f1a5",
         "TEAM": "Suns",
@@ -3447,12 +2626,6 @@
         "PPG": 9.0,
         "APG": 3.7,
         "RPG": 1.8
-    },
-    "CJ Huntley": {
-        "ID": "215f475c-bee5-418c-ba2d-ebb9580e4b3c",
-        "TEAM": "Suns",
-        "HEIGHT": "6-11",
-        "BIRTHDAY": "2002-01-06"
     },
     "Devin Booker": {
         "ID": "31baa84f-c759-4f92-8e1f-a92305ade3d6",
@@ -3471,24 +2644,6 @@
         "PPG": 9.1,
         "APG": 2.2,
         "RPG": 4.7
-    },
-    "Koby Brea": {
-        "ID": "36d34864-f1f9-48f9-9cf1-bd7accc437c7",
-        "TEAM": "Suns",
-        "HEIGHT": "6-6",
-        "BIRTHDAY": "2002-11-06"
-    },
-    "Jalen Bridges": {
-        "ID": "3a692a4b-19d9-4087-9e91-1479dd0245dd",
-        "TEAM": "Suns",
-        "HEIGHT": "6-8",
-        "BIRTHDAY": "2001-05-14"
-    },
-    "Nigel Hayes-Davis": {
-        "ID": "5d756e84-5a91-4760-afeb-beec87692a75",
-        "TEAM": "Suns",
-        "HEIGHT": "6-7",
-        "BIRTHDAY": "1994-12-16"
     },
     "Collin Gillespie": {
         "ID": "60b8026e-e154-4ed7-a247-8e4af1dbf668",
@@ -3553,24 +2708,6 @@
         "APG": 2.5,
         "RPG": 10.2
     },
-    "Isaiah Livers": {
-        "ID": "c722d438-db08-421e-9484-9e7d2f67c05d",
-        "TEAM": "Suns",
-        "HEIGHT": "6-6",
-        "BIRTHDAY": "1998-07-28"
-    },
-    "Rasheer Fleming": {
-        "ID": "e1d35615-1fd9-4c91-a05f-ef6e7f23c4ff",
-        "TEAM": "Suns",
-        "HEIGHT": "6-8",
-        "BIRTHDAY": "2004-07-10"
-    },
-    "Khaman Maluach": {
-        "ID": "fc0c5adb-2e00-4b9b-9db2-338ed54be386",
-        "TEAM": "Suns",
-        "HEIGHT": "7-1",
-        "BIRTHDAY": "2006-09-14"
-    },
     "Grayson Allen": {
         "ID": "ffa9a64f-d624-4033-bd23-59dcfd805175",
         "TEAM": "Suns",
@@ -3625,12 +2762,6 @@
         "APG": 2.6,
         "RPG": 5.6
     },
-    "Brooks Barnhizer": {
-        "ID": "4ab6a1ca-60ab-41e3-adbc-0395dec8c0da",
-        "TEAM": "Thunder",
-        "HEIGHT": "6-6",
-        "BIRTHDAY": "2002-03-02"
-    },
     "Jalen Williams": {
         "ID": "62c44a90-f280-438a-9c7e-252f4f376283",
         "TEAM": "Thunder",
@@ -3648,12 +2779,6 @@
         "PPG": 7.1,
         "APG": 2.5,
         "RPG": 2.9
-    },
-    "Malevy Leons": {
-        "ID": "8a62bff0-8dc9-4bea-9922-6eeabb6212f2",
-        "TEAM": "Thunder",
-        "HEIGHT": "6-9",
-        "BIRTHDAY": "1999-09-23"
     },
     "Kenrich Williams": {
         "ID": "9318b4c1-49d0-40eb-8b76-1098e28133d2",
@@ -3691,18 +2816,6 @@
         "APG": 2.5,
         "RPG": 3.4
     },
-    "Nikola Topi\u0107": {
-        "ID": "bf6b4aed-c007-41eb-b4e5-08b99f292ec2",
-        "TEAM": "Thunder",
-        "HEIGHT": "6-6",
-        "BIRTHDAY": "2005-08-10"
-    },
-    "Thomas Sorber": {
-        "ID": "c56cbf7a-42a4-41a2-a37b-0cd4aaf248d0",
-        "TEAM": "Thunder",
-        "HEIGHT": "6-10",
-        "BIRTHDAY": "2005-12-25"
-    },
     "Aaron Wiggins": {
         "ID": "d3b28775-473d-471a-8452-e913f4347f0f",
         "TEAM": "Thunder",
@@ -3729,18 +2842,6 @@
         "PPG": 15.0,
         "APG": 2.0,
         "RPG": 8.0
-    },
-    "Jesse Edwards": {
-        "ID": "1b807c23-716f-4117-bc86-35553ced0cac",
-        "TEAM": "Timberwolves",
-        "HEIGHT": "7-0",
-        "BIRTHDAY": "2000-03-18"
-    },
-    "Joan Beringer": {
-        "ID": "24a0f5aa-209a-4d54-91db-bddecc37f87e",
-        "TEAM": "Timberwolves",
-        "HEIGHT": "6-11",
-        "BIRTHDAY": "2006-11-11"
     },
     "Julius Randle": {
         "ID": "24c85a15-686e-4161-934b-40948188fa36",
@@ -3778,12 +2879,6 @@
         "APG": 4.5,
         "RPG": 2.6
     },
-    "Joe Ingles": {
-        "ID": "5b297372-b2af-445e-a4bc-777982dbc1e3",
-        "TEAM": "Timberwolves",
-        "HEIGHT": "6-8",
-        "BIRTHDAY": "1987-10-02"
-    },
     "Johnny Juzang": {
         "ID": "5cc6d4d4-e4d5-42b7-b431-cecbc55bf023",
         "TEAM": "Timberwolves",
@@ -3793,24 +2888,6 @@
         "APG": 1.1,
         "RPG": 2.9
     },
-    "Rocco Zikarsky": {
-        "ID": "65fec68f-dfbb-4127-bb7a-932d5144c0f6",
-        "TEAM": "Timberwolves",
-        "HEIGHT": "7-2",
-        "BIRTHDAY": "2006-07-11"
-    },
-    "Bones Hyland": {
-        "ID": "7ad01370-ae8e-40ae-b70d-61f6d8dba8d9",
-        "TEAM": "Timberwolves",
-        "HEIGHT": "6-2",
-        "BIRTHDAY": "2000-09-14"
-    },
-    "Leonard Miller": {
-        "ID": "7b526b14-5d50-411e-8bea-0ac7a8d0e8d7",
-        "TEAM": "Timberwolves",
-        "HEIGHT": "6-10",
-        "BIRTHDAY": "2003-11-26"
-    },
     "Naz Reid": {
         "ID": "823b2161-0c34-494c-9d7c-b438152f4f4d",
         "TEAM": "Timberwolves",
@@ -3819,18 +2896,6 @@
         "PPG": 14.2,
         "APG": 2.3,
         "RPG": 6.0
-    },
-    "Tristen Newton": {
-        "ID": "892e2e4d-b10c-47b1-8c40-25ac3c9f7166",
-        "TEAM": "Timberwolves",
-        "HEIGHT": "6-5",
-        "BIRTHDAY": "2001-04-26"
-    },
-    "Enrique Freeman": {
-        "ID": "952cd8e7-2fa5-4eac-bcd9-b2e135eab16f",
-        "TEAM": "Timberwolves",
-        "HEIGHT": "6-7",
-        "BIRTHDAY": "2000-07-29"
     },
     "Rob Dillingham": {
         "ID": "99dc3c11-03fc-4d15-9dd5-d8d1f41c569a",
@@ -3940,24 +3005,6 @@
         "APG": 3.9,
         "RPG": 4.3
     },
-    "Sidy Cissoko": {
-        "ID": "7721e264-5db8-4af9-b252-65f2d18c454d",
-        "TEAM": "Trail Blazers",
-        "HEIGHT": "6-6",
-        "BIRTHDAY": "2004-04-02"
-    },
-    "Matisse Thybulle": {
-        "ID": "8b43c272-c16b-40c7-a4d5-7bbcefeb1816",
-        "TEAM": "Trail Blazers",
-        "HEIGHT": "6-5",
-        "BIRTHDAY": "1997-03-04"
-    },
-    "Caleb Love": {
-        "ID": "a26661fb-805f-41a9-8fc9-8ed805233482",
-        "TEAM": "Trail Blazers",
-        "HEIGHT": "6-4",
-        "BIRTHDAY": "2001-09-27"
-    },
     "Scoot Henderson": {
         "ID": "a978acbc-e84b-4cc4-85c9-30595e022847",
         "TEAM": "Trail Blazers",
@@ -3976,18 +3023,6 @@
         "APG": 1.0,
         "RPG": 2.6
     },
-    "Yang Hansen": {
-        "ID": "c089cc76-e8a3-46cc-8691-3d4f28edc9bf",
-        "TEAM": "Trail Blazers",
-        "HEIGHT": "7-2",
-        "BIRTHDAY": "2005-06-26"
-    },
-    "Robert Williams III": {
-        "ID": "c20dfb58-5622-405e-90b1-92b79ee97461",
-        "TEAM": "Trail Blazers",
-        "HEIGHT": "6-9",
-        "BIRTHDAY": "1997-10-17"
-    },
     "Donovan Clingan": {
         "ID": "c76e8dae-58ad-4950-8929-5094036210c4",
         "TEAM": "Trail Blazers",
@@ -3996,12 +3031,6 @@
         "PPG": 6.5,
         "APG": 1.1,
         "RPG": 7.9
-    },
-    "Justin Minaya": {
-        "ID": "d35f38c6-bcd9-42c4-b93a-71332581353f",
-        "TEAM": "Trail Blazers",
-        "HEIGHT": "6-5",
-        "BIRTHDAY": "1999-03-26"
     },
     "Duop Reath": {
         "ID": "dc929037-1cbf-4a60-a4d8-59636641ae88",
@@ -4030,12 +3059,6 @@
         "APG": 5.4,
         "RPG": 5.4
     },
-    "Kevin Knox II": {
-        "ID": "239f0ff0-3d09-4991-bb67-ad8c8b7fd0cb",
-        "TEAM": "Warriors",
-        "HEIGHT": "6-8",
-        "BIRTHDAY": "1999-08-11"
-    },
     "Quinten Post": {
         "ID": "3a3207cc-269f-47ef-9b77-f852f0bed4b0",
         "TEAM": "Warriors",
@@ -4063,12 +3086,6 @@
         "APG": 5.6,
         "RPG": 6.1
     },
-    "Jackson Rowe": {
-        "ID": "61ee95c1-2350-4154-880c-b68c661b7c57",
-        "TEAM": "Warriors",
-        "HEIGHT": "6-7",
-        "BIRTHDAY": "1997-01-04"
-    },
     "Buddy Hield": {
         "ID": "795f46f2-c78d-4f1d-9ee2-4331c1cc8184",
         "TEAM": "Warriors",
@@ -4086,12 +3103,6 @@
         "PPG": 6.6,
         "APG": 1.7,
         "RPG": 5.0
-    },
-    "Alex Toohey": {
-        "ID": "8e2c38f7-494f-4dd1-af73-a17238f216fa",
-        "TEAM": "Warriors",
-        "HEIGHT": "6-8",
-        "BIRTHDAY": "2004-05-05"
     },
     "Stephen Curry": {
         "ID": "8ec91366-faea-4196-bbfd-b8fab7434795",
@@ -4111,12 +3122,6 @@
         "APG": 1.3,
         "RPG": 2.6
     },
-    "Will Richard": {
-        "ID": "a5b978ac-7a35-4ec0-b15f-91d9a8e1ac31",
-        "TEAM": "Warriors",
-        "HEIGHT": "6-4",
-        "BIRTHDAY": "2002-12-24"
-    },
     "Jonathan Kuminga": {
         "ID": "b27687c1-55bb-49e6-9c5b-96a099fda7b7",
         "TEAM": "Warriors",
@@ -4125,12 +3130,6 @@
         "PPG": 15.3,
         "APG": 2.2,
         "RPG": 4.6
-    },
-    "Jahmai Mashack": {
-        "ID": "c2f67310-b2e2-4e89-a1f9-303e836b1415",
-        "TEAM": "Warriors",
-        "HEIGHT": "6-4",
-        "BIRTHDAY": "2002-11-10"
     },
     "Gui Santos": {
         "ID": "f5d6fdfd-21f6-48f0-a297-4c13e8fc40cb",
@@ -4149,18 +3148,6 @@
         "PPG": 8.7,
         "APG": 2.5,
         "RPG": 4.2
-    },
-    "Tre Johnson": {
-        "ID": "19561190-edab-4465-a82d-7e42a7635800",
-        "TEAM": "Wizards",
-        "HEIGHT": "6-5",
-        "BIRTHDAY": "2006-03-07"
-    },
-    "Jaylen Martin": {
-        "ID": "1cc0577e-a011-4b08-a6a8-216765672f08",
-        "TEAM": "Wizards",
-        "HEIGHT": "6-6",
-        "BIRTHDAY": "2004-01-28"
     },
     "Bilal Coulibaly": {
         "ID": "27db7dbb-6aad-44df-a3f4-7e1c21c2f256",
@@ -4207,12 +3194,6 @@
         "APG": 4.1,
         "RPG": 3.7
     },
-    "Will Riley": {
-        "ID": "584a8771-ee79-4957-89f1-a2b0638c497a",
-        "TEAM": "Wizards",
-        "HEIGHT": "6-8",
-        "BIRTHDAY": "2006-02-10"
-    },
     "Justin Champagnie": {
         "ID": "6d117ec5-649d-4151-8d44-88175c603067",
         "TEAM": "Wizards",
@@ -4257,18 +3238,6 @@
         "PPG": 21.1,
         "APG": 4.1,
         "RPG": 3.8
-    },
-    "Jamir Watkins": {
-        "ID": "c0ec993e-16ee-48e8-b410-05690b1c17b6",
-        "TEAM": "Wizards",
-        "HEIGHT": "6-5",
-        "BIRTHDAY": "2001-07-06"
-    },
-    "AJ Johnson": {
-        "ID": "d8058632-b2ca-468c-9c27-56410aef4dff",
-        "TEAM": "Wizards",
-        "HEIGHT": "6-5",
-        "BIRTHDAY": "2004-12-01"
     },
     "Marvin Bagley III": {
         "ID": "e86c1439-4ef0-4530-9c41-c3a682962eb3",
