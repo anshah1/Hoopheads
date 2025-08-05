@@ -8,7 +8,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from data.dataStorage import divisionBreakdown, conferenceBreakdown
 warnings.simplefilter(action='ignore', category=FutureWarning)
 from datetime import datetime, timedelta
-from data import players
+import players
 import unicodedata
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = True
