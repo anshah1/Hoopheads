@@ -6,9 +6,8 @@ Hoophead is an interactive basketball-themed game where users guess NBA players 
 ## Technologies Used
 - Frontend: HTML, CSS, JavaScript (for real-time player search)
 - Backend: Python (Flask)
--	Database: SQLite3 (for storing user accounts and stats)
--	Data Scraping: basketball-reference-scraper for pulling player data
--	Session Management: Flask session to maintain game state
+-	Database: SQLite3 (for storing user accounts and stats on local version)
+-	Data Scraping: nba-api and Sportradar for pulling player data
 
 ## Features
 - Player Guessing Game: Players guess the NBA player based on points per game (PPG), rebounds per game (RPG), and assists per game (APG).
@@ -20,28 +19,28 @@ Hoophead is an interactive basketball-themed game where users guess NBA players 
 ## Project Structure
 **Top Banner**:
 -	Includes hyperlinks to the important pages.
--	An info icon trigger modals with details about the game
--	If not logged in, users can register or log in. If logged in, they can access stats or log out.
+-	A "How to Play" icon trigger a modal with details about the game
+-	If not logged in, users can register or log in. If logged in, they can access stats or log out (On local version).
   
-**Register and Login**:
+**Register and Login (local version)**:
 -	Users can create an account with a unique username and a matching password confirmation.
 -	Users can log in with their credentials, and the site verifies the username and hashed password via SQLite3.
   
-**Stats Page**:
+**Stats Page (local version)**:
 -	Displays user-specific statistics in a 2-row, 9-column table.
 -	Top row: Number of guesses + failures.
 -	Bottom row: Count of how many times users scored each number of guesses.
 -	Stats are stored and updated in the SQLite3 database each time a guess is made.
   
 **NBA Player Data**:
--	Player data is sourced from basketball-reference using the basketball-reference-scraper library.
--	A list of players (with at least 7 PPG in the 2024 season) is fetched and stored in a dictionary, which is used for quick access during gameplay.
+-	Player data was sourced using a REST API (SportRadar). All player names are stored in a database for the search section and the players are filtered for >= 7 ppg for guessing.
+-	A list of players (with at least 7 PPG in the 2024-2025 season) is fetched and stored in a dictionary, which is used for quick access during gameplay.
   
 **Guessing Mechanics**:
 -	When a user accesses the main page, a random player is selected from the pre-fetched player dictionary.
 -	Players make guesses by typing into a search box, which suggests player names using JavaScript.
 -	After selecting a player, their stats (division, height, PPG, RPG, APG) are compared to the correct player’s stats. The session stores the guesses.
--	Correct guesses lead to a congratulatory screen; after 8 incorrect guesses, the user is shown the correct player and a failure message.
+-	Correct guesses lead to a congratulatory screen with the players picture; after 8 incorrect guesses, the user is shown the correct player and a failure message.
 
 ## Installation
 
@@ -68,14 +67,8 @@ flask run
 
 ## Acknowledgments
 
-- Special thanks to basketball-reference-scraper by Vishaal Agartha and nba-api for making this possible
+- Special thanks to basketball-reference-scraper by Vishaal Agartha and Sportradar
 
 ## Contact
 
 Ansh Shah - [LinkedIn](https://www.linkedin.com/in/anshah18/)
-
-
-
-
-Gitingore
-
