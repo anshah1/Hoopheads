@@ -1,41 +1,74 @@
 {% extends "layout.html" %}
 
-{% block title %}
-    Your stats
-{% endblock %}
-
 {% block main %}
-<div class="container mt-5">
-    <h2 class="text-center">Player Stats</h2>
-    <table class="table table-striped table-bordered table-hover">
-        <thead class="thead-dark">
-            <tr>
-                <th>Number Of Guesses</th>
-                <th>1</th>
-                <th>2</th>
-                <th>3</th>
-                <th>4</th>
-                <th>5</th>
-                <th>6</th>
-                <th>7</th>
-                <th>8</th>
-                <th>Fails</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Amount of Times</td>
-                <td>{{ ones }}</td>
-                <td>{{ twos }}</td>
-                <td>{{ threes }}</td>
-                <td>{{ fours }}</td>
-                <td>{{ fives }}</td>
-                <td>{{ sixes }}</td>
-                <td>{{ sevens }}</td>
-                <td>{{ eights }}</td>
-                <td>{{ fails }}</td>
-            </tr>
-        </tbody>
-    </table>
+<div class="container" style="max-width: 700px;">
+    <h2 class="mb-1" style="font-family: Georgia, 'Times New Roman', Times, serif;">Your Stats</h2>
+    <p class="text-muted mb-4">{{ user_email }}</p>
+
+    <!-- Summary Cards -->
+    <div class="row g-3 mb-5">
+        <div class="col-4">
+            <div class="card text-center border-0 shadow-sm py-3">
+                <div class="fs-1 fw-bold">{{ win_count }}</div>
+                <div class="text-muted small">Wins</div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card text-center border-0 shadow-sm py-3">
+                <div class="fs-1 fw-bold">{{ streak }}</div>
+                <div class="text-muted small">Streak</div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card text-center border-0 shadow-sm py-3">
+                <div class="fs-1 fw-bold">{{ win_pct }}%</div>
+                <div class="text-muted small">Win %</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Guess Distribution -->
+    <h5 class="mb-3 text-start">Guess Distribution</h5>
+    <div class="card border-0 shadow-sm p-4 mb-4">
+        <canvas id="distributionChart"></canvas>
+    </div>
+
+    <div class="text-muted small text-start">Fails: {{ fails }}</div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const dist = {{ guess_distribution | tojson }};
+    const ctx = document.getElementById('distributionChart').getContext('2d');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['1', '2', '3', '4', '5', '6', '7', '8'],
+            datasets: [{
+                label: 'Games',
+                data: dist,
+                backgroundColor: '#90EE90',
+                borderRadius: 6,
+                borderSkipped: false,
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false },
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { stepSize: 1 },
+                    grid: { color: '#e9ecef' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
 {% endblock %}

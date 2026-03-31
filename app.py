@@ -4,16 +4,20 @@ import warnings
 import json
 from io import StringIO
 from flask import Flask, redirect, render_template, session, request, jsonify
-from werkzeug.security import check_password_hash, generate_password_hash
+from supabase import create_client
 from data.dataStorage import divisionBreakdown, conferenceBreakdown
 warnings.simplefilter(action='ignore', category=FutureWarning)
 from datetime import datetime, timedelta
+from dotenv import load_dotenv
+load_dotenv()
 import players
 import unicodedata
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = True
 app.permanent_session_lifetime = timedelta(minutes=30)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev-temp-secret")
+supabase = create_client(os.environ["SUPABASE_URL"], os.environ["SUPABASE_ANON_KEY"])
+supabase_admin = create_client(os.environ["SUPABASE_URL"], os.environ["SUPABASE_SECRET_KEY"]) 
 
 def load_data():
     try:
@@ -94,6 +98,10 @@ def process_guess():
         # Check if max guesses reached
         if session["guess_count"] == 8:
             session["game_complete"] = True  # Mark as complete
+            if session.get("user_id"):
+                user_id = session["user_id"]
+                current = supabase_admin.table("profiles").select("fails").eq("id", user_id).single().execute()
+                supabase_admin.table("profiles").update({"streak": 0, "fails": current.data["fails"] + 1}).eq("id", user_id).execute()
             return jsonify({
                 "gameOver": True,
                 "redirectTo": "/failure", 
@@ -142,6 +150,17 @@ def congrats():
     guess_count = request.args.get("guess_count", type=int)
     image_url = request.args.get("image_url")
     player_link = request.args.get("player_link")
+
+    if session.get("user_id"):
+        user_id = session["user_id"]
+        current = supabase_admin.table("profiles").select("streak").eq("id", user_id).single().execute()
+        supabase_admin.table("profiles").update({"streak": current.data["streak"] + 1}).eq("id", user_id).execute()
+        
+        current_stats = supabase_admin.table("profiles").select("guess_distribution").eq("id", user_id).single().execute()
+        dist = current_stats.data["guess_distribution"]
+        dist[guess_count - 1] += 1
+        supabase_admin.table("profiles").update({"guess_distribution": dist}).eq("id", user_id).execute()
+        
     
     return render_template("congrats.html", 
                          player_name=player_name, 
@@ -185,6 +204,54 @@ def failure():
                          image_url=image_url, 
                          player_link=player_link,
                          eight_guesses=eight_guesses)
+
+@app.route("/login")
+def login():
+    response = supabase.auth.sign_in_with_oauth({
+        "provider": "google",
+        "options": {
+            "redirect_to": os.environ["SUPABASE_REDIRECT_URL"]
+        }
+    })
+    return redirect(response.url)
+
+@app.route("/auth/callback")
+def auth_callback():
+    code = request.args.get("code")
+    if not code:
+        return redirect("/")
+    auth_response = supabase.auth.exchange_code_for_session({"auth_code": code})
+    user = auth_response.user
+    session["user_id"] = user.id
+    session["user_email"] = user.email
+    supabase_admin.table("profiles").upsert({"id": user.id}, on_conflict="id").execute()
+    return redirect("/")
+
+@app.route("/stats")
+def stats():
+    if not session.get("user_id"):
+        return redirect("/login")
+    user_id = session["user_id"]
+    data = supabase_admin.table("profiles").select("streak, guess_distribution, fails").eq("id", user_id).single().execute().data
+    dist = data["guess_distribution"] or [0]*8
+    fails = data["fails"] or 0
+    win_count = sum(dist)
+    games_played = win_count + fails
+    win_pct = round((win_count / games_played) * 100) if games_played > 0 else 0
+    return render_template("stats.html",
+        user_email=session["user_email"],
+        streak=data["streak"] or 0,
+        win_count=win_count,
+        win_pct=win_pct,
+        guess_distribution=dist,
+        fails=fails
+    )
+
+@app.route("/logout")
+def logout():
+    session.pop("user_id", None)
+    session.pop("user_email", None)
+    return redirect("/")
 
 @app.route("/reset")
 def reset_game():

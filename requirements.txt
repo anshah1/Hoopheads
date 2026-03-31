@@ -39,6 +39,7 @@ sortedcontainers==2.4.0
 soupsieve==2.6
 spotipy==2.24.0
 SQLAlchemy==2.0.36
+supabase
 sqlmodel==0.0.22
 tqdm==4.67.1
 trio==0.26.2

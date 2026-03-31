@@ -175,10 +175,15 @@
         }
     }
 
+    let isSubmitting = false;
+
     function submitGuess(playerName) {
+        if (isSubmitting) return;
+        isSubmitting = true;
+
         document.getElementById('player-search').value = '';
         document.getElementById('suggestions').innerHTML = '';
-        
+
         fetch('/guess', {
             method: 'POST',
             headers: {
@@ -198,9 +203,11 @@
             
             updateTableRow(currentGuessIndex, data.guessResult);
             currentGuessIndex++;
+            isSubmitting = false;
         })
         .catch(error => {
             console.error('Error:', error);
+            isSubmitting = false;
         });
     }
 
