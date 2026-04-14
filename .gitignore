@@ -1,8 +1,9 @@
 .vercel
 .db
-__pycache__
 data/
 node_modules/
 analytics/
 .env
 old/
+.DS_Store
+*pyc
