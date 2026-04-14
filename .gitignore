@@ -5,3 +5,4 @@ data/
 node_modules/
 analytics/
 .env
+old/
