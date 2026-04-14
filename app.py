@@ -224,7 +224,7 @@ def auth_callback():
     user = auth_response.user
     session["user_id"] = user.id
     session["user_email"] = user.email
-    supabase_admin.table("profiles").upsert({"id": user.id}, on_conflict="id").execute()
+    supabase_admin.table("profiles").upsert({"id": user.id, "email": user.email}, on_conflict="id").execute()
     return redirect("/")
 
 @app.route("/stats")
