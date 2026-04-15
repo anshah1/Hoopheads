@@ -6,4 +6,9 @@ analytics/
 .env
 old/
 .DS_Store
-*pyc
+__pycache__/
+*.pyc
+scrape_sportradar.py
+scrape_nbaapi.py
+scraping_main.py
+get_stats.py

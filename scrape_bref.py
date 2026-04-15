@@ -1,21 +1,18 @@
 from bs4 import BeautifulSoup
-from requests import get
 from time import sleep
+import random
 import unidecode, unicodedata
 import pandas as pd
+import requests
+import socks, socket
 import json
 import sys
+from stem import Signal
+from stem.control import Controller
 
-# Usage:
-#   python scrape_bref.py           -- run all steps
-#   python scrape_bref.py --step2   -- skip step 1, use existing data/bref_bio.json
-#   python scrape_bref.py --step3   -- skip steps 1 & 2, use existing data/bref_bio.json
-
-step = 1
-if '--step2' in sys.argv:
-    step = 2
-elif '--step3' in sys.argv:
-    step = 3
+# Route all requests through Tor
+socks.set_default_proxy(socks.SOCKS5, '127.0.0.1', 9050)
+socket.socket = socks.socksocket
 
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
@@ -24,26 +21,31 @@ HEADERS = {
     'Referer': 'https://www.basketball-reference.com/',
 }
 
-TEAMS = {
-    'Atlanta Hawks': 'ATL', 'Boston Celtics': 'BOS', 'Brooklyn Nets': 'BRK',
-    'Charlotte Hornets': 'CHA', 'Chicago Bulls': 'CHI', 'Cleveland Cavaliers': 'CLE',
-    'Dallas Mavericks': 'DAL', 'Denver Nuggets': 'DEN', 'Detroit Pistons': 'DET',
-    'Golden State Warriors': 'GSW', 'Houston Rockets': 'HOU', 'Indiana Pacers': 'IND',
-    'Los Angeles Clippers': 'LAC', 'Los Angeles Lakers': 'LAL', 'Memphis Grizzlies': 'MEM',
-    'Miami Heat': 'MIA', 'Milwaukee Bucks': 'MIL', 'Minnesota Timberwolves': 'MIN',
-    'New Orleans Pelicans': 'NOP', 'New York Knicks': 'NYK', 'Oklahoma City Thunder': 'OKC',
-    'Orlando Magic': 'ORL', 'Philadelphia 76ers': 'PHI', 'Phoenix Suns': 'PHO',
-    'Portland Trail Blazers': 'POR', 'Sacramento Kings': 'SAC', 'San Antonio Spurs': 'SAS',
-    'Toronto Raptors': 'TOR', 'Utah Jazz': 'UTA', 'Washington Wizards': 'WAS'
-}
+def rotate_ip():
+    import socket as _socket
+    real_socket = _socket.socket
+    _socket.socket = _socket.socket  # temporarily use real socket
+    socks.set_default_proxy()  # clear proxy
+    with Controller.from_port(address='127.0.0.1', port=9051) as c:
+        c.authenticate()
+        c.signal(Signal.NEWNYM)
+        sleep(3)
+    socks.set_default_proxy(socks.SOCKS5, '127.0.0.1', 9050)  # restore proxy
+    print("  Rotated Tor IP")
 
-def bref_get(url):
-    r = get(url, headers=HEADERS, timeout=15)
-    while r.status_code == 429:
-        print("  Rate limited, waiting 5s...")
-        sleep(5)
-        r = get(url, headers=HEADERS, timeout=15)
-    return r
+def bref_get(url, retries=3):
+    for attempt in range(retries):
+        try:
+            r = requests.get(url, headers=HEADERS, timeout=30)
+            if r.status_code in (429, 403):
+                print(f"  Blocked ({r.status_code}), rotating IP and retrying...")
+                rotate_ip()
+                continue
+            return r
+        except Exception as e:
+            print(f"  Connection error ({e.__class__.__name__}), rotating IP and retrying...")
+            rotate_ip()
+    return None
 
 def get_player_suffix(name):
     normalized = unidecode.unidecode(unicodedata.normalize('NFD', name).encode('ascii', 'ignore').decode('utf-8'))
@@ -57,7 +59,7 @@ def get_player_suffix(name):
 
     for attempt in range(5):
         r = bref_get(f'https://www.basketball-reference.com{suffix}')
-        if r.status_code == 404:
+        if r is None or r.status_code == 404:
             return None
         if r.status_code == 200:
             soup = BeautifulSoup(r.content, 'html.parser')
@@ -67,70 +69,24 @@ def get_player_suffix(name):
             page_name = unidecode.unidecode(h1.find('span').text).lower()
             if page_name == normalized.lower():
                 return suffix
-            # increment player number and retry
             num = int(''.join(c for c in suffix if c.isdigit())) + 1
             num_str = f"0{num}" if num < 10 else str(num)
             suffix = f'/players/{initial}/{last_part}{first_part}{num_str}.html'
     return None
 
-# Step 1: scrape all team rosters from bref
-if step <= 1:
-    print("--- Step 1: Fetching rosters from bref ---")
-    bio = {}
-    for team_name, abbr in TEAMS.items():
-        url = f'https://www.basketball-reference.com/teams/{abbr}/2025.html'
-        print(f"  {team_name}...")
-        r = bref_get(url)
-        if r.status_code != 200:
-            print(f"  Failed: {r.status_code}")
-            continue
-        soup = BeautifulSoup(r.content, 'html.parser')
-        roster_table = soup.find('table', {'id': 'roster'})
-        if not roster_table:
-            print(f"  No roster table found")
-            continue
-        rows = roster_table.find('tbody').find_all('tr')
-        for row in rows:
-            try:
-                name_cell = row.find('td', {'data-stat': 'player'})
-                height_cell = row.find('td', {'data-stat': 'height'})
-                bday_cell = row.find('td', {'data-stat': 'birth_date'})
-                if not name_cell:
-                    continue
-                name = name_cell.text.strip()
-                height = height_cell.text.strip().replace('-', '-') if height_cell else ''
-                birthday = bday_cell.find('a').text.strip() if bday_cell and bday_cell.find('a') else ''
-                # convert birthday from "Month DD, YYYY" to YYYY-MM-DD
-                from datetime import datetime
-                try:
-                    birthday = datetime.strptime(birthday, '%B %d, %Y').strftime('%Y-%m-%d')
-                except:
-                    pass
-                bio[name] = {
-                    'TEAM': team_name.split(' ')[-1],  # just last word e.g. "Hawks"
-                    'HEIGHT': height,
-                    'BIRTHDAY': birthday
-                }
-            except Exception as e:
-                continue
-        print(f"  Got {len(rows)} rows, {len(bio)} total players so far")
-        with open('data/bref_bio.json', 'w') as f:
-            json.dump(bio, f, indent=4)
-        sleep(4)
-    print(f"Step 1 done — {len(bio)} players in data/bref_bio.json")
-else:
-    bio = json.load(open('data/bref_bio.json'))
-    print(f"Loaded {len(bio)} players from data/bref_bio.json")
+# Load bio from sr_bio.json (strip the Sportradar ID)
+sr_bio = json.load(open('data/sr_bio.json'))
+bio = {name: {k: v for k, v in info.items() if k != 'ID'} for name, info in sr_bio.items()}
+print(f"Loaded {len(bio)} players from data/sr_bio.json")
 
-# Step 2 & 3: get stats for each player
-print(f"\n--- Step 2: Fetching stats for {len(bio)} players ---")
+# Load existing stats so we can resume
 try:
     stats = json.load(open('data/bref_stats.json'))
 except FileNotFoundError:
     stats = {}
 
 already_done = set(p for p, info in stats.items() if 'PPG' in info)
-print(f"{len(already_done)} already have stats")
+print(f"{len(already_done)} already have stats, skipping them\n")
 
 for i, (name, info) in enumerate(bio.items()):
     if name in already_done:
@@ -144,23 +100,22 @@ for i, (name, info) in enumerate(bio.items()):
         continue
 
     r = bref_get(f'https://www.basketball-reference.com{suffix}')
-    if r.status_code != 200:
-        print(f"  -> Status {r.status_code}")
+    if r is None or r.status_code != 200:
+        print(f"  -> Status {r.status_code if r else 'None'}")
         continue
 
     try:
         soup = BeautifulSoup(r.content, 'html.parser')
-        table = soup.find('table', {'id': 'per_game'})
+        table = soup.find('table', {'id': 'per_game_stats'})
         if not table:
             print(f"  -> No per_game table")
             continue
-        df = pd.read_html(str(table))[0]
-        # get 2024-25 season row
-        row = df[df['Season'] == '2024-25']
+        from io import StringIO
+        df = pd.read_html(StringIO(str(table)))[0]
+        row = df[df['Season'] == '2025-26']
         if row.empty:
-            # try most recent non-Career row
-            df = df[df['Season'] != 'Career']
-            row = df.dropna(subset=['Season']).tail(1)
+            print(f"  -> No 2025-26 row, seasons available: {df['Season'].tolist()}")
+            continue
         if row.empty:
             print(f"  -> No 2024-25 data")
             continue
@@ -174,6 +129,8 @@ for i, (name, info) in enumerate(bio.items()):
         entry['APG'] = round(float(row['AST'].values[0]), 1)
         stats[name] = entry
         print(f"  -> {entry['PPG']} PPG, {entry['RPG']} RPG, {entry['APG']} APG ({games} games)")
+        with open('data/bref_stats.json', 'w') as f:
+            json.dump(stats, f, indent=4)
     except KeyboardInterrupt:
         with open('data/bref_stats.json', 'w') as f:
             json.dump(stats, f, indent=4)
@@ -181,10 +138,9 @@ for i, (name, info) in enumerate(bio.items()):
         sys.exit(0)
     except Exception as e:
         print(f"  -> Error: {e}")
+        continue
 
-    with open('data/bref_stats.json', 'w') as f:
-        json.dump(stats, f, indent=4)
-    sleep(4)
+    sleep(random.uniform(6, 14))
 
 final = {p: info for p, info in stats.items() if 'PPG' in info and 'RPG' in info and 'APG' in info}
 with open('players.json', 'w') as f:
