@@ -27,10 +27,11 @@
 .game-table th:nth-child(7) { width: 9%; }   /* APG */
 .game-table th:nth-child(8) { width: 9%; }   /* Age */
 
-.game-table td {
+.game-table td, .game-table th {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    height: 48px;
 }
 
 /* Arrow animations and styling */
