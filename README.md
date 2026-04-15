@@ -1,7 +1,7 @@
 # HoopHeads
 Hoophead: Guess the NBA Player
 
-Hoophead is an interactive basketball-themed game where users guess NBA players based on their 2024-2025 statistics. This project showcases my work in web development, database management, and game logic, offering a fun experience for basketball fans.
+Hoophead is an interactive basketball-themed game where users guess NBA players based on their 2025-2026 statistics. This project showcases my work in web development, database management, and game logic, offering a fun experience for basketball fans.
 
 ## Technologies Used
 - Frontend: HTML, CSS, JavaScript (for real-time player search)

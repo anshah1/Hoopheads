@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Play Today's game
+Play Today's game
 {% endblock %}
 
 {% block main %}
@@ -9,7 +9,7 @@
     <!-- Stats Container -->
     <div class="card shadow-sm mb-4 bg-white bg-opacity-75 rounded-4">
         <div class="card-body text-center">
-            <h2 class="card-title fs-4 mb-2 text-dark fw-normal">Player's 2024-2025 Regular Season Stats (Per Game)</h2>
+            <h2 class="card-title fs-4 mb-2 text-dark fw-normal">Player's 2025-2026 Regular Season Stats (Per Game)</h2>
             <div class="row g-3">
                 <div class="col-4">
                     <div class="card h-100 shadow-sm border-0 rounded-3">
@@ -42,10 +42,10 @@
     <!-- Search Form -->
     <form id="player-form" class="mb-4">
         <div class="search-wrapper position-relative mx-auto" style="max-width: 400px;">
-            <input type="text" id="player-search" class="form-control form-control-lg border-2 shadow-sm" 
-                   name="player-search" onkeyup="getSuggestions()" autocomplete="off" 
-                   placeholder="Search for a player..." />
-            <ul class="suggestions-list position-absolute w-100 bg-white border border-top-0 rounded-bottom shadow list-unstyled m-0 p-0" 
+            <input type="text" id="player-search" class="form-control form-control-lg border-2 shadow-sm"
+                name="player-search" onkeyup="getSuggestions()" autocomplete="off"
+                placeholder="Search for a player..." />
+            <ul class="suggestions-list position-absolute w-100 bg-white border border-top-0 rounded-bottom shadow list-unstyled m-0 p-0"
                 id="suggestions" style="z-index: 1000; max-height: 220px; overflow-y: auto;"></ul>
         </div>
     </form>
@@ -90,9 +90,9 @@
                     ">
                         {{ guesses[i]['height'][0] or '' }}
                         {% if guesses[i]['height'][1] in ['up', 'closeup'] %}
-                            <span class="arrow">↑</span>
+                        <span class="arrow">↑</span>
                         {% elif guesses[i]['height'][1] in ['down', 'closedown'] %}
-                            <span class="arrow">↓</span>
+                        <span class="arrow">↓</span>
                         {% endif %}
                     </td>
                     <td>{{ guesses[i]['ppg'] or '' }}</td>
@@ -107,9 +107,9 @@
                     ">
                         {{ guesses[i]['age'][0] or '' }}
                         {% if guesses[i]['age'][1] in ['up', 'closeup'] %}
-                            <span class="arrow">↑</span>
+                        <span class="arrow">↑</span>
                         {% elif guesses[i]['age'][1] in ['down', 'closedown'] %}
-                            <span class="arrow">↓</span>
+                        <span class="arrow">↓</span>
                         {% endif %}
                     </td>
                 </tr>
@@ -123,8 +123,8 @@
         <a href="/failure" class="btn btn-danger btn-lg flex-fill" style="max-width: 300px;">
             Give Up & Show Answer
         </a>
-        <a href="/reset" class="btn btn-success btn-lg d-flex align-items-center justify-content-center gap-2 flex-fill" 
-           style="max-width: 200px;">
+        <a href="/reset" class="btn btn-success btn-lg d-flex align-items-center justify-content-center gap-2 flex-fill"
+            style="max-width: 200px;">
             🔄 New Game
         </a>
     </div>
@@ -167,11 +167,11 @@
 
                         suggestionsList.appendChild(listItem);
                     });
-                    
+
                     currentFocus = -1;
                 });
         } else {
-            document.getElementById('suggestions').innerHTML = ''; 
+            document.getElementById('suggestions').innerHTML = '';
         }
     }
 
@@ -191,40 +191,40 @@
             },
             body: `player-search=${encodeURIComponent(playerName)}`
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.gameWon) {
-                window.location.href = `/congrats?player_name=${encodeURIComponent(data.playerName)}&guess_count=${data.guessCount}&image_url=${encodeURIComponent(data.imageUrl)}&player_link=${encodeURIComponent(data.playerLink)}`;
-                return;
-            } else if (data.gameOver) {
-                window.location.href = `/failure?player_name=${encodeURIComponent(data.playerName)}&image_url=${encodeURIComponent(data.imageUrl)}&player_link=${encodeURIComponent(data.playerLink)}&eight_guesses=${encodeURIComponent(data.eight_guesses)}`;
-                return;
-            }
-            
-            updateTableRow(currentGuessIndex, data.guessResult);
-            currentGuessIndex++;
-            isSubmitting = false;
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            isSubmitting = false;
-        });
+            .then(response => response.json())
+            .then(data => {
+                if (data.gameWon) {
+                    window.location.href = `/congrats?player_name=${encodeURIComponent(data.playerName)}&guess_count=${data.guessCount}&image_url=${encodeURIComponent(data.imageUrl)}&player_link=${encodeURIComponent(data.playerLink)}`;
+                    return;
+                } else if (data.gameOver) {
+                    window.location.href = `/failure?player_name=${encodeURIComponent(data.playerName)}&image_url=${encodeURIComponent(data.imageUrl)}&player_link=${encodeURIComponent(data.playerLink)}&eight_guesses=${encodeURIComponent(data.eight_guesses)}`;
+                    return;
+                }
+
+                updateTableRow(currentGuessIndex, data.guessResult);
+                currentGuessIndex++;
+                isSubmitting = false;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                isSubmitting = false;
+            });
     }
 
     function updateTableRow(rowIndex, guessData) {
         const row = document.querySelector(`tbody tr:nth-child(${rowIndex + 1})`);
         const cells = Array.from(row.children).slice(1);
-        
+
         row.style.transform = 'scale(1.02)';
         row.style.transition = 'all 0.3s ease';
-        
+
         cells.forEach((cell, index) => {
             setTimeout(() => {
                 cell.style.opacity = '0';
                 cell.style.transform = 'translateY(-10px)';
                 cell.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
-                
-                switch(index) {
+
+                switch (index) {
                     case 0:
                         cell.textContent = guessData.name;
                         break;
@@ -248,11 +248,11 @@
                         updateAgeCell(cell, guessData.age);
                         break;
                 }
-                
+
                 setTimeout(() => {
                     cell.style.opacity = '1';
                     cell.style.transform = 'translateY(0)';
-                    
+
                     if (cell.classList.contains('green-bg')) {
                         cell.style.transform = 'scale(1.05)';
                         setTimeout(() => {
@@ -260,13 +260,13 @@
                         }, 200);
                     }
                 }, 50);
-                
+
             }, index * 100);
         });
-        
+
         setTimeout(() => {
             row.style.transform = 'scale(1)';
-            
+
             const hasCorrectMatch = cells.some(cell => cell.classList.contains('green-bg'));
             if (hasCorrectMatch) {
                 row.style.boxShadow = '0 0 20px rgba(144, 238, 144, 0.5)';
@@ -279,7 +279,7 @@
 
     function updateHeightCell(cell, heightData) {
         cell.innerHTML = heightData[0];
-        
+
         if (heightData[1] === 'equal') {
             cell.className = 'green-bg';
         } else if (['closeup', 'closedown'].includes(heightData[1])) {
@@ -287,7 +287,7 @@
         } else {
             cell.className = '';
         }
-        
+
         if (['up', 'closeup'].includes(heightData[1])) {
             const arrow = document.createElement('span');
             arrow.className = 'arrow';
@@ -296,7 +296,7 @@
             arrow.style.transform = 'translateY(5px)';
             arrow.style.transition = 'all 0.3s ease';
             cell.appendChild(arrow);
-            
+
             setTimeout(() => {
                 arrow.style.opacity = '1';
                 arrow.style.transform = 'translateY(0)';
@@ -309,7 +309,7 @@
             arrow.style.transform = 'translateY(-5px)';
             arrow.style.transition = 'all 0.3s ease';
             cell.appendChild(arrow);
-            
+
             setTimeout(() => {
                 arrow.style.opacity = '1';
                 arrow.style.transform = 'translateY(0)';
@@ -319,7 +319,7 @@
 
     function updateAgeCell(cell, ageData) {
         cell.innerHTML = ageData[0];
-        
+
         if (ageData[1] === 'equal') {
             cell.className = 'green-bg';
         } else if (['closeup', 'closedown'].includes(ageData[1])) {
@@ -327,7 +327,7 @@
         } else {
             cell.className = '';
         }
-        
+
         if (['up', 'closeup'].includes(ageData[1])) {
             const arrow = document.createElement('span');
             arrow.className = 'arrow';
@@ -336,7 +336,7 @@
             arrow.style.transform = 'translateY(5px)';
             arrow.style.transition = 'all 0.3s ease';
             cell.appendChild(arrow);
-            
+
             setTimeout(() => {
                 arrow.style.opacity = '1';
                 arrow.style.transform = 'translateY(0)';
@@ -349,7 +349,7 @@
             arrow.style.transform = 'translateY(-5px)';
             arrow.style.transition = 'all 0.3s ease';
             cell.appendChild(arrow);
-            
+
             setTimeout(() => {
                 arrow.style.opacity = '1';
                 arrow.style.transform = 'translateY(0)';
@@ -358,7 +358,7 @@
     }
 
     function getBackgroundClass(color) {
-        switch(color) {
+        switch (color) {
             case '#90EE90': return 'green-bg';
             case '#FFFFC5': return 'yellow-bg';
             case '#FFCCCB': return 'red-bg';
@@ -366,7 +366,7 @@
         }
     }
 
-    document.getElementById('player-search').addEventListener('keydown', function(e) {
+    document.getElementById('player-search').addEventListener('keydown', function (e) {
         const suggestionsList = document.getElementById('suggestions').getElementsByTagName('li');
         if (suggestionsList.length > 0) {
             if (e.key === 'ArrowDown') {
@@ -402,10 +402,10 @@
         }
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const rows = document.querySelectorAll('tbody tr');
         currentGuessIndex = 0;
-        
+
         for (let i = 0; i < rows.length; i++) {
             const nameCell = rows[i].children[1];
             if (nameCell.textContent.trim() !== '') {
