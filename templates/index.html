@@ -215,66 +215,14 @@ Play Today's game
         const row = document.querySelector(`tbody tr:nth-child(${rowIndex + 1})`);
         const cells = Array.from(row.children).slice(1);
 
-        row.style.transform = 'scale(1.02)';
-        row.style.transition = 'all 0.3s ease';
-
-        cells.forEach((cell, index) => {
-            setTimeout(() => {
-                cell.style.opacity = '0';
-                cell.style.transform = 'translateY(-10px)';
-                cell.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
-
-                switch (index) {
-                    case 0:
-                        cell.textContent = guessData.name;
-                        break;
-                    case 1:
-                        cell.textContent = guessData.division;
-                        cell.className = getBackgroundClass(guessData.divColor);
-                        break;
-                    case 2:
-                        updateHeightCell(cell, guessData.height);
-                        break;
-                    case 3:
-                        cell.textContent = guessData.ppg;
-                        break;
-                    case 4:
-                        cell.textContent = guessData.rpg;
-                        break;
-                    case 5:
-                        cell.textContent = guessData.apg;
-                        break;
-                    case 6:
-                        updateAgeCell(cell, guessData.age);
-                        break;
-                }
-
-                setTimeout(() => {
-                    cell.style.opacity = '1';
-                    cell.style.transform = 'translateY(0)';
-
-                    if (cell.classList.contains('green-bg')) {
-                        cell.style.transform = 'scale(1.05)';
-                        setTimeout(() => {
-                            cell.style.transform = 'scale(1)';
-                        }, 200);
-                    }
-                }, 50);
-
-            }, index * 100);
-        });
-
-        setTimeout(() => {
-            row.style.transform = 'scale(1)';
-
-            const hasCorrectMatch = cells.some(cell => cell.classList.contains('green-bg'));
-            if (hasCorrectMatch) {
-                row.style.boxShadow = '0 0 20px rgba(144, 238, 144, 0.5)';
-                setTimeout(() => {
-                    row.style.boxShadow = '';
-                }, 1000);
-            }
-        }, 800);
+        cells[0].textContent = guessData.name;
+        cells[1].textContent = guessData.division;
+        cells[1].className = getBackgroundClass(guessData.divColor);
+        updateHeightCell(cells[2], guessData.height);
+        cells[3].textContent = guessData.ppg;
+        cells[4].textContent = guessData.rpg;
+        cells[5].textContent = guessData.apg;
+        updateAgeCell(cells[6], guessData.age);
     }
 
     function updateHeightCell(cell, heightData) {
@@ -292,28 +240,12 @@ Play Today's game
             const arrow = document.createElement('span');
             arrow.className = 'arrow';
             arrow.innerHTML = '↑';
-            arrow.style.opacity = '0';
-            arrow.style.transform = 'translateY(5px)';
-            arrow.style.transition = 'all 0.3s ease';
             cell.appendChild(arrow);
-
-            setTimeout(() => {
-                arrow.style.opacity = '1';
-                arrow.style.transform = 'translateY(0)';
-            }, 100);
         } else if (['down', 'closedown'].includes(heightData[1])) {
             const arrow = document.createElement('span');
             arrow.className = 'arrow';
             arrow.innerHTML = '↓';
-            arrow.style.opacity = '0';
-            arrow.style.transform = 'translateY(-5px)';
-            arrow.style.transition = 'all 0.3s ease';
             cell.appendChild(arrow);
-
-            setTimeout(() => {
-                arrow.style.opacity = '1';
-                arrow.style.transform = 'translateY(0)';
-            }, 100);
         }
     }
 
@@ -332,28 +264,12 @@ Play Today's game
             const arrow = document.createElement('span');
             arrow.className = 'arrow';
             arrow.innerHTML = '↑';
-            arrow.style.opacity = '0';
-            arrow.style.transform = 'translateY(5px)';
-            arrow.style.transition = 'all 0.3s ease';
             cell.appendChild(arrow);
-
-            setTimeout(() => {
-                arrow.style.opacity = '1';
-                arrow.style.transform = 'translateY(0)';
-            }, 100);
         } else if (['down', 'closedown'].includes(ageData[1])) {
             const arrow = document.createElement('span');
             arrow.className = 'arrow';
             arrow.innerHTML = '↓';
-            arrow.style.opacity = '0';
-            arrow.style.transform = 'translateY(-5px)';
-            arrow.style.transition = 'all 0.3s ease';
             cell.appendChild(arrow);
-
-            setTimeout(() => {
-                arrow.style.opacity = '1';
-                arrow.style.transform = 'translateY(0)';
-            }, 100);
         }
     }
 
