@@ -14,7 +14,23 @@
 .game-table {
     font-size: 1.05rem;
     border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+}
 
+.game-table th:nth-child(1) { width: 4%; }   /* # */
+.game-table th:nth-child(2) { width: 28%; }  /* Name */
+.game-table th:nth-child(3) { width: 14%; }  /* Division */
+.game-table th:nth-child(4) { width: 10%; }  /* Height */
+.game-table th:nth-child(5) { width: 9%; }   /* PPG */
+.game-table th:nth-child(6) { width: 9%; }   /* RPG */
+.game-table th:nth-child(7) { width: 9%; }   /* APG */
+.game-table th:nth-child(8) { width: 9%; }   /* Age */
+
+.game-table td {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 /* Arrow animations and styling */
