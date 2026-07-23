@@ -2471,6 +2471,14 @@
         "RPG": 1.8,
         "APG": 1.8
     },
+    "Royce O'Neale": {
+        "TEAM": "Suns",
+        "HEIGHT": "6-6",
+        "BIRTHDAY": "1993-06-05",
+        "PPG": 9.8,
+        "RPG": 4.8,
+        "APG": 2.7
+    },
     "Devin Booker": {
         "TEAM": "Suns",
         "HEIGHT": "6-5",
@@ -3070,5 +3078,61 @@
         "PPG": 16.3,
         "RPG": 7.4,
         "APG": 2.7
+    },
+    "P.J. Washington": {
+        "TEAM": "Mavericks",
+        "HEIGHT": "6-7",
+        "BIRTHDAY": "1998-08-23",
+        "PPG": 14.2,
+        "RPG": 7.0,
+        "APG": 1.8
+    },
+    "T.J. McConnell": {
+        "TEAM": "Pacers",
+        "HEIGHT": "6-1",
+        "BIRTHDAY": "1992-03-25",
+        "PPG": 9.4,
+        "RPG": 2.2,
+        "APG": 5.1
+    },
+    "A.J. Lawson": {
+        "TEAM": "Raptors",
+        "HEIGHT": "6-6",
+        "BIRTHDAY": "2000-07-15",
+        "PPG": 4.2,
+        "RPG": 1.8,
+        "APG": 0.3
+    },
+    "D'Angelo Russell": {
+        "TEAM": "Mavericks",
+        "HEIGHT": "6-3",
+        "BIRTHDAY": "1996-02-23",
+        "PPG": 10.2,
+        "RPG": 2.3,
+        "APG": 4.0
+    },
+    "E.J. Liddell": {
+        "TEAM": "Nets",
+        "HEIGHT": "6-6",
+        "BIRTHDAY": "2000-12-18",
+        "PPG": 5.7,
+        "RPG": 2.7,
+        "APG": 0.9
+    },
+    "Robert Williams III": {
+        "TEAM": "Trail Blazers",
+        "HEIGHT": "6-9",
+        "BIRTHDAY": "1997-10-17",
+        "PPG": 6.7,
+        "RPG": 7.0,
+        "APG": 1.0
+    },
+    "Egor D\u00ebmin": {
+        "TEAM": "Nets",
+        "HEIGHT": "6-8",
+        "BIRTHDAY": "2006-03-03",
+        "PPG": 10.3,
+        "RPG": 3.2,
+        "APG": 3.3
     }
 }

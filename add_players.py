@@ -3,6 +3,8 @@ from io import StringIO
 import requests
 import pandas as pd
 import json
+import re
+import unicodedata
 
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
@@ -39,6 +41,16 @@ MANUAL_PLAYERS = {
 }
 
 bio = json.load(open('data/sr_bio.json'))
+
+
+def norm_name(name):
+    """Letters only, accents stripped — so 'PJ Washington' matches 'P.J. Washington'
+    and 'Egor Demin' matches 'Egor Demin'."""
+    ascii_name = unicodedata.normalize('NFD', name).encode('ascii', 'ignore').decode('utf-8')
+    return re.sub(r'[^a-z]', '', ascii_name.lower())
+
+
+bio_index = {norm_name(k): v for k, v in bio.items()}
 
 try:
     stats = json.load(open('data/bref_stats.json'))
@@ -77,13 +89,18 @@ for i, (name, url) in enumerate(MANUAL_PLAYERS.items()):
         # check common renames
         rename_map = {
             'Jimmy Butler': 'Jimmy Butler III',
+            'Robert Williams': 'Robert Williams III',
             'Ron Holland': 'Ronald Holland II',
             'Walter Clayton': 'Walter Clayton Jr.',
             'Xavier Tillman': 'Xavier Tillman Sr.',
             'GG Jackson': 'GG Jackson II',
         }
         sr_name = rename_map.get(name, name)
-        sr_info = bio.get(sr_name, bio.get(name, {}))
+        # exact match, then punctuation/accent-insensitive match (rename_map only
+        # covers suffix changes like Jr./III, not 'PJ' vs 'P.J.')
+        sr_info = bio.get(sr_name) or bio.get(name) or bio_index.get(norm_name(name), {})
+        if not sr_info:
+            print(f"  -> WARNING: no sr_bio entry for {name}, bio fields will be empty")
 
         entry = {
             'TEAM': sr_info.get('TEAM', ''),

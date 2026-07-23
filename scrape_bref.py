@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 from time import sleep
 import random
 import unidecode, unicodedata
+import re
 import pandas as pd
 import requests
 import socks, socket
@@ -52,9 +53,13 @@ def get_player_suffix(name):
     parts = normalized.split(' ')
     if len(parts) < 2:
         return None
-    initial = parts[1][0].lower()
-    first_part = unidecode.unidecode(parts[0][:2].lower())
-    last_part = ''.join(parts[1:])[:5].lower()
+    # bref ids are letters only — strip punctuation before slicing, or apostrophes
+    # and periods eat slots (O'Neale -> o'nea instead of oneal, P.J. -> p. instead of pj)
+    first_part = re.sub(r'[^a-z]', '', parts[0].lower())[:2]
+    last_part = re.sub(r'[^a-z]', '', ''.join(parts[1:]).lower())[:5]
+    if not first_part or not last_part:
+        return None
+    initial = last_part[0]
     suffix = f'/players/{initial}/{last_part}{first_part}01.html'
 
     for attempt in range(5):
