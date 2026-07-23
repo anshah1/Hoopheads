@@ -31,6 +31,10 @@ def load_data():
 
 allTheData = load_data()
 
+def heightToInches(height):
+    feet, inches = height.split("-")
+    return int(feet) * 12 + int(inches)
+
 @app.route("/", methods=["GET"])
 def start_game():
     session.permanent = True
@@ -56,7 +60,7 @@ def start_game():
             session["rpg"] = rpg
             session["division"] = defaultDivision(allTheData[random_player])
             height = allTheData[random_player]["HEIGHT"]
-            session["inches"] = int(height[0]) * 12 + int(height[2])
+            session["inches"] = heightToInches(height)
             session["age"] = defaultAge(allTheData[random_player])
             session["guess_count"] = 0
             session["guesses"] = [{"name": "", "division": "", "height": "", "age": ""} for _ in range(8)]
@@ -284,10 +288,7 @@ def getDivision(guessedPlayerData):
 def getHeight(guessedPlayer):
     global allTheData
     height = allTheData[guessedPlayer]['HEIGHT']
-    if len(height) == 4:
-        inches = inches = int(height[0]) * 12 + int(height[2]) * 10 + int(height[3])
-    else:
-        inches = int(height[0]) * 12 + int(height[2])
+    inches = heightToInches(height)
     if session["inches"] > inches:
         if session["inches"] - inches == 1 or session["inches"] - inches == 2:
             return [height, 'closeup']
