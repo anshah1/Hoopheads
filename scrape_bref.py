@@ -129,6 +129,7 @@ for i, (name, info) in enumerate(bio.items()):
             print(f"  -> Only {games} games, skipping")
             continue
         entry = dict(info)
+        entry['SLUG'] = suffix
         entry['PPG'] = round(float(row['PTS'].values[0]), 1)
         entry['RPG'] = round(float(row['TRB'].values[0]), 1)
         entry['APG'] = round(float(row['AST'].values[0]), 1)
