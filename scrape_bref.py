@@ -48,6 +48,11 @@ def bref_get(url, retries=3):
             rotate_ip()
     return None
 
+def clean_for_compare(s):
+    # letters and spaces only, so "A.J. Green" and "AJ Green" compare equal
+    # regardless of which side bref or the source data put the punctuation on
+    return re.sub(r'[^a-z ]', '', s.lower()).strip()
+
 GENERATIONAL_SUFFIXES = {'jr', 'sr', 'ii', 'iii', 'iv', 'v'}
 
 def strip_generational_suffix(name):
@@ -83,8 +88,8 @@ def get_player_suffix(name):
             h1 = soup.find('h1')
             if not h1:
                 return None
-            page_name = unidecode.unidecode(h1.find('span').text).lower()
-            if page_name == normalized.lower():
+            page_name = unidecode.unidecode(h1.find('span').text)
+            if clean_for_compare(page_name) == clean_for_compare(normalized):
                 return suffix
             num = int(''.join(c for c in suffix if c.isdigit())) + 1
             num_str = f"0{num}" if num < 10 else str(num)
