@@ -5,7 +5,6 @@ import json
 from io import StringIO
 from flask import Flask, redirect, render_template, session, request, jsonify
 from supabase import create_client
-from data.dataStorage import divisionBreakdown, conferenceBreakdown
 warnings.simplefilter(action='ignore', category=FutureWarning)
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
@@ -30,6 +29,11 @@ def load_data():
         return {}
 
 allTheData = load_data()
+
+with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', 'breakdowns.json')) as f:
+    breakdowns = json.load(f)
+divisionBreakdown = breakdowns["divisionBreakdown"]
+conferenceBreakdown = breakdowns["conferenceBreakdown"]
 
 def heightToInches(height):
     feet, inches = height.split("-")
