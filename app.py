@@ -156,7 +156,11 @@ def search():
 
     if query:
         norm_query = strip_accents(query)
-        matches = [player for player in list(allTheData.keys()) if norm_query in strip_accents(player.lower())]
+        matches = [
+            {"name": info["NAME"], "slug": slug}
+            for slug, info in allTheData.items()
+            if norm_query in strip_accents(info["NAME"].lower())
+        ]
         return jsonify(matches)
     return jsonify([])
 
