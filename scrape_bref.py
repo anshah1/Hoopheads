@@ -128,7 +128,7 @@ def get_player_suffix(name):
             h1 = soup.find('h1')
             if not h1:
                 return None
-            page_name = unidecode.unidecode(h1.find('span').text)
+            page_name = strip_generational_suffix(unidecode.unidecode(h1.find('span').text))
             if clean_for_compare(page_name) == clean_for_compare(normalized):
                 return suffix
             num = int(''.join(c for c in suffix if c.isdigit())) + 1
