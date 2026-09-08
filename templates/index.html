@@ -148,11 +148,12 @@ Play Today's game
                         const listItem = document.createElement('li');
                         listItem.className = 'list-group-item list-group-item-action border-0 py-2 px-3 text-center';
                         listItem.style.cursor = 'pointer';
-                        listItem.textContent = player;
+                        listItem.textContent = player.name;
+                        listItem.dataset.slug = player.slug;
 
                         listItem.addEventListener('click', () => {
-                            document.getElementById('player-search').value = player;
-                            submitGuess(player);
+                            document.getElementById('player-search').value = player.name;
+                            submitGuess(player.slug);
                         });
 
                         listItem.addEventListener('mouseenter', () => {
@@ -177,7 +178,7 @@ Play Today's game
 
     let isSubmitting = false;
 
-    function submitGuess(playerName) {
+    function submitGuess(guessedSlug) {
         if (isSubmitting) return;
         isSubmitting = true;
 
@@ -189,7 +190,7 @@ Play Today's game
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: `player-search=${encodeURIComponent(playerName)}`
+            body: `player-search=${encodeURIComponent(guessedSlug)}`
         })
             .then(response => response.json())
             .then(data => {
@@ -301,8 +302,9 @@ Play Today's game
                 e.preventDefault();
                 if (currentFocus > -1) {
                     if (suggestionsList[currentFocus]) {
-                        const playerName = suggestionsList[currentFocus].textContent;
-                        submitGuess(playerName);
+                        const el = suggestionsList[currentFocus];
+                        document.getElementById('player-search').value = el.textContent;
+                        submitGuess(el.dataset.slug);
                     }
                 }
             }
