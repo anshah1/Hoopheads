@@ -90,14 +90,13 @@ def process_guess():
     guess_count = session.get("guess_count", 0) + 1
     session["guess_count"] = guess_count
 
-    correct_player_name = allTheData[session["correct_player"]]["NAME"]
+    correct_player_data = allTheData[session["correct_player"]]
+    correct_player_name = correct_player_data["NAME"]
 
-    image_url = players.get_player_headshot(correct_player_name)
+    image_url = players.get_player_headshot(correct_player_data["SLUG"])
     print(f"Player Image URL: {image_url}")
-    if image_url is None:
-        image_url = "https://www.logodesignlove.com/images/classic/nba-logo.jpg"
 
-    player_link = players.get_player_link(correct_player_name)
+    player_link = players.get_player_link(correct_player_data["SLUG"])
     print(f"Player Link: {player_link}")
 
     # Check if the guess is correct
@@ -203,23 +202,19 @@ def failure():
     print(f'image_url from params: {image_url}')
     print(f'player_link from params: {player_link}')
     print(f'correct_player from session: {session.get("correct_player")}')
-    correct_player_name = allTheData[session["correct_player"]]["NAME"]
+    correct_player_data = allTheData[session["correct_player"]]
+    correct_player_name = correct_player_data["NAME"]
 
     # Get fallback values if parameters are missing
     if image_url is None:
         print("Getting image_url from get_player_headshot...")
-        image_url = players.get_player_headshot(correct_player_name)
+        image_url = players.get_player_headshot(correct_player_data["SLUG"])
         print(f'fallback image_url: {image_url}')
 
     if player_link is None:
         print("Getting player_link from get_player_link...")
-        player_link = players.get_player_link(correct_player_name)
+        player_link = players.get_player_link(correct_player_data["SLUG"])
         print(f'fallback player_link: {player_link}')
-    
-    # Final fallback for image if still None
-    if image_url is None:
-        image_url = "https://www.logodesignlove.com/images/classic/nba-logo.jpg"
-        print(f'using NBA logo fallback: {image_url}')
 
     print(f'eight_guesses: {eight_guesses}')
     return render_template("failure.html",
