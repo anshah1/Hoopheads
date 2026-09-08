@@ -69,6 +69,12 @@ def start_game():
 
 @app.route("/guess", methods=["POST"])
 def process_guess():
+    if not session.get("game_active") or "correct_player" not in session:
+        return jsonify({
+            "sessionExpired": True,
+            "redirectTo": "/"
+        })
+
     guessedPlayer = request.form.get("player-search")
     print(f'Guessed player: {guessedPlayer}')
     ppg = session.get("ppg")

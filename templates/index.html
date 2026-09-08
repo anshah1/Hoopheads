@@ -193,7 +193,10 @@ Play Today's game
         })
             .then(response => response.json())
             .then(data => {
-                if (data.gameWon) {
+                if (data.sessionExpired) {
+                    window.location.href = data.redirectTo;
+                    return;
+                } else if (data.gameWon) {
                     window.location.href = `/congrats?player_name=${encodeURIComponent(data.playerName)}&guess_count=${data.guessCount}&image_url=${encodeURIComponent(data.imageUrl)}&player_link=${encodeURIComponent(data.playerLink)}`;
                     return;
                 } else if (data.gameOver) {
