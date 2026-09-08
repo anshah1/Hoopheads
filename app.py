@@ -90,12 +90,14 @@ def process_guess():
     guess_count = session.get("guess_count", 0) + 1
     session["guess_count"] = guess_count
 
-    image_url = players.get_player_headshot(session["correct_player"])
+    correct_player_name = allTheData[session["correct_player"]]["NAME"]
+
+    image_url = players.get_player_headshot(correct_player_name)
     print(f"Player Image URL: {image_url}")
     if image_url is None:
         image_url = "https://www.logodesignlove.com/images/classic/nba-logo.jpg"
 
-    player_link = players.get_player_link(session["correct_player"])
+    player_link = players.get_player_link(correct_player_name)
     print(f"Player Link: {player_link}")
 
     # Check if the guess is correct
@@ -105,7 +107,7 @@ def process_guess():
             "gameWon": True,
             "redirectTo": "/congrats",
             "guessCount": guess_count,
-            "playerName": session["correct_player"],
+            "playerName": correct_player_name,
             "imageUrl": image_url,
             "playerLink": player_link
         })
@@ -120,15 +122,15 @@ def process_guess():
                 supabase_admin.table("profiles").update({"streak": 0, "fails": current.data["fails"] + 1}).eq("id", user_id).execute()
             return jsonify({
                 "gameOver": True,
-                "redirectTo": "/failure", 
-                "playerName": session["correct_player"],
+                "redirectTo": "/failure",
+                "playerName": correct_player_name,
                 "imageUrl": image_url,
                 "playerLink": player_link,
                 "eight_guesses": True
             })
-        
+
         # Process the guess and update session
-        guesses[guess_count - 1]["name"] = guessedPlayer
+        guesses[guess_count - 1]["name"] = allTheData[guessedPlayer]["NAME"]
         division = getDivision(allTheData[guessedPlayer])
         guesses[guess_count-1]['division'] = division[0]
         guesses[guess_count-1]['divColor'] = division[1]
@@ -201,16 +203,17 @@ def failure():
     print(f'image_url from params: {image_url}')
     print(f'player_link from params: {player_link}')
     print(f'correct_player from session: {session.get("correct_player")}')
-    
+    correct_player_name = allTheData[session["correct_player"]]["NAME"]
+
     # Get fallback values if parameters are missing
     if image_url is None:
         print("Getting image_url from get_player_headshot...")
-        image_url = players.get_player_headshot(session["correct_player"])
+        image_url = players.get_player_headshot(correct_player_name)
         print(f'fallback image_url: {image_url}')
-    
+
     if player_link is None:
         print("Getting player_link from get_player_link...")
-        player_link = players.get_player_link(session["correct_player"])
+        player_link = players.get_player_link(correct_player_name)
         print(f'fallback player_link: {player_link}')
     
     # Final fallback for image if still None
@@ -219,9 +222,9 @@ def failure():
         print(f'using NBA logo fallback: {image_url}')
 
     print(f'eight_guesses: {eight_guesses}')
-    return render_template("failure.html", 
-                         player_name=session["correct_player"], 
-                         image_url=image_url, 
+    return render_template("failure.html",
+                         player_name=correct_player_name,
+                         image_url=image_url,
                          player_link=player_link,
                          eight_guesses=eight_guesses)
 
