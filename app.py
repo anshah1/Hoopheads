@@ -30,7 +30,7 @@ def load_data():
 
 allTheData = load_data()
 
-with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', 'breakdowns.json')) as f:
+with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'breakdowns.json')) as f:
     breakdowns = json.load(f)
 divisionBreakdown = breakdowns["divisionBreakdown"]
 conferenceBreakdown = breakdowns["conferenceBreakdown"]

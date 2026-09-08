@@ -1,0 +1,14 @@
+{
+    "divisionBreakdown": {
+        "Atlantic": ["Celtics", "Nets", "Knicks", "76ers", "Raptors"],
+        "Central": ["Bulls", "Cavaliers", "Pistons", "Pacers", "Bucks"],
+        "Southeast": ["Hawks", "Hornets", "Heat", "Magic", "Wizards"],
+        "Northwest": ["Nuggets", "Timberwolves", "Thunder", "Trail Blazers", "Jazz"],
+        "Pacific": ["Warriors", "Clippers", "Lakers", "Suns", "Kings"],
+        "Southwest": ["Mavericks", "Rockets", "Grizzlies", "Pelicans", "Spurs"]
+    },
+    "conferenceBreakdown": {
+        "East": ["Atlantic", "Central", "Southeast"],
+        "West": ["Northwest", "Pacific", "Southwest"]
+    }
+}
