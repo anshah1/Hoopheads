@@ -129,6 +129,7 @@ for i, (name, info) in enumerate(bio.items()):
             print(f"  -> Only {games} games, skipping")
             continue
         entry = dict(info)
+        entry['NAME'] = name
         entry['SLUG'] = suffix
         entry['PPG'] = round(float(row['PTS'].values[0]), 1)
         entry['RPG'] = round(float(row['TRB'].values[0]), 1)
@@ -148,7 +149,14 @@ for i, (name, info) in enumerate(bio.items()):
 
     sleep(random.uniform(6, 14))
 
-final = {p: info for p, info in stats.items() if 'PPG' in info and 'RPG' in info and 'APG' in info}
+def slug_id(suffix):
+    return suffix.split('/')[-1].replace('.html', '')
+
+final = {}
+for p, info in stats.items():
+    if 'PPG' in info and 'RPG' in info and 'APG' in info and info.get('SLUG'):
+        final[slug_id(info['SLUG'])] = info
+
 with open('players.json', 'w') as f:
     json.dump(final, f, indent=4)
 print(f"\nDone — {len(final)} players saved to players.json")
