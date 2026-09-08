@@ -48,8 +48,20 @@ def bref_get(url, retries=3):
             rotate_ip()
     return None
 
+GENERATIONAL_SUFFIXES = {'jr', 'sr', 'ii', 'iii', 'iv', 'v'}
+
+def strip_generational_suffix(name):
+    # bref never shows Jr./Sr./II/III/IV in a player's page title, so a name
+    # that still has one on it will never string-match the page and get
+    # rejected after 5 failed attempts (e.g. "Robert Williams III")
+    parts = name.split(' ')
+    if len(parts) > 1 and parts[-1].rstrip('.').lower() in GENERATIONAL_SUFFIXES:
+        return ' '.join(parts[:-1])
+    return name
+
 def get_player_suffix(name):
     normalized = unidecode.unidecode(unicodedata.normalize('NFD', name).encode('ascii', 'ignore').decode('utf-8'))
+    normalized = strip_generational_suffix(normalized)
     parts = normalized.split(' ')
     if len(parts) < 2:
         return None
