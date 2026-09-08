@@ -202,6 +202,9 @@ Play Today's game
                 } else if (data.gameOver) {
                     window.location.href = `/failure?player_name=${encodeURIComponent(data.playerName)}&image_url=${encodeURIComponent(data.imageUrl)}&player_link=${encodeURIComponent(data.playerLink)}&eight_guesses=${encodeURIComponent(data.eight_guesses)}`;
                     return;
+                } else if (data.invalidPlayer) {
+                    isSubmitting = false;
+                    return;
                 }
 
                 updateTableRow(currentGuessIndex, data.guessResult);

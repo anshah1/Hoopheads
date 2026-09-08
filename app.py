@@ -77,6 +77,12 @@ def process_guess():
 
     guessedPlayer = request.form.get("player-search")
     print(f'Guessed player: {guessedPlayer}')
+
+    if guessedPlayer not in allTheData:
+        return jsonify({
+            "invalidPlayer": True
+        }), 400
+
     ppg = session.get("ppg")
     apg = session.get("apg")
     rpg = session.get("rpg")
