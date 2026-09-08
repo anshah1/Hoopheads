@@ -14,7 +14,7 @@ import players
 import unicodedata
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = True
-app.permanent_session_lifetime = timedelta(minutes=30)
+app.permanent_session_lifetime = timedelta(hours=2)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev-temp-secret")
 supabase = create_client(os.environ["SUPABASE_URL"], os.environ["SUPABASE_ANON_KEY"])
 supabase_admin = create_client(os.environ["SUPABASE_URL"], os.environ["SUPABASE_SECRET_KEY"]) 
