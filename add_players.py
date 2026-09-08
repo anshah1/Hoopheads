@@ -4,7 +4,30 @@ import requests
 import pandas as pd
 import json
 import re
-import unicodedata
+
+# bref's per_game_stats "Team" column uses these abbreviations; our data uses nicknames
+TEAM_ABBR_TO_NICKNAME = {
+    'ATL': 'Hawks', 'BOS': 'Celtics', 'BRK': 'Nets', 'CHO': 'Hornets', 'CHI': 'Bulls',
+    'CLE': 'Cavaliers', 'DAL': 'Mavericks', 'DEN': 'Nuggets', 'DET': 'Pistons', 'GSW': 'Warriors',
+    'HOU': 'Rockets', 'IND': 'Pacers', 'LAC': 'Clippers', 'LAL': 'Lakers', 'MEM': 'Grizzlies',
+    'MIA': 'Heat', 'MIL': 'Bucks', 'MIN': 'Timberwolves', 'NOP': 'Pelicans', 'NYK': 'Knicks',
+    'OKC': 'Thunder', 'ORL': 'Magic', 'PHI': '76ers', 'PHO': 'Suns', 'POR': 'Trail Blazers',
+    'SAC': 'Kings', 'SAS': 'Spurs', 'TOR': 'Raptors', 'UTA': 'Jazz', 'WAS': 'Wizards',
+}
+
+def parse_bio(soup):
+    """Pull height and birthday straight off the player's own bref page (the 'meta' bio box)."""
+    meta = soup.find('div', id='meta')
+    height = ''
+    birthday = ''
+    if meta:
+        height_match = re.search(r'(\d-\d{1,2}),\s*\d+lb', meta.get_text())
+        if height_match:
+            height = height_match.group(1)
+        born_span = meta.find('span', id='necro-birth')
+        if born_span and born_span.get('data-birth'):
+            birthday = born_span['data-birth']
+    return height, birthday
 
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
@@ -40,18 +63,6 @@ MANUAL_PLAYERS = {
     'AJ Green':         'https://www.basketball-reference.com/players/g/greenaj01.html',
 }
 
-bio = json.load(open('data/sr_bio.json'))
-
-
-def norm_name(name):
-    """Letters only, accents stripped — so 'PJ Washington' matches 'P.J. Washington'
-    and 'Egor Demin' matches 'Egor Demin'."""
-    ascii_name = unicodedata.normalize('NFD', name).encode('ascii', 'ignore').decode('utf-8')
-    return re.sub(r'[^a-z]', '', ascii_name.lower())
-
-
-bio_index = {norm_name(k): v for k, v in bio.items()}
-
 try:
     stats = json.load(open('data/bref_stats.json'))
 except FileNotFoundError:
@@ -84,28 +95,21 @@ for i, (name, url) in enumerate(MANUAL_PLAYERS.items()):
             print(f"  -> Only {games} games, skipping")
             continue
 
-        # get bio from sr_bio, fall back to empty
-        sr_name = name  # try exact match first
-        # check common renames
-        rename_map = {
-            'Jimmy Butler': 'Jimmy Butler III',
-            'Robert Williams': 'Robert Williams III',
-            'Ron Holland': 'Ronald Holland II',
-            'Walter Clayton': 'Walter Clayton Jr.',
-            'Xavier Tillman': 'Xavier Tillman Sr.',
-            'GG Jackson': 'GG Jackson II',
-        }
-        sr_name = rename_map.get(name, name)
-        # exact match, then punctuation/accent-insensitive match (rename_map only
-        # covers suffix changes like Jr./III, not 'PJ' vs 'P.J.')
-        sr_info = bio.get(sr_name) or bio.get(name) or bio_index.get(norm_name(name), {})
-        if not sr_info:
-            print(f"  -> WARNING: no sr_bio entry for {name}, bio fields will be empty")
+        team_abbr = row['Team'].values[0]
+        team = TEAM_ABBR_TO_NICKNAME.get(team_abbr, '')
+        if not team:
+            print(f"  -> WARNING: unrecognized team abbreviation {team_abbr!r}")
+
+        height, birthday = parse_bio(soup)
+        if not height or not birthday:
+            print(f"  -> WARNING: couldn't parse bio (height={height!r}, birthday={birthday!r})")
 
         entry = {
-            'TEAM': sr_info.get('TEAM', ''),
-            'HEIGHT': sr_info.get('HEIGHT', ''),
-            'BIRTHDAY': sr_info.get('BIRTHDAY', ''),
+            'TEAM': team,
+            'HEIGHT': height,
+            'BIRTHDAY': birthday,
+            'NAME': name,
+            'SLUG': url.replace('https://www.basketball-reference.com', ''),
             'PPG': round(float(row['PTS'].values[0]), 1),
             'RPG': round(float(row['TRB'].values[0]), 1),
             'APG': round(float(row['AST'].values[0]), 1),
