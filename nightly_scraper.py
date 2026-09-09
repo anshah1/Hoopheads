@@ -3,7 +3,10 @@ from datetime import datetime, timedelta
 from io import StringIO
 from time import sleep
 from zoneinfo import ZoneInfo
+import json
+import random
 import re
+import sys
 import pandas as pd
 import requests
 import socks, socket
@@ -24,6 +27,15 @@ HEADERS = {
 SEASON = '2025-26'
 SEASON_YEAR = 2026
 MIN_GAMES_SHARE = 0.38  # must have played this share of their current team's games so far
+
+TEAM_ABBR_TO_NICKNAME = {
+    'ATL': 'Hawks', 'BOS': 'Celtics', 'BRK': 'Nets', 'CHO': 'Hornets', 'CHI': 'Bulls',
+    'CLE': 'Cavaliers', 'DAL': 'Mavericks', 'DEN': 'Nuggets', 'DET': 'Pistons', 'GSW': 'Warriors',
+    'HOU': 'Rockets', 'IND': 'Pacers', 'LAC': 'Clippers', 'LAL': 'Lakers', 'MEM': 'Grizzlies',
+    'MIA': 'Heat', 'MIL': 'Bucks', 'MIN': 'Timberwolves', 'NOP': 'Pelicans', 'NYK': 'Knicks',
+    'OKC': 'Thunder', 'ORL': 'Magic', 'PHI': '76ers', 'PHO': 'Suns', 'POR': 'Trail Blazers',
+    'SAC': 'Kings', 'SAS': 'Spurs', 'TOR': 'Raptors', 'UTA': 'Jazz', 'WAS': 'Wizards',
+}
 
 def rotate_ip():
     socks.set_default_proxy()  # clear proxy
@@ -168,3 +180,83 @@ def parse_bio(soup):
 
 def slug_id(slug):
     return slug.split('/')[-1].replace('.html', '')
+
+
+def main():
+    target_date = datetime.now(ZoneInfo('America/New_York')).date() - timedelta(days=1)
+
+    teams_that_played = get_teams_that_played(target_date)
+    traded_players = get_traded_players_on(target_date)
+
+    if not teams_that_played and not traded_players:
+        return
+
+    candidates = {}  # slug -> name
+    for team_abbr in teams_that_played:
+        sleep(random.uniform(1, 2))
+        for name, slug in get_roster(team_abbr):
+            candidates[slug] = name
+    for name, slug in traded_players:
+        candidates[slug] = name
+
+    try:
+        players = json.load(open('players.json'))
+    except FileNotFoundError:
+        players = {}
+
+    team_games_cache = {}
+    updated = 0
+
+    for slug, name in candidates.items():
+        try:
+            stats, err = get_player_season_stats(slug)
+            if err:
+                continue
+
+            team_abbr = stats['team_abbr']
+            if team_abbr not in team_games_cache:
+                team_games_cache[team_abbr] = get_team_games_played(team_abbr)
+                sleep(random.uniform(1, 2))
+            team_games = team_games_cache[team_abbr]
+            if not team_games:
+                continue
+
+            share = stats['games'] / team_games
+            if share < MIN_GAMES_SHARE:
+                continue
+
+            r = bref_get(f'https://www.basketball-reference.com{slug}')
+            soup = BeautifulSoup(r.content, 'html.parser')
+            height, birthday = parse_bio(soup)
+
+            entry = {
+                'TEAM': TEAM_ABBR_TO_NICKNAME.get(team_abbr, ''),
+                'HEIGHT': height,
+                'BIRTHDAY': birthday,
+                'NAME': name,
+                'SLUG': slug,
+                'PPG': stats['ppg'],
+                'RPG': stats['rpg'],
+                'APG': stats['apg'],
+            }
+            players[slug_id(slug)] = entry
+            updated += 1
+
+            with open('players.json', 'w') as f:
+                json.dump(players, f, indent=4)
+        except KeyboardInterrupt:
+            with open('players.json', 'w') as f:
+                json.dump(players, f, indent=4)
+            print(f"\nInterrupted — saved")
+            sys.exit(0)
+        except Exception as e:
+            print(f"  -> Error: {e}")
+            continue
+
+        sleep(random.uniform(6, 14))
+
+    print(f"\nDone — {updated} players upserted, {len(players)} total in players.json")
+
+
+if __name__ == '__main__':
+    main()
