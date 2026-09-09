@@ -253,7 +253,7 @@ def main():
             print(f"  -> Error: {e}")
             continue
 
-        sleep(random.uniform(6, 14))
+        sleep(random.uniform(3, 7))
 
     print(f"\nDone — {updated} players upserted, {len(players)} total in players.json")
 

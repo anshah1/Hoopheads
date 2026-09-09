@@ -188,7 +188,7 @@ for team_abbr, team_name in TEAM_ABBR_TO_NICKNAME.items():
             print(f"    -> Error: {e}")
             continue
 
-        sleep(random.uniform(6, 14))
+        sleep(random.uniform(3, 7))
 
 def slug_id(slug):
     return slug.split('/')[-1].replace('.html', '')
