@@ -77,3 +77,44 @@ def get_traded_players_on(date):
         if span and span.get_text().strip() == date_str:
             return [(a.text.strip(), a['href']) for a in li.find_all('a', href=re.compile(r'^/players/'))]
     return []
+
+def get_roster(team_abbr):
+    """[(name, slug), ...] for a team's current roster."""
+    url = f'https://www.basketball-reference.com/teams/{team_abbr}/{SEASON_YEAR}.html'
+    r = bref_get(url)
+    if r is None or r.status_code != 200:
+        return []
+
+    soup = BeautifulSoup(r.content, 'html.parser')
+    table = soup.find('table', id='roster')
+    if not table:
+        return []
+
+    roster = []
+    for row in table.find('tbody').find_all('tr'):
+        cell = row.find('td', {'data-stat': 'player'})
+        if not cell:
+            continue
+        link = cell.find('a')
+        if link and link.get('href'):
+            roster.append((link.text.strip(), link['href']))
+    return roster
+
+def get_team_games_played(team_abbr):
+    """How many games this team has completed so far this season."""
+    url = f'https://www.basketball-reference.com/teams/{team_abbr}/{SEASON_YEAR}_games.html'
+    r = bref_get(url)
+    if r is None or r.status_code != 200:
+        return None
+
+    soup = BeautifulSoup(r.content, 'html.parser')
+    table = soup.find('table', id='games')
+    if not table:
+        return None
+
+    completed = 0
+    for row in table.find('tbody').find_all('tr'):
+        result_cell = row.find('td', {'data-stat': 'game_result'})
+        if result_cell and result_cell.get_text().strip():
+            completed += 1
+    return completed
