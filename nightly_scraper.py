@@ -1,8 +1,10 @@
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
+from io import StringIO
 from time import sleep
 from zoneinfo import ZoneInfo
 import re
+import pandas as pd
 import requests
 import socks, socket
 from stem import Signal
@@ -118,3 +120,51 @@ def get_team_games_played(team_abbr):
         if result_cell and result_cell.get_text().strip():
             completed += 1
     return completed
+
+def get_player_season_stats(slug):
+    """Returns (current_team_abbr, total_games, ppg, rpg, apg) for this season, combining
+    multiple stints if the player was traded — bref's own 'XTM' row already sums this up."""
+    r = bref_get(f'https://www.basketball-reference.com{slug}')
+    if r is None or r.status_code != 200:
+        return None, f"status {r.status_code if r else 'None'}"
+
+    soup = BeautifulSoup(r.content, 'html.parser')
+    table = soup.find('table', {'id': 'per_game_stats'})
+    if not table:
+        return None, "no per_game table"
+
+    df = pd.read_html(StringIO(str(table)))[0]
+    season_rows = df[df['Season'] == SEASON]
+    if season_rows.empty:
+        return None, f"no {SEASON} row"
+
+    # multi-team row (e.g. "2TM") comes first when present and already sums games/stats;
+    # the current team is whichever single-team row is listed LAST (most recent stint)
+    combined_row = season_rows[season_rows['Team'].str.contains(r'^\dTM$', regex=True)]
+    stats_row = combined_row.iloc[0] if not combined_row.empty else season_rows.iloc[0]
+    single_team_rows = season_rows[~season_rows['Team'].str.contains(r'^\dTM$', regex=True)]
+    current_team_abbr = single_team_rows.iloc[-1]['Team'] if not single_team_rows.empty else stats_row['Team']
+
+    return {
+        'team_abbr': current_team_abbr,
+        'games': int(stats_row['G']),
+        'ppg': round(float(stats_row['PTS']), 1),
+        'rpg': round(float(stats_row['TRB']), 1),
+        'apg': round(float(stats_row['AST']), 1),
+    }, None
+
+def parse_bio(soup):
+    meta = soup.find('div', id='meta')
+    height = ''
+    birthday = ''
+    if meta:
+        height_match = re.search(r'(\d-\d{1,2}),\s*\d+lb', meta.get_text())
+        if height_match:
+            height = height_match.group(1)
+        born_span = meta.find('span', id='necro-birth')
+        if born_span and born_span.get('data-birth'):
+            birthday = born_span['data-birth']
+    return height, birthday
+
+def slug_id(slug):
+    return slug.split('/')[-1].replace('.html', '')
