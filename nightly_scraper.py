@@ -58,3 +58,22 @@ def get_teams_that_played(date):
     for link in soup.find_all('a', href=re.compile(r'^/teams/[A-Z]{3}/\d{4}\.html$')):
         teams.add(link['href'].split('/')[2])
     return teams
+
+def get_traded_players_on(date):
+    """[(name, slug), ...] for every player mentioned in that date's transactions."""
+    url = f'https://www.basketball-reference.com/leagues/NBA_{SEASON_YEAR}_transactions.html'
+    r = bref_get(url)
+    if r is None or r.status_code != 200:
+        return []
+
+    date_str = date.strftime('%B ') + str(date.day) + date.strftime(', %Y')  # e.g. "January 9, 2026" — no zero-padded day
+    soup = BeautifulSoup(r.content, 'html.parser')
+    content = soup.find('div', id='content')
+    if not content:
+        return []
+
+    for li in content.find_all('li'):
+        span = li.find('span')
+        if span and span.get_text().strip() == date_str:
+            return [(a.text.strip(), a['href']) for a in li.find_all('a', href=re.compile(r'^/players/'))]
+    return []
