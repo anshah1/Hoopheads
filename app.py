@@ -1,5 +1,6 @@
 import random
 import os
+import re
 import warnings
 import json
 from io import StringIO
@@ -156,15 +157,16 @@ def process_guess():
 @app.route('/search', methods=['GET'])
 def search():
     query = request.args.get('q', '').lower()
-    def strip_accents(text):
-        return ''.join(c for c in unicodedata.normalize('NFD', text) if unicodedata.category(c) != 'Mn')
+    def normalize_for_search(text):
+        no_accents = ''.join(c for c in unicodedata.normalize('NFD', text) if unicodedata.category(c) != 'Mn')
+        return re.sub(r'[^a-z0-9 ]', '', no_accents)
 
     if query:
-        norm_query = strip_accents(query)
+        norm_query = normalize_for_search(query)
         matches = [
             {"name": info["NAME"], "slug": slug}
             for slug, info in allTheData.items()
-            if norm_query in strip_accents(info["NAME"].lower())
+            if norm_query in normalize_for_search(info["NAME"].lower())
         ]
         return jsonify(matches)
     return jsonify([])
