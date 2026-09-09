@@ -89,17 +89,27 @@ def get_roster(team_abbr):
     return roster
 
 def fetch_stats_row(soup):
+    """Returns (stats_row, current_team_abbr) — stats_row is the combined 'XTM' row when a
+    player was traded (bref already sums games/stats across stints), and current_team_abbr
+    is whichever single-team row is listed LAST (most recent stint), not the roster page
+    we happened to find this player through."""
     table = soup.find('table', {'id': 'per_game_stats'})
     if not table:
-        return None, "no per_game table"
+        return None, None, "no per_game table"
     df = pd.read_html(StringIO(str(table)))[0]
-    row = df[df['Season'] == SEASON]
-    if row.empty:
-        return None, f"no {SEASON} row, seasons available: {df['Season'].tolist()}"
-    games = int(row['G'].values[0])
+    season_rows = df[df['Season'] == SEASON]
+    if season_rows.empty:
+        return None, None, f"no {SEASON} row, seasons available: {df['Season'].tolist()}"
+
+    combined_row = season_rows[season_rows['Team'].str.contains(r'^\dTM$', regex=True)]
+    stats_row = combined_row.iloc[0] if not combined_row.empty else season_rows.iloc[0]
+    single_team_rows = season_rows[~season_rows['Team'].str.contains(r'^\dTM$', regex=True)]
+    current_team_abbr = single_team_rows.iloc[-1]['Team'] if not single_team_rows.empty else stats_row['Team']
+
+    games = int(stats_row['G'])
     if games < MIN_GAMES:
-        return None, f"only {games} games"
-    return row, None
+        return None, None, f"only {games} games"
+    return stats_row, current_team_abbr, None
 
 def parse_bio(soup):
     """Pull height and birthday straight off the player's own bref page (the 'meta' bio box)."""
@@ -121,8 +131,7 @@ try:
 except FileNotFoundError:
     stats = {}
 
-already_done = set(slug for slug, info in stats.items() if 'PPG' in info)
-print(f"{len(already_done)} already have stats, skipping them\n")
+print(f"{sum('PPG' in info for info in stats.values())} already have stats, skipping them\n")
 
 for team_abbr, team_name in TEAM_ABBR_TO_NICKNAME.items():
     print(f"--- {team_name} ({team_abbr}) ---")
@@ -131,7 +140,11 @@ for team_abbr, team_name in TEAM_ABBR_TO_NICKNAME.items():
     sleep(random.uniform(3, 6))
 
     for name, slug in roster:
-        if slug in already_done:
+        # checked live (not a snapshot from before the loop started) — a traded player's
+        # old team can still list them on its season roster page, so without this a
+        # player already handled via their real current team would get reprocessed and
+        # possibly overwritten with the wrong team on a later, stale roster page
+        if 'PPG' in stats.get(slug, {}):
             print(f"  {name} — skipping")
             continue
 
@@ -143,7 +156,7 @@ for team_abbr, team_name in TEAM_ABBR_TO_NICKNAME.items():
 
         try:
             soup = BeautifulSoup(r.content, 'html.parser')
-            row, err = fetch_stats_row(soup)
+            row, current_team_abbr, err = fetch_stats_row(soup)
             if err:
                 print(f"    -> {err}")
                 continue
@@ -153,14 +166,14 @@ for team_abbr, team_name in TEAM_ABBR_TO_NICKNAME.items():
                 print(f"    -> WARNING: couldn't parse bio (height={height!r}, birthday={birthday!r})")
 
             entry = {
-                'TEAM': team_name,
+                'TEAM': TEAM_ABBR_TO_NICKNAME.get(current_team_abbr, team_name),
                 'HEIGHT': height,
                 'BIRTHDAY': birthday,
                 'NAME': name,
                 'SLUG': slug,
-                'PPG': round(float(row['PTS'].values[0]), 1),
-                'RPG': round(float(row['TRB'].values[0]), 1),
-                'APG': round(float(row['AST'].values[0]), 1),
+                'PPG': round(float(row['PTS']), 1),
+                'RPG': round(float(row['TRB']), 1),
+                'APG': round(float(row['AST']), 1),
             }
             stats[slug] = entry
             print(f"    -> {entry['PPG']} PPG, {entry['RPG']} RPG, {entry['APG']} APG")
