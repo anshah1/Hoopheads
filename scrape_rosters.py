@@ -25,6 +25,12 @@ HEADERS = {
 SEASON = '2025-26'
 SEASON_YEAR = 2026  # bref team roster pages are keyed by the year the season ENDS in
 
+# NOTE for the next full rebuild (planned for early November, once nightly_scraper.py
+# takes over from there): 30 assumes a season that's mostly played out. Re-running this
+# early in a new season means teams won't have played 30 games yet — lower this to
+# whatever's reasonable for how many games have actually been played at that point.
+MIN_GAMES = 30
+
 TEAM_ABBR_TO_NICKNAME = {
     'ATL': 'Hawks', 'BOS': 'Celtics', 'BRK': 'Nets', 'CHO': 'Hornets', 'CHI': 'Bulls',
     'CLE': 'Cavaliers', 'DAL': 'Mavericks', 'DEN': 'Nuggets', 'DET': 'Pistons', 'GSW': 'Warriors',
@@ -91,7 +97,7 @@ def fetch_stats_row(soup):
     if row.empty:
         return None, f"no {SEASON} row, seasons available: {df['Season'].tolist()}"
     games = int(row['G'].values[0])
-    if games < 30:
+    if games < MIN_GAMES:
         return None, f"only {games} games"
     return row, None
 
